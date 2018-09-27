@@ -5,7 +5,7 @@
     "tslint-config-prettier"
   ],
   "linterOptions": {
-    "exclude": ["packages/prisma/src/*", "packages/*/node_modules/**/*"]
+    "exclude": ["prisma/src/*", "**/*.d.ts"]
   },
   "rules": {}
 }

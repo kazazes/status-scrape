@@ -3,6 +3,12 @@
   "references": [
     {
       "path": "packages/prisma"
+    },
+    {
+      "path": "packages/scraper"
+    },
+    {
+      "path": "packages/server"
     }
   ]
 }

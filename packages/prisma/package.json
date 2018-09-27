@@ -5,9 +5,10 @@
   "author": "Peter Kazazes",
   "private": true,
   "scripts": {
-    "build": "yarn run clean && tsc",
+    "build": "tsc",
     "clean": "rimraf dist",
-    "deploy": "prisma deploy"
+    "deploy": "prisma deploy",
+    "lint": "tslint -c ../tslint.json -p tsconfig.json"
   },
   "dependencies": {
     "graphql": "^0.13.2",

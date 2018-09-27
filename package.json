@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "clean": "lerna run clean",
-    "lint": "lerna run lint",
-    "test": "lerna run test",
+    "clean": "lerna run --parallel clean",
+    "clean:modules": "rimraf packages/*/node_modules node_modules",
+    "lint": "lerna run --parallel lint",
+    "test": "lerna run --parallel test",
     "serve": "yarn workspace @status-scrape/admin run serve"
   },
   "devDependencies": {
@@ -16,7 +17,8 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-airbnb": "^5.11.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "@types/node": "^9.4.6"
   },
   "workspaces": [
     "packages/*"
