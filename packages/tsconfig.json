@@ -1,9 +1,0 @@
-{
-  "files": [],
-  "references": [
-    {
-      "path": "admin-frontend",
-      "path": "prisma"
-    }
-  ]
-}

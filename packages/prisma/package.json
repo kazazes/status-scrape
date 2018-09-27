@@ -1,0 +1,23 @@
+{
+  "name": "@status-scrape/prisma",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "author": "Peter Kazazes",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.0",
+    "prisma-client-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.0.1",
+    "@types/prettier": "^1.13.2",
+    "@types/ws": "^6.0.1"
+  },
+  "noHoist": [
+    "graphql-tools"
+  ]
+}
