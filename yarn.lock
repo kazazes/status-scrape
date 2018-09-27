@@ -1234,12 +1234,6 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/bson@*":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@types/bson/-/bson-1.0.11.tgz#c95ad69bb0b3f5c33b4bb6cc86d86cafb273335c"
-  dependencies:
-    "@types/node" "*"
-
 "@types/commander@^2.11.0":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@types/commander/-/commander-2.12.2.tgz#183041a23842d4281478fa5d23c5ca78e6fd08ae"
@@ -1365,22 +1359,6 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
-"@types/mongodb@*":
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.9.tgz#aec8b3180cc32520fee34fa6b7fa1a6f9348c8cf"
-  dependencies:
-    "@types/bson" "*"
-    "@types/events" "*"
-    "@types/node" "*"
-
-"@types/mongoose@^4.7.34":
-  version "4.7.39"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-4.7.39.tgz#08581b757922ebc7f69ccd55f5e4ffe6b06d172d"
-  dependencies:
-    "@types/events" "*"
-    "@types/mongodb" "*"
-    "@types/node" "*"
-
 "@types/morgan@^1.7.35":
   version "1.7.35"
   resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.7.35.tgz#6358f502931cc2583d7a94248c41518baa688494"
@@ -1414,9 +1392,9 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@types/shelljs@^0.7.8":
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.7.9.tgz#3abecb72d9cad9cd4b0e7cb86ed10a97d93ba602"
+"@types/shelljs@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.0.tgz#0caa56b68baae4f68f44e0dd666ab30b098e3632"
   dependencies:
     "@types/glob" "*"
     "@types/node" "*"
@@ -4005,7 +3983,7 @@ dot-prop@^4.1.0, dot-prop@^4.1.1, dot-prop@^4.2.0:
   dependencies:
     is-obj "^1.0.0"
 
-dotenv@6.0.0:
+dotenv@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
 
