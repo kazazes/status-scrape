@@ -1,0 +1,11 @@
+{
+  "name": "@status-scrape/scraper",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Peter Kazazes",
+  "private": true,
+  "scripts": {
+    "build": "yarn run clean && tsc",
+    "clean": "rimraf dist"
+  }
+}

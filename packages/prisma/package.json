@@ -1,11 +1,12 @@
 {
   "name": "@status-scrape/prisma",
   "version": "1.0.0",
-  "main": "dist/index",
+  "main": "dist/index.js",
   "author": "Peter Kazazes",
   "private": true,
   "scripts": {
-    "build": "tsc -b"
+    "build": "yarn run clean && tsc",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "graphql": "^14.0.2",
@@ -16,8 +17,5 @@
     "@types/graphql": "^14.0.1",
     "@types/prettier": "^1.13.2",
     "@types/ws": "^6.0.1"
-  },
-  "noHoist": [
-    "graphql-tools"
-  ]
+  }
 }
