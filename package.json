@@ -1,0 +1,8 @@
+{
+  "name": "status-scrape",
+  "version": "1.0.0",
+  "author": "Peter Kazazes",
+  "private": true,
+  "devDependencies": {},
+  "workspaces": ["packages/*"]
+}
