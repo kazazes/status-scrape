@@ -6,10 +6,11 @@
   "private": true,
   "scripts": {
     "build": "yarn run clean && tsc",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "deploy": "prisma deploy"
   },
   "dependencies": {
-    "graphql": "^14.0.2",
+    "graphql": "^0.13.2",
     "graphql-tools": "^4.0.0",
     "prisma-client-lib": "^1.17.1"
   },
