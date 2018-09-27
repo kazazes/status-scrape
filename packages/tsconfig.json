@@ -1,6 +1,9 @@
 {
   "files": [],
-  "references": [{
-    "path": "admin"
-  }]
+  "references": [
+    {
+      "path": "admin-frontend",
+      "path": "prisma"
+    }
+  ]
 }

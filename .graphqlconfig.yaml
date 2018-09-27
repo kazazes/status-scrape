@@ -1,0 +1,6 @@
+projects:
+  status-scrape:
+    schemaPath: packages/prisma/datamodel.prisma
+    extensions:
+      endpoints:
+        dev: 'https://us1.prisma.sh/peter-k/status-scrape/dev'
