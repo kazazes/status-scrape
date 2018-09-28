@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:carbon-stretch-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - status-scrape-dependencies-{{ checksum "yarn.lock" }}
+            - status-scrape-dependencies-
+      - run: yarn install --pure-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+          key: status-scrape-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - packages/admin-frontend/dist/
