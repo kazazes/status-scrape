@@ -38,6 +38,7 @@
     "lodash": "^4.17.4",
     "lusca": "^1.5.2",
     "pug": "^2.0.0-rc.4",
+    "tslib": "^1.9.3",
     "winston": "3"
   },
   "devDependencies": {
