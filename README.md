@@ -6,7 +6,7 @@
 
 <h4 align="center">
 
-[![CircleCI](https://circleci.com/gh/kazazes/status-scrape.svg?style=svg&circle-token=89eb1acb780525c0aad93ed2ca7d0c34db9ec386)](https://circleci.com/gh/kazazes/status-scrape)
+[![CircleCI](https://circleci.com/gh/kazazes/status-scrape.svg?style=shield&circle-token=89eb1acb780525c0aad93ed2ca7d0c34db9ec386&)](https://circleci.com/gh/kazazes/status-scrape)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=kazazes/status-scrape&identifier=150507884)](https://dependabot.com)
 
 </span>
