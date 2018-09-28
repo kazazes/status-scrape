@@ -1,0 +1,21 @@
+.gcloudignore
+.git
+.gitignore
+*.log
+.circleci
+.vscode
+ts*.json
+*.log
+
+# Node.js dependencies:
+node_modules
+packages/*/node_modules
+packages/scraper
+packages/*/src
+
+coverage/
+src/
+test/
+.DS_Store
+tsconfig.json
+copyStaticAssets.js

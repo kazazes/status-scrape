@@ -9,7 +9,8 @@
     "clean:modules": "rimraf packages/*/node_modules node_modules",
     "lint": "lerna run --parallel lint",
     "test": "lerna run --parallel test",
-    "serve": "yarn workspace @status-scrape/admin run serve"
+    "serve": "yarn workspace @status-scrape/admin run serve",
+    "start": "yarn workspace @status-scrape/server run start"
   },
   "devDependencies": {
     "lerna": "^3.4.0",
@@ -22,5 +23,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "engines": {
+    "yarn": "^1.10",
+    "node": "^8"
+  }
 }
