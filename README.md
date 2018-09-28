@@ -40,10 +40,9 @@ packages
 ├── admin-frontend
 ├── prisma
 ├── scraper
-└── server
+└── common
 ```
 
 - `admin-frontend` - A Vue.js application which controls the scraper targets and scheduling, and displays historical scraping data.
-- `prisma` - A [Prisma](https://prisma.io) GraphQL data model/ORM which handles database operations.
+- `prisma-server` - A [Prisma](https://prisma.io) GraphQL server and ORM.
 - `scraper` - The scraper and associated utilities. These are designed to be run locally or via Google Cloud Functions. They are dispatched by the server.
-- `server` - An Express server which serves the admin frontend and dispatches scheduled scraping jobs.

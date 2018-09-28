@@ -1,2 +1,8 @@
 runtime: nodejs
 env: flex
+
+handlers:
+  - url: /graphql(\/.*)*
+    script: auto
+  - url: /.*
+    static_dir: packages/admin-frontend/dist

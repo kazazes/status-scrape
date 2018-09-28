@@ -5,8 +5,9 @@
   "author": "Peter Kazazes",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "lint": "tslint -c ../tslint.json -p tsconfig.json"
+    "lint": "tslint -c ../tslint.json -p tsconfig.json",
+    "watch:ts": "tsc -w"
   }
 }
