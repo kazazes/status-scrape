@@ -5,7 +5,7 @@
     "tslint-config-prettier"
   ],
   "linterOptions": {
-    "exclude": ["prisma-server/src/**/*", "**/*.d.ts"]
+    "exclude": ["server/src/**/*", "**/*.d.ts"]
   },
   "rules": {
     "object-literal-sort-keys": false

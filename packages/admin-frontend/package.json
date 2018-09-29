@@ -5,9 +5,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:pack": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit"
+    "test": "vue-cli-service test:unit",
+    "watch:webpack": "vue-cli-service build --watch"
   },
   "dependencies": {
     "vue": "^2.5.17",
