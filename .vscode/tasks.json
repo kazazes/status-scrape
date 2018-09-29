@@ -6,23 +6,37 @@
     {
       "type": "npm",
       "script": "lint",
-      "problemMatcher": ["$tslint5"]
+      "problemMatcher": [
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "build",
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": [
+        "$tsc"
+      ]
     },
     {
       "type": "npm",
       "script": "watch:ts",
-      "problemMatcher": ["$tslint5"]
+      "problemMatcher": [
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "watch:ts",
       "path": "packages/scraper/",
-      "problemMatcher": ["$tsc-watch"]
+      "problemMatcher": [
+        "$tsc-watch"
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "deploy",
+      "path": "packages/server/",
+      "problemMatcher": []
     }
   ]
 }
