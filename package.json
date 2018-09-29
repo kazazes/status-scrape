@@ -12,7 +12,8 @@
     "serve": "yarn workspace @status-scrape/admin run serve",
     "start": "yarn workspace @status-scrape/server run start",
     "watch:ts": "lerna run watch:ts --parallel",
-    "watch:webpack": "yarn workspace @status-scrape/admin run watch:webpack"
+    "watch:webpack": "yarn workspace @status-scrape/admin run watch:webpack",
+    "debug": "yarn workspace @status-scrape/server watch:debug"
   },
   "devDependencies": {
     "lerna": "^3.4.0",

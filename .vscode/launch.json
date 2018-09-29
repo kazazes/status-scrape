@@ -9,7 +9,10 @@
       "request": "launch",
       "name": "Launch via NPM",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["run", "start"]
+      "runtimeArgs": ["run", "debug"],
+      "port": 9229,
+      "outputCapture": "std",
+      "console": "integratedTerminal"
     }
   ]
 }

@@ -1,11 +1,11 @@
 import { logger } from "@status-scrape/common";
 import dotenv from "dotenv";
 import { GraphQLServer } from "graphql-yoga";
-import { prisma } from "./generated";
+import { prisma } from "../../prisma/dist/generated/";
 import { resolvers } from "./resolvers";
 
 dotenv.config();
-
+debugger;
 const server = new GraphQLServer({
   resolvers,
   typeDefs: "schema.graphql",
