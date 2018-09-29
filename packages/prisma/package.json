@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@status-scrape/common": "^1.0.0",
-    "prisma-client-lib": "0.2.58"
+    "prisma-client-lib": "1.17.1"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
