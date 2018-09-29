@@ -1,5 +1,7 @@
 endpoint: https://us1.prisma.sh/peter-k/status-scrape/dev
-datamodel: datamodel.prisma
+datamodel:
+  - datamodel.prisma
+  - enum.prisma
 
 generate:
   - generator: typescript-client
