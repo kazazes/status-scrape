@@ -1,13 +1,14 @@
+import { StatusScrapeTargetNode } from "../../../prisma/dist";
 import { ScraperStrategy } from "./strategy";
 
 export class StatusPageStrategy extends ScraperStrategy {
   public url: string;
-  constructor(url: string) {
-    super(url);
-    this.strategy = "STATUSPAGE";
+  constructor(target: StatusScrapeTargetNode) {
+    super(target);
+    this.strategy = "STATUSPAGE_IO";
   }
 
   public async scrape() {
-    return {};
+    console.log(`Starting scrape of ${this.target.statusUrl}`);
   }
 }

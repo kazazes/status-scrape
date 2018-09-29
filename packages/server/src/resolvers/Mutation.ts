@@ -1,6 +1,8 @@
+import { prisma, StatusScrapeTargetCreateInput } from "@status-scrape/prisma";
+import { IApolloContext } from "./apollo";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { AuthError } from "../utils";
+import { AuthError, isAuthenticated } from "../utils";
 
 export interface ILoginArgs {
   name?: string;
@@ -46,5 +48,19 @@ export const Mutation = {
     }
 
     return new AuthError();
+  },
+  upsertScrapeTarget: async (
+    obj: any,
+    args: any,
+    ctx: IApolloContext,
+    info: any
+  ) => {
+    const data: StatusScrapeTargetCreateInput = args.data;
+    await isAuthenticated(ctx);
+    return prisma.upsertStatusScrapeTarget({
+      where: { name: data.name },
+      create: data,
+      update: data
+    });
   }
 };

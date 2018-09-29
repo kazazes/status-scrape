@@ -1,6 +1,6 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { importSchema } from "graphql-import";
-import { prisma } from "../../prisma/dist";
+import { prisma, Prisma } from "../../prisma/dist";
 import { resolvers } from "./resolvers";
 
 import { Config } from "apollo-server-core";
@@ -14,17 +14,27 @@ const schema = makeExecutableSchema({
   resolvers,
   resolverValidationOptions: {
     requireResolversForResolveType: false
-  }
+  },
+  allowUndefinedInResolve: false
 });
+
+export interface IApolloContext {
+  db: Prisma;
+  req: Request;
+  res: Response;
+}
 
 const apolloConfig: Config = {
   schema,
-  context: (req: Request) => {
-    return {
-      ...req,
+  context: (ctx: any) => {
+    const context: IApolloContext = {
+      req: ctx.req,
+      res: ctx.res,
       db: prisma
     };
-  }
+    return context;
+  },
+  debug: true
 };
 
 const server = new ApolloServer(apolloConfig);

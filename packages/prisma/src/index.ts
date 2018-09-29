@@ -188,7 +188,7 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type ScrapeStrategy = "STATUSPAGE";
+export type ScrapeStrategy = "STATUSPAGE_IO";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 

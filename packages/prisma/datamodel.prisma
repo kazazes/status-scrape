@@ -9,6 +9,6 @@ type StatusScrapeTarget {
   id: ID! @unique
   name: String! @unique
   twitterHandle: String @unique
-  strategy: ScrapeStrategy! @default(value: "STATUSPAGE")
+  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
 }

@@ -12,7 +12,8 @@
       "runtimeArgs": ["run", "debug"],
       "port": 9229,
       "outputCapture": "std",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "outFiles": ["packages/*/dist/**"]
     }
   ]
 }

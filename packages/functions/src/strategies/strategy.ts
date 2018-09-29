@@ -1,10 +1,10 @@
-import { ScrapeStrategy } from "../../../prisma/dist/";
+import { ScrapeStrategy, StatusScrapeTargetNode } from "../../../prisma/dist/";
 
 export abstract class ScraperStrategy {
-  public url: string;
+  public target: StatusScrapeTargetNode;
   public strategy: ScrapeStrategy;
-  constructor(url: string) {
-    this.url = url;
+  constructor(target: StatusScrapeTargetNode) {
+    this.target = target;
   }
 
   public abstract async scrape(): Promise<any>;

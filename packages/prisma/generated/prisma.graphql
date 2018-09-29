@@ -55,7 +55,7 @@ type Query {
 }
 
 enum ScrapeStrategy {
-  STATUSPAGE
+  STATUSPAGE_IO
 }
 
 type StatusScrapeTarget {

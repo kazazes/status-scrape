@@ -1,17 +1,16 @@
 # import StatusScrapeTarget from '../prisma/generated/prisma.graphql'
+# import StatusScrapeTargetCreateInput from '../prisma/generated/prisma.graphql'
+# import StatusScrapeTargetWhereUniqueInput from '../prisma/generated/prisma.graphql'
 
 type Query {
   me: User
+  startScrape(target: StatusScrapeTargetWhereUniqueInput): Boolean
 }
 
 type Mutation {
   signup(name: String!, email: String!, password: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  upsertScrapeTarget(
-    name: String
-    strategy: ScrapeStrategy
-    statusUrl: String
-  ): StatusScrapeTarget!
+  upsertScrapeTarget(data: StatusScrapeTargetCreateInput): StatusScrapeTarget!
 }
 
 type AuthPayload {

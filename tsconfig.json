@@ -2,13 +2,16 @@
   "files": [],
   "references": [
     {
-      "path": "packages/prisma-server"
+      "path": "./packages/prisma"
     },
     {
-      "path": "packages/scraper"
+      "path": "./packages/scraper"
     },
     {
-      "path": "packages/common"
+      "path": "./packages/common"
+    },
+    {
+      "path": "./packages/functions"
     }
   ]
 }

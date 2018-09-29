@@ -16,8 +16,6 @@
   },
   "dependencies": {
     "@status-scrape/common": "^1.0.0",
-    "graphql": "0.13.2",
-    "graphql-yoga": "1.16.2",
     "prisma-client-lib": "0.2.58"
   },
   "devDependencies": {
