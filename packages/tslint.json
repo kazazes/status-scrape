@@ -8,6 +8,9 @@
     "exclude": ["prisma/src/**/*", "**/*.d.ts"]
   },
   "rules": {
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "prefer-template": {
+      "options": "allow-single-concat"
+    }
   }
 }

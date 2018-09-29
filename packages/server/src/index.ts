@@ -1,32 +1,27 @@
 import { logger } from "@status-scrape/common";
-import dotenv from "dotenv";
-import { GraphQLServer } from "graphql-yoga";
-import { prisma } from "../../prisma/dist/generated/";
-import { resolvers } from "./resolvers";
+import { config } from "dotenv";
+import errorhandler from "errorhandler";
+import { existsSync } from "fs";
 
-dotenv.config();
-debugger;
-const server = new GraphQLServer({
-  resolvers,
-  typeDefs: "schema.graphql",
-  context: req => {
-    return {
-      ...req,
-      db: prisma
-    };
-  }
+const envPath = existsSync(__dirname + "/../.env")
+  ? __dirname + "/../.env"
+  : __dirname + "/../.env.example";
+
+config({ path: envPath });
+
+import app from "./app";
+
+let server;
+export default server;
+
+if (process.env.NODE_ENV !== "production") {
+  app.use(errorhandler());
+}
+
+server = app.listen(app.get("port"), app.get("host"), () => {
+  logger.info(
+    `Status Scrape webserver is running at http://${app.get(
+      "hostname"
+    )}:${app.get("port")} in ${app.get("env")} mode`
+  );
 });
-
-server.start(
-  {
-    port: process.env.PORT || 4000,
-    endpoint: "/graphql",
-    playground: "/graphql"
-  },
-  () => {
-    logger.info(
-      `Server is running on http://localhost:${process.env.PORT ||
-        4000}/graphql`
-    );
-  }
-);

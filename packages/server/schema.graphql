@@ -1,4 +1,4 @@
-# import StatusScrapeTarget from '../prisma/datamodel.prisma'
+# import StatusScrapeTarget from '../prisma/generated/prisma.graphql'
 
 type Query {
   me: User

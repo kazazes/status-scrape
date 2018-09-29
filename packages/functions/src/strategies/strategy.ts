@@ -1,4 +1,4 @@
-import { ScrapeStrategy } from "../../../prisma/dist/generated";
+import { ScrapeStrategy } from "../../../prisma/dist/";
 
 export abstract class ScraperStrategy {
   public url: string;

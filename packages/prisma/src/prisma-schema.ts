@@ -14,7 +14,10 @@ scalar Long
 
 type Mutation {
   createStatusScrapeTarget(data: StatusScrapeTargetCreateInput!): StatusScrapeTarget!
+  updateStatusScrapeTarget(data: StatusScrapeTargetUpdateInput!, where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
   updateManyStatusScrapeTargets(data: StatusScrapeTargetUpdateInput!, where: StatusScrapeTargetWhereInput): BatchPayload!
+  upsertStatusScrapeTarget(where: StatusScrapeTargetWhereUniqueInput!, create: StatusScrapeTargetCreateInput!, update: StatusScrapeTargetUpdateInput!): StatusScrapeTarget!
+  deleteStatusScrapeTarget(where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
   deleteManyStatusScrapeTargets(where: StatusScrapeTargetWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
@@ -42,6 +45,7 @@ type PageInfo {
 }
 
 type Query {
+  statusScrapeTarget(where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
   statusScrapeTargets(where: StatusScrapeTargetWhereInput, orderBy: StatusScrapeTargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeTarget]!
   statusScrapeTargetsConnection(where: StatusScrapeTargetWhereInput, orderBy: StatusScrapeTargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeTargetConnection!
   user(where: UserWhereUniqueInput!): User
@@ -55,6 +59,7 @@ enum ScrapeStrategy {
 }
 
 type StatusScrapeTarget {
+  id: ID!
   name: String!
   twitterHandle: String
   strategy: ScrapeStrategy!
@@ -80,6 +85,8 @@ type StatusScrapeTargetEdge {
 }
 
 enum StatusScrapeTargetOrderByInput {
+  id_ASC
+  id_DESC
   name_ASC
   name_DESC
   twitterHandle_ASC
@@ -88,8 +95,6 @@ enum StatusScrapeTargetOrderByInput {
   strategy_DESC
   statusUrl_ASC
   statusUrl_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -97,6 +102,7 @@ enum StatusScrapeTargetOrderByInput {
 }
 
 type StatusScrapeTargetPreviousValues {
+  id: ID!
   name: String!
   twitterHandle: String
   strategy: ScrapeStrategy!
@@ -129,6 +135,20 @@ input StatusScrapeTargetUpdateInput {
 }
 
 input StatusScrapeTargetWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   name: String
   name_not: String
   name_in: [String!]
@@ -178,6 +198,13 @@ input StatusScrapeTargetWhereInput {
   AND: [StatusScrapeTargetWhereInput!]
   OR: [StatusScrapeTargetWhereInput!]
   NOT: [StatusScrapeTargetWhereInput!]
+}
+
+input StatusScrapeTargetWhereUniqueInput {
+  id: ID
+  name: String
+  twitterHandle: String
+  statusUrl: String
 }
 
 type Subscription {

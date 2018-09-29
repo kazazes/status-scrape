@@ -11,6 +11,7 @@ interface IVerifiedToken {
 }
 
 export function getUserId(context: any) {
+  // tslint:disable-next-line:variable-name
   const Authorization = context.request.get("Authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");

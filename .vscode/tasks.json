@@ -6,17 +6,23 @@
     {
       "type": "npm",
       "script": "lint",
-      "problemMatcher": ["$tslint5"]
+      "problemMatcher": [
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "build",
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": [
+        "$tsc"
+      ]
     },
     {
       "type": "npm",
       "script": "watch:ts",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "isBackground": true,
       "presentation": {
         "echo": true,
@@ -30,13 +36,23 @@
       "type": "npm",
       "script": "watch:ts",
       "path": "packages/scraper/",
-      "problemMatcher": ["$tsc-watch"]
+      "problemMatcher": [
+        "$tsc-watch"
+      ]
     },
     {
       "type": "npm",
       "script": "deploy",
       "path": "packages/server/",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build:pack",
+      "path": "packages/admin-frontend/",
+      "problemMatcher": [
+        "$tsc"
+      ]
     }
   ]
 }

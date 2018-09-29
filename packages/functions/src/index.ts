@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { StatusScrapeTargetNode } from "../../prisma/dist/generated";
+import { StatusScrapeTargetNode } from "../../prisma/dist/";
 import { StatusPageStrategy } from "./strategies/statusPageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
 
