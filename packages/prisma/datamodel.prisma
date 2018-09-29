@@ -1,0 +1,14 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+}
+
+type StatusScrapeTarget {
+  id: ID! @unique
+  name: String! @unique
+  twitterHandle: String @unique
+  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
+  statusUrl: String! @unique
+}

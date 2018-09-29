@@ -1,5 +1,5 @@
 {
-  "name": "@status-scrape/scraper",
+  "name": "@status-scrape/functions",
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "Peter Kazazes",
@@ -9,5 +9,11 @@
     "clean": "rimraf dist",
     "lint": "tslint -c ../tslint.json -p tsconfig.json",
     "watch:ts": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
   }
 }

@@ -35,6 +35,9 @@ export interface Prisma {
    * Queries
    */
 
+  statusScrapeTarget: (
+    where: StatusScrapeTargetWhereUniqueInput
+  ) => StatusScrapeTarget;
   statusScrapeTargets: (
     args?: {
       where?: StatusScrapeTargetWhereInput;
@@ -89,12 +92,28 @@ export interface Prisma {
   createStatusScrapeTarget: (
     data: StatusScrapeTargetCreateInput
   ) => StatusScrapeTarget;
+  updateStatusScrapeTarget: (
+    args: {
+      data: StatusScrapeTargetUpdateInput;
+      where: StatusScrapeTargetWhereUniqueInput;
+    }
+  ) => StatusScrapeTarget;
   updateManyStatusScrapeTargets: (
     args: {
       data: StatusScrapeTargetUpdateInput;
       where?: StatusScrapeTargetWhereInput;
     }
   ) => BatchPayload;
+  upsertStatusScrapeTarget: (
+    args: {
+      where: StatusScrapeTargetWhereUniqueInput;
+      create: StatusScrapeTargetCreateInput;
+      update: StatusScrapeTargetUpdateInput;
+    }
+  ) => StatusScrapeTarget;
+  deleteStatusScrapeTarget: (
+    where: StatusScrapeTargetWhereUniqueInput
+  ) => StatusScrapeTarget;
   deleteManyStatusScrapeTargets: (
     where?: StatusScrapeTargetWhereInput
   ) => BatchPayload;
@@ -139,9 +158,21 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type ScrapeStrategy = "STATUSPAGE";
-
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type StatusScrapeTargetOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "twitterHandle_ASC"
+  | "twitterHandle_DESC"
+  | "strategy_ASC"
+  | "strategy_DESC"
+  | "statusUrl_ASC"
+  | "statusUrl_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -157,26 +188,14 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type StatusScrapeTargetOrderByInput =
-  | "name_ASC"
-  | "name_DESC"
-  | "twitterHandle_ASC"
-  | "twitterHandle_DESC"
-  | "strategy_ASC"
-  | "strategy_DESC"
-  | "statusUrl_ASC"
-  | "statusUrl_DESC"
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+export type ScrapeStrategy = "STATUSPAGE_IO";
 
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface UserUpdateInput {
+  name?: String;
+  email?: String;
+  password?: String;
 }
 
 export interface UserWhereInput {
@@ -241,7 +260,28 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
+export type StatusScrapeTargetWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  name?: String;
+  twitterHandle?: String;
+  statusUrl?: String;
+}>;
+
 export interface StatusScrapeTargetWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   name?: String;
   name_not?: String;
   name_in?: String[] | String;
@@ -293,17 +333,6 @@ export interface StatusScrapeTargetWhereInput {
   NOT?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   email?: String;
@@ -323,6 +352,23 @@ export interface StatusScrapeTargetUpdateInput {
   statusUrl?: String;
 }
 
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
 export interface StatusScrapeTargetSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -338,12 +384,6 @@ export interface StatusScrapeTargetSubscriptionWhereInput {
   NOT?:
     | StatusScrapeTargetSubscriptionWhereInput[]
     | StatusScrapeTargetSubscriptionWhereInput;
-}
-
-export interface UserUpdateInput {
-  name?: String;
-  email?: String;
-  password?: String;
 }
 
 export interface NodeNode {
@@ -366,6 +406,29 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<Array<UserEdgeSubscription>>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface PageInfoNode {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfoNode>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValuesNode {
@@ -393,6 +456,26 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
+export interface StatusScrapeTargetConnectionNode {}
+
+export interface StatusScrapeTargetConnection
+  extends Promise<StatusScrapeTargetConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = Promise<Array<StatusScrapeTargetEdgeNode>>>() => T;
+  aggregate: <T = AggregateStatusScrapeTarget>() => T;
+}
+
+export interface StatusScrapeTargetConnectionSubscription
+  extends Promise<AsyncIterator<StatusScrapeTargetConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<Array<StatusScrapeTargetEdgeSubscription>>>
+  >() => T;
+  aggregate: <T = AggregateStatusScrapeTargetSubscription>() => T;
+}
+
 export interface UserNode {
   id: ID_Output;
   name: String;
@@ -416,29 +499,6 @@ export interface UserSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfoNode {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfoNode>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface UserEdgeNode {
   cursor: String;
 }
@@ -453,6 +513,22 @@ export interface UserEdgeSubscription
     Fragmentable {
   node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateStatusScrapeTargetNode {
+  count: Int;
+}
+
+export interface AggregateStatusScrapeTarget
+  extends Promise<AggregateStatusScrapeTargetNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStatusScrapeTargetSubscription
+  extends Promise<AsyncIterator<AggregateStatusScrapeTargetNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface StatusScrapeTargetSubscriptionPayloadNode {
@@ -476,111 +552,6 @@ export interface StatusScrapeTargetSubscriptionPayloadSubscription
   node: <T = StatusScrapeTargetSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = StatusScrapeTargetPreviousValuesSubscription>() => T;
-}
-
-export interface StatusScrapeTargetNode {
-  name: String;
-  twitterHandle?: String;
-  strategy: ScrapeStrategy;
-  statusUrl: String;
-}
-
-export interface StatusScrapeTarget
-  extends Promise<StatusScrapeTargetNode>,
-    Fragmentable {
-  name: () => Promise<String>;
-  twitterHandle: () => Promise<String>;
-  strategy: () => Promise<ScrapeStrategy>;
-  statusUrl: () => Promise<String>;
-}
-
-export interface StatusScrapeTargetSubscription
-  extends Promise<AsyncIterator<StatusScrapeTargetNode>>,
-    Fragmentable {
-  name: () => Promise<AsyncIterator<String>>;
-  twitterHandle: () => Promise<AsyncIterator<String>>;
-  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
-  statusUrl: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateStatusScrapeTargetNode {
-  count: Int;
-}
-
-export interface AggregateStatusScrapeTarget
-  extends Promise<AggregateStatusScrapeTargetNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStatusScrapeTargetSubscription
-  extends Promise<AsyncIterator<AggregateStatusScrapeTargetNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateUserNode {
-  count: Int;
-}
-
-export interface AggregateUser
-  extends Promise<AggregateUserNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUserNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface StatusScrapeTargetPreviousValuesNode {
-  name: String;
-  twitterHandle?: String;
-  strategy: ScrapeStrategy;
-  statusUrl: String;
-}
-
-export interface StatusScrapeTargetPreviousValues
-  extends Promise<StatusScrapeTargetPreviousValuesNode>,
-    Fragmentable {
-  name: () => Promise<String>;
-  twitterHandle: () => Promise<String>;
-  strategy: () => Promise<ScrapeStrategy>;
-  statusUrl: () => Promise<String>;
-}
-
-export interface StatusScrapeTargetPreviousValuesSubscription
-  extends Promise<AsyncIterator<StatusScrapeTargetPreviousValuesNode>>,
-    Fragmentable {
-  name: () => Promise<AsyncIterator<String>>;
-  twitterHandle: () => Promise<AsyncIterator<String>>;
-  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
-  statusUrl: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface UserSubscriptionPayload
-  extends Promise<UserSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = User>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValues>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface BatchPayloadNode {
@@ -615,38 +586,100 @@ export interface StatusScrapeTargetEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StatusScrapeTargetConnectionNode {}
-
-export interface StatusScrapeTargetConnection
-  extends Promise<StatusScrapeTargetConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = Promise<Array<StatusScrapeTargetEdgeNode>>>() => T;
-  aggregate: <T = AggregateStatusScrapeTarget>() => T;
+export interface AggregateUserNode {
+  count: Int;
 }
 
-export interface StatusScrapeTargetConnectionSubscription
-  extends Promise<AsyncIterator<StatusScrapeTargetConnectionNode>>,
+export interface AggregateUser
+  extends Promise<AggregateUserNode>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <
-    T = Promise<AsyncIterator<Array<StatusScrapeTargetEdgeSubscription>>>
-  >() => T;
-  aggregate: <T = AggregateStatusScrapeTargetSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUserNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
 
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
+export interface StatusScrapeTargetPreviousValuesNode {
+  id: ID_Output;
+  name: String;
+  twitterHandle?: String;
+  strategy: ScrapeStrategy;
+  statusUrl: String;
+}
 
-export type Long = string;
+export interface StatusScrapeTargetPreviousValues
+  extends Promise<StatusScrapeTargetPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  twitterHandle: () => Promise<String>;
+  strategy: () => Promise<ScrapeStrategy>;
+  statusUrl: () => Promise<String>;
+}
+
+export interface StatusScrapeTargetPreviousValuesSubscription
+  extends Promise<AsyncIterator<StatusScrapeTargetPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  twitterHandle: () => Promise<AsyncIterator<String>>;
+  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
+  statusUrl: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface UserSubscriptionPayload
+  extends Promise<UserSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = User>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValues>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface StatusScrapeTargetNode {
+  id: ID_Output;
+  name: String;
+  twitterHandle?: String;
+  strategy: ScrapeStrategy;
+  statusUrl: String;
+}
+
+export interface StatusScrapeTarget
+  extends Promise<StatusScrapeTargetNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  twitterHandle: () => Promise<String>;
+  strategy: () => Promise<ScrapeStrategy>;
+  statusUrl: () => Promise<String>;
+}
+
+export interface StatusScrapeTargetSubscription
+  extends Promise<AsyncIterator<StatusScrapeTargetNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  twitterHandle: () => Promise<AsyncIterator<String>>;
+  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
+  statusUrl: () => Promise<AsyncIterator<String>>;
+}
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -654,9 +687,22 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+export type Long = string;
+
+/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /**
  * Type Defs

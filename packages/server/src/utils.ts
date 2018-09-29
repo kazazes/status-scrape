@@ -1,4 +1,5 @@
 import { verify } from "jsonwebtoken";
+import { IApolloContext } from "./apollo";
 
 export class AuthError extends Error {
   constructor() {
@@ -6,12 +7,28 @@ export class AuthError extends Error {
   }
 }
 
+export function isAuthenticated(context: IApolloContext) {
+  // tslint:disable-next-line:variable-name
+  const Authorization = context.req.get("Authorization");
+  if (Authorization) {
+    const token = Authorization.replace("Bearer ", "");
+    const verifiedToken = verify(
+      token,
+      process.env.APP_SECRET
+    ) as IVerifiedToken;
+    return verifiedToken.userId !== undefined;
+  }
+
+  throw new AuthError();
+}
+
 interface IVerifiedToken {
   userId?: any;
 }
 
-export function getUserId(context: any) {
-  const Authorization = context.request.get("Authorization");
+export function getUserId(context: IApolloContext) {
+  // tslint:disable-next-line:variable-name
+  const Authorization = context.req.get("Authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
     const verifiedToken = verify(
@@ -21,5 +38,5 @@ export function getUserId(context: any) {
     return verifiedToken && verifiedToken.userId;
   }
 
-  throw new AuthError();
+  return new AuthError();
 }

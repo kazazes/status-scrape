@@ -21,8 +21,16 @@
       "type": "npm",
       "script": "watch:ts",
       "problemMatcher": [
-        "$tslint5"
-      ]
+        "$tsc-watch"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": false
+      }
     },
     {
       "type": "npm",
@@ -37,6 +45,14 @@
       "script": "deploy",
       "path": "packages/server/",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build:pack",
+      "path": "packages/admin-frontend/",
+      "problemMatcher": [
+        "$tsc"
+      ]
     }
   ]
 }
