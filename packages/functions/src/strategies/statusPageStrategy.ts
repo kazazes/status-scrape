@@ -1,6 +1,7 @@
 import { StatusScrapeTargetNode } from "../../../prisma/dist";
 import { ScraperStrategy } from "./strategy";
 
+// tslint:disable:no-console
 export class StatusPageStrategy extends ScraperStrategy {
   public url: string;
   constructor(target: StatusScrapeTargetNode) {

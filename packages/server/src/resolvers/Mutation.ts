@@ -1,7 +1,7 @@
 import { prisma, StatusScrapeTargetCreateInput } from "@status-scrape/prisma";
-import { IApolloContext } from "./apollo";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { IApolloContext } from "../apollo";
 import { AuthError, isAuthenticated } from "../utils";
 
 export interface ILoginArgs {

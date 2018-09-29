@@ -11,19 +11,20 @@
     "test": "lerna run --parallel test",
     "serve": "yarn workspace @status-scrape/admin run serve",
     "start": "yarn workspace @status-scrape/server run start",
-    "watch:ts": "lerna run watch:ts --parallel",
+    "watch:ts": "bin/build-ts.sh",
     "watch:webpack": "yarn workspace @status-scrape/admin run watch:webpack",
     "debug": "yarn workspace @status-scrape/server watch:debug",
     "emulate-functions": "npx @google-cloud/functions-emulator start"
   },
   "devDependencies": {
+    "@types/node": "^10.11.1",
     "lerna": "^3.4.0",
+    "node-notifier-cli": "^1.1.2",
     "rimraf": "^2.6.2",
     "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
     "tslint-config-airbnb": "^5.11.0",
-    "typescript": "^3.0.3",
-    "@types/node": "^10.11.1"
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
   },
   "workspaces": [
     "packages/*"
