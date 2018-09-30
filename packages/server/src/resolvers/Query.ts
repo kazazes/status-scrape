@@ -1,21 +1,22 @@
-import { logger } from "@status-scrape/common";
-import { StatusScrapeTargetNode } from "@status-scrape/prisma";
+import { prisma, StatusScrapeTargetNode } from "@status-scrape/prisma";
+import { IApolloContext } from "../apollo";
+import { ScrapeController } from "../scrapeController";
 import { getUserId } from "../utils";
 import { ILoginArgs } from "./Mutation";
 
 // tslint:disable-next-line:variable-name
 export const Query = {
-  me: (obj: any, args: ILoginArgs, ctx: any, info: any) => {
+  me: (obj: any, args: ILoginArgs, ctx: IApolloContext, info: any) => {
     return ctx.db.user({ id: getUserId(ctx) });
   },
-  startScrape: (
+  startScrape: async (
     obj: any,
     args: { target: StatusScrapeTargetNode },
-    ctx: any,
+    ctx: IApolloContext,
     info: any
   ) => {
     const { target } = args;
-    // prisma.statusScrapeTarget(target);
-    logger.info(`Starting scrape of ${target.name} (${target.statusUrl})`);
+    const node = await prisma.statusScrapeTarget({ id: target.id });
+    new ScrapeController(node).scrape();
   }
 };
