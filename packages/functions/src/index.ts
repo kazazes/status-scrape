@@ -6,7 +6,7 @@ import { StatusPageStrategy } from "./strategies/statusPageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
 
 export const statusScrape = async (req: Request, res: Response) => {
-  isAuthenticated(req);
+  isAuthenticated(req, res);
 
   if (req.body.target === undefined) {
     console.error("No target in body.");
@@ -36,7 +36,7 @@ interface IVerifiedToken {
   machine?: boolean;
 }
 
-function isAuthenticated(req: Request) {
+function isAuthenticated(req: Request, res: Response) {
   // tslint:disable-next-line:variable-name
   const Authorization = req.get("Authorization");
   if (Authorization) {
@@ -48,7 +48,7 @@ function isAuthenticated(req: Request) {
     return verifiedToken.machine !== undefined && verifiedToken.machine;
   }
 
-  throw new AuthError();
+  return res.status(403).send(new AuthError());
 }
 
 class AuthError extends Error {
