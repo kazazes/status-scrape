@@ -1,7 +1,9 @@
 import { logger } from "@status-scrape/common";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import cookieSession from "cookie-session";
 import express from "express";
-import expressSession from "express-session";
+import expressHealthcheck from "express-healthcheck";
 import morgan from "morgan";
 import path from "path";
 import apollo from "./apollo";
@@ -15,6 +17,7 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const staticPath = path.join(`${__dirname}"/../../admin-frontend/dist/`);
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
@@ -22,16 +25,15 @@ app.use(express.static(staticPath, { maxAge: 31557600000 }));
 app.locals.env = env;
 
 app.use(
-  expressSession({
+  cookieSession({
     secret: process.env.APP_SECRET,
-    saveUninitialized: true,
-    resave: true,
-    cookie: {
-      expires: false
-    }
+    maxAge: 60 * 60 * 1000,
+    httpOnly: false
   })
 );
 
+app.use("/liveness_check", expressHealthcheck());
+app.use("/readiness_check", expressHealthcheck());
 apollo.applyMiddleware({ app });
 
 const morganFormat: string =

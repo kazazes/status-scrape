@@ -59,6 +59,11 @@
       "script": "deploy:prisma",
       "path": "packages/prisma/",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "deploy:gae",
+      "problemMatcher": []
     }
   ]
 }

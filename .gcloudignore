@@ -9,9 +9,7 @@ ts*.json
 
 # Node.js dependencies:
 node_modules
-packages/*/node_modules
-packages/scraper
-packages/*/src
+packages/functions
 
 coverage/
 src/
