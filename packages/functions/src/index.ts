@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import { StatusScrapeTargetNode } from "../../prisma/";
+import { StatusScrapeTargetNode } from './prisma';
 import { StatusPageStrategy } from "./strategies/statusPageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
 

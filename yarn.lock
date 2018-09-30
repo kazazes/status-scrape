@@ -1548,7 +1548,6 @@
   dependencies:
     "@types/node" "*"
 
-
 "@types/got@^8.3.4":
   version "8.3.4"
   resolved "https://registry.yarnpkg.com/@types/got/-/got-8.3.4.tgz#c6acca7252cdc9f7ae58070d13a45eb6ef9f88e7"
@@ -11425,7 +11424,7 @@ prisma-client-lib@0.2.58:
     ws "^6.0.0"
     zen-observable "^0.8.9"
 
-prisma-client-lib@1.17.1:
+prisma-client-lib@1.17.1, prisma-client-lib@^1.17.1:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.17.1.tgz#5fcc386a493e89ab650d8a9d4ca42817091d35a9"
   integrity sha512-PIGnOMXJhVqwewNKCdJ1vaDg3itt1cmnm8Dgf5nhxADJlwJkRnMCwjZnG7f4A909XAzakumPAWdvBmDERRoYnQ==

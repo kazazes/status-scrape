@@ -1,0 +1,1 @@
+../../prisma/src/index.ts
