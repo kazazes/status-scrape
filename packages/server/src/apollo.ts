@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { importSchema } from "graphql-import";
-import { prisma, Prisma } from "../../prisma/dist";
+import { prisma, Prisma } from "../../prisma";
 import { resolvers } from "./resolvers";
 
 import { Config } from "apollo-server-core";

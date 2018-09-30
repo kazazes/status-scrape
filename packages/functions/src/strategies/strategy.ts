@@ -1,4 +1,4 @@
-import { ScrapeStrategy, StatusScrapeTargetNode } from "../../../prisma/dist/";
+import { ScrapeStrategy, StatusScrapeTargetNode } from "../../../prisma";
 
 export abstract class ScraperStrategy {
   public target: StatusScrapeTargetNode;

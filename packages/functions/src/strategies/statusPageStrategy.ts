@@ -1,6 +1,6 @@
 import got from "got";
 
-import { StatusScrapeTargetNode } from "../../../prisma/dist";
+import { StatusScrapeTargetNode } from "../../../prisma";
 import { ScraperStrategy } from "./strategy";
 
 // tslint:disable:no-console
