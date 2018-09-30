@@ -1,4 +1,5 @@
 import got from "got";
+
 import { StatusScrapeTargetNode } from "../../../prisma/dist";
 import { ScraperStrategy } from "./strategy";
 

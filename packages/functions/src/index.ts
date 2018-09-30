@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+
 import { StatusScrapeTargetNode } from "../../prisma/dist/";
 import { StatusPageStrategy } from "./strategies/statusPageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
