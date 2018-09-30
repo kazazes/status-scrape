@@ -16,19 +16,20 @@ export class ScrapeController {
 
     const token = this.getMachineToken();
     const headers = {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
     };
-    const body = JSON.stringify({ target: this.target }, null, 2);
+    const body = { target: this.target };
 
-    logger.silly(`Headers: \n\n ${JSON.stringify(headers, null, 2)}`);
-    logger.silly(`Body: \n\n ${JSON.stringify(body, null, 2)}`);
+    logger.verbose(`Headers: \n\n ${JSON.stringify(headers, null, 2)}`);
+    logger.verbose(`Body: \n\n ${JSON.stringify(body, null, 2)}`);
 
     const response = await got(
       `${process.env.GC_FUNCTIONS_BASE_URL}statusScrape`,
-      { headers, body }
+      { headers, body: JSON.stringify(body) }
     );
 
-    logger.info(JSON.stringify(response));
+    logger.info(JSON.stringify(response.headers));
   }
 
   private getMachineToken() {

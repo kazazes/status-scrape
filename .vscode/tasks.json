@@ -53,6 +53,12 @@
       "problemMatcher": [
         "$tsc"
       ]
+    },
+    {
+      "type": "npm",
+      "script": "deploy:prisma",
+      "path": "packages/prisma/",
+      "problemMatcher": []
     }
   ]
 }

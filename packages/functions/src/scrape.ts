@@ -1,17 +1,20 @@
+import dotenv from "dotenv";
 import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import { StatusScrapeTargetNode } from './prisma';
+import { StatusScrapeTargetNode } from "./prisma";
 import { StatusPageStrategy } from "./strategies/statusPageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
 
 export const statusScrape = async (req: Request, res: Response) => {
-  isAuthenticated(req, res);
+  dotenv.config();
+  if (!isAuthenticated(req, res)) {
+    return false;
+  }
 
   if (req.body.target === undefined) {
-    console.error("No target in body.");
-    console.error(`${JSON.stringify(req.body, null, 2)}`);
-    res.send(400);
+    console.error("No target in body. Aborting.");
+    return res.send(400);
   }
 
   const target = req.body.target as StatusScrapeTargetNode;
@@ -23,12 +26,11 @@ export const statusScrape = async (req: Request, res: Response) => {
       scraper = new StatusPageStrategy(target);
       break;
     default:
-      res.sendStatus(500).send("Invalid scraping strategy.");
-      break;
+      return res.status(500).send("Invalid scraping strategy.");
   }
 
   const result = await scraper.scrape();
-  res.status(200).send(result);
+  return res.send(result.headers);
 };
 
 interface IVerifiedToken {
@@ -41,14 +43,20 @@ function isAuthenticated(req: Request, res: Response) {
   const Authorization = req.get("Authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
-    const verifiedToken = verify(
-      token,
-      process.env.APP_SECRET
-    ) as IVerifiedToken;
-    return verifiedToken.machine !== undefined && verifiedToken.machine;
+    try {
+      const verifiedToken = verify(
+        token,
+        process.env.APP_SECRET
+      ) as IVerifiedToken;
+      return verifiedToken.machine !== undefined && verifiedToken.machine;
+    } catch (e) {
+      res.status(403).send(new AuthError());
+      return false;
+    }
   }
 
-  return res.status(403).send(new AuthError());
+  res.status(403).send(new AuthError());
+  return false;
 }
 
 class AuthError extends Error {

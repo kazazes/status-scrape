@@ -10,7 +10,6 @@
     "deploy": "prisma deploy",
     "lint": "tslint -c ../tslint.json -p tsconfig.json",
     "start": "node dist/index.js",
-    "prisma": "prisma",
     "watch:ts": "tsc -w",
     "watch:start": "nodemon dist/index.js",
     "watch:debug": "nodemon --inspect dist/index.js"

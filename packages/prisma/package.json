@@ -7,16 +7,15 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",
-    "deploy": "prisma deploy",
+    "deploy:prisma": "prisma deploy",
     "lint": "tslint -c ../tslint.json -p tsconfig.json",
     "start": "node dist/index.js",
-    "prisma": "prisma",
     "watch:ts": "tsc -w",
     "watch:start": "nodemon dist/index.js"
   },
   "dependencies": {
     "@status-scrape/common": "^1.0.0",
-    "prisma-client-lib": "0.2.58"
+    "prisma-client-lib": "^1.18.0-beta.12"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
@@ -24,6 +23,6 @@
     "@types/jsonwebtoken": "^7.2.8",
     "@types/prettier": "^1.13.2",
     "@types/ws": "^6.0.1",
-    "prisma": "^1.17.1"
+    "prisma": "^1.18.0-beta.12"
   }
 }
