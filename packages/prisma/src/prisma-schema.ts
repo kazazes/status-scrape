@@ -1,4 +1,12 @@
-export const typeDefs = /* GraphQL */ `type AggregateStatusScrapeTarget {
+export const typeDefs = /* GraphQL */ `type AggregateStatusScrape {
+  count: Int!
+}
+
+type AggregateStatusScrapeResult {
+  count: Int!
+}
+
+type AggregateStatusScrapeTarget {
   count: Int!
 }
 
@@ -10,9 +18,20 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
+  createStatusScrape(data: StatusScrapeCreateInput!): StatusScrape!
+  updateStatusScrape(data: StatusScrapeUpdateInput!, where: StatusScrapeWhereUniqueInput!): StatusScrape
+  updateManyStatusScrapes(data: StatusScrapeUpdateInput!, where: StatusScrapeWhereInput): BatchPayload!
+  upsertStatusScrape(where: StatusScrapeWhereUniqueInput!, create: StatusScrapeCreateInput!, update: StatusScrapeUpdateInput!): StatusScrape!
+  deleteStatusScrape(where: StatusScrapeWhereUniqueInput!): StatusScrape
+  deleteManyStatusScrapes(where: StatusScrapeWhereInput): BatchPayload!
+  createStatusScrapeResult(data: StatusScrapeResultCreateInput!): StatusScrapeResult!
+  updateManyStatusScrapeResults(data: StatusScrapeResultUpdateInput!, where: StatusScrapeResultWhereInput): BatchPayload!
+  deleteManyStatusScrapeResults(where: StatusScrapeResultWhereInput): BatchPayload!
   createStatusScrapeTarget(data: StatusScrapeTargetCreateInput!): StatusScrapeTarget!
   updateStatusScrapeTarget(data: StatusScrapeTargetUpdateInput!, where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
   updateManyStatusScrapeTargets(data: StatusScrapeTargetUpdateInput!, where: StatusScrapeTargetWhereInput): BatchPayload!
@@ -45,6 +64,11 @@ type PageInfo {
 }
 
 type Query {
+  statusScrape(where: StatusScrapeWhereUniqueInput!): StatusScrape
+  statusScrapes(where: StatusScrapeWhereInput, orderBy: StatusScrapeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrape]!
+  statusScrapesConnection(where: StatusScrapeWhereInput, orderBy: StatusScrapeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeConnection!
+  statusScrapeResults(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult]!
+  statusScrapeResultsConnection(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeResultConnection!
   statusScrapeTarget(where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
   statusScrapeTargets(where: StatusScrapeTargetWhereInput, orderBy: StatusScrapeTargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeTarget]!
   statusScrapeTargetsConnection(where: StatusScrapeTargetWhereInput, orderBy: StatusScrapeTargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeTargetConnection!
@@ -58,12 +82,220 @@ enum ScrapeStrategy {
   STATUSPAGE_IO
 }
 
+type StatusScrape {
+  id: ID!
+  createdAt: DateTime!
+  target: StatusScrapeTarget!
+  results(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult!]
+}
+
+type StatusScrapeConnection {
+  pageInfo: PageInfo!
+  edges: [StatusScrapeEdge]!
+  aggregate: AggregateStatusScrape!
+}
+
+input StatusScrapeCreateInput {
+  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+  results: StatusScrapeResultCreateManyWithoutScrapeInput
+}
+
+input StatusScrapeCreateManyWithoutTargetInput {
+  create: [StatusScrapeCreateWithoutTargetInput!]
+  connect: [StatusScrapeWhereUniqueInput!]
+}
+
+input StatusScrapeCreateOneWithoutResultsInput {
+  create: StatusScrapeCreateWithoutResultsInput
+  connect: StatusScrapeWhereUniqueInput
+}
+
+input StatusScrapeCreateWithoutResultsInput {
+  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+}
+
+input StatusScrapeCreateWithoutTargetInput {
+  results: StatusScrapeResultCreateManyWithoutScrapeInput
+}
+
+type StatusScrapeEdge {
+  node: StatusScrape!
+  cursor: String!
+}
+
+enum StatusScrapeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type StatusScrapePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+}
+
+type StatusScrapeResult {
+  scrape: StatusScrape!
+  category: String!
+  component: String!
+  status: String!
+}
+
+type StatusScrapeResultConnection {
+  pageInfo: PageInfo!
+  edges: [StatusScrapeResultEdge]!
+  aggregate: AggregateStatusScrapeResult!
+}
+
+input StatusScrapeResultCreateInput {
+  scrape: StatusScrapeCreateOneWithoutResultsInput!
+  category: String!
+  component: String!
+  status: String!
+}
+
+input StatusScrapeResultCreateManyWithoutScrapeInput {
+  create: [StatusScrapeResultCreateWithoutScrapeInput!]
+}
+
+input StatusScrapeResultCreateWithoutScrapeInput {
+  category: String!
+  component: String!
+  status: String!
+}
+
+type StatusScrapeResultEdge {
+  node: StatusScrapeResult!
+  cursor: String!
+}
+
+enum StatusScrapeResultOrderByInput {
+  category_ASC
+  category_DESC
+  component_ASC
+  component_DESC
+  status_ASC
+  status_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type StatusScrapeResultPreviousValues {
+  category: String!
+  component: String!
+  status: String!
+}
+
+type StatusScrapeResultSubscriptionPayload {
+  mutation: MutationType!
+  node: StatusScrapeResult
+  updatedFields: [String!]
+  previousValues: StatusScrapeResultPreviousValues
+}
+
+input StatusScrapeResultSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StatusScrapeResultWhereInput
+  AND: [StatusScrapeResultSubscriptionWhereInput!]
+  OR: [StatusScrapeResultSubscriptionWhereInput!]
+  NOT: [StatusScrapeResultSubscriptionWhereInput!]
+}
+
+input StatusScrapeResultUpdateInput {
+  scrape: StatusScrapeUpdateOneRequiredWithoutResultsInput
+  category: String
+  component: String
+  status: String
+}
+
+input StatusScrapeResultUpdateManyWithoutScrapeInput {
+  create: [StatusScrapeResultCreateWithoutScrapeInput!]
+}
+
+input StatusScrapeResultWhereInput {
+  scrape: StatusScrapeWhereInput
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  component: String
+  component_not: String
+  component_in: [String!]
+  component_not_in: [String!]
+  component_lt: String
+  component_lte: String
+  component_gt: String
+  component_gte: String
+  component_contains: String
+  component_not_contains: String
+  component_starts_with: String
+  component_not_starts_with: String
+  component_ends_with: String
+  component_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  AND: [StatusScrapeResultWhereInput!]
+  OR: [StatusScrapeResultWhereInput!]
+  NOT: [StatusScrapeResultWhereInput!]
+}
+
+type StatusScrapeSubscriptionPayload {
+  mutation: MutationType!
+  node: StatusScrape
+  updatedFields: [String!]
+  previousValues: StatusScrapePreviousValues
+}
+
+input StatusScrapeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StatusScrapeWhereInput
+  AND: [StatusScrapeSubscriptionWhereInput!]
+  OR: [StatusScrapeSubscriptionWhereInput!]
+  NOT: [StatusScrapeSubscriptionWhereInput!]
+}
+
 type StatusScrapeTarget {
   id: ID!
   name: String!
   twitterHandle: String
   strategy: ScrapeStrategy!
   statusUrl: String!
+  results(where: StatusScrapeWhereInput, orderBy: StatusScrapeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrape!]
 }
 
 type StatusScrapeTargetConnection {
@@ -73,6 +305,19 @@ type StatusScrapeTargetConnection {
 }
 
 input StatusScrapeTargetCreateInput {
+  name: String!
+  twitterHandle: String
+  strategy: ScrapeStrategy
+  statusUrl: String!
+  results: StatusScrapeCreateManyWithoutTargetInput
+}
+
+input StatusScrapeTargetCreateOneWithoutResultsInput {
+  create: StatusScrapeTargetCreateWithoutResultsInput
+  connect: StatusScrapeTargetWhereUniqueInput
+}
+
+input StatusScrapeTargetCreateWithoutResultsInput {
   name: String!
   twitterHandle: String
   strategy: ScrapeStrategy
@@ -132,6 +377,26 @@ input StatusScrapeTargetUpdateInput {
   twitterHandle: String
   strategy: ScrapeStrategy
   statusUrl: String
+  results: StatusScrapeUpdateManyWithoutTargetInput
+}
+
+input StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
+  create: StatusScrapeTargetCreateWithoutResultsInput
+  update: StatusScrapeTargetUpdateWithoutResultsDataInput
+  upsert: StatusScrapeTargetUpsertWithoutResultsInput
+  connect: StatusScrapeTargetWhereUniqueInput
+}
+
+input StatusScrapeTargetUpdateWithoutResultsDataInput {
+  name: String
+  twitterHandle: String
+  strategy: ScrapeStrategy
+  statusUrl: String
+}
+
+input StatusScrapeTargetUpsertWithoutResultsInput {
+  update: StatusScrapeTargetUpdateWithoutResultsDataInput!
+  create: StatusScrapeTargetCreateWithoutResultsInput!
 }
 
 input StatusScrapeTargetWhereInput {
@@ -195,6 +460,9 @@ input StatusScrapeTargetWhereInput {
   statusUrl_not_starts_with: String
   statusUrl_ends_with: String
   statusUrl_not_ends_with: String
+  results_every: StatusScrapeWhereInput
+  results_some: StatusScrapeWhereInput
+  results_none: StatusScrapeWhereInput
   AND: [StatusScrapeTargetWhereInput!]
   OR: [StatusScrapeTargetWhereInput!]
   NOT: [StatusScrapeTargetWhereInput!]
@@ -207,7 +475,90 @@ input StatusScrapeTargetWhereUniqueInput {
   statusUrl: String
 }
 
+input StatusScrapeUpdateInput {
+  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+  results: StatusScrapeResultUpdateManyWithoutScrapeInput
+}
+
+input StatusScrapeUpdateManyWithoutTargetInput {
+  create: [StatusScrapeCreateWithoutTargetInput!]
+  delete: [StatusScrapeWhereUniqueInput!]
+  connect: [StatusScrapeWhereUniqueInput!]
+  disconnect: [StatusScrapeWhereUniqueInput!]
+  update: [StatusScrapeUpdateWithWhereUniqueWithoutTargetInput!]
+  upsert: [StatusScrapeUpsertWithWhereUniqueWithoutTargetInput!]
+}
+
+input StatusScrapeUpdateOneRequiredWithoutResultsInput {
+  create: StatusScrapeCreateWithoutResultsInput
+  update: StatusScrapeUpdateWithoutResultsDataInput
+  upsert: StatusScrapeUpsertWithoutResultsInput
+  connect: StatusScrapeWhereUniqueInput
+}
+
+input StatusScrapeUpdateWithoutResultsDataInput {
+  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+}
+
+input StatusScrapeUpdateWithoutTargetDataInput {
+  results: StatusScrapeResultUpdateManyWithoutScrapeInput
+}
+
+input StatusScrapeUpdateWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeWhereUniqueInput!
+  data: StatusScrapeUpdateWithoutTargetDataInput!
+}
+
+input StatusScrapeUpsertWithoutResultsInput {
+  update: StatusScrapeUpdateWithoutResultsDataInput!
+  create: StatusScrapeCreateWithoutResultsInput!
+}
+
+input StatusScrapeUpsertWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeWhereUniqueInput!
+  update: StatusScrapeUpdateWithoutTargetDataInput!
+  create: StatusScrapeCreateWithoutTargetInput!
+}
+
+input StatusScrapeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  target: StatusScrapeTargetWhereInput
+  results_every: StatusScrapeResultWhereInput
+  results_some: StatusScrapeResultWhereInput
+  results_none: StatusScrapeResultWhereInput
+  AND: [StatusScrapeWhereInput!]
+  OR: [StatusScrapeWhereInput!]
+  NOT: [StatusScrapeWhereInput!]
+}
+
+input StatusScrapeWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  statusScrape(where: StatusScrapeSubscriptionWhereInput): StatusScrapeSubscriptionPayload
+  statusScrapeResult(where: StatusScrapeResultSubscriptionWhereInput): StatusScrapeResultSubscriptionPayload
   statusScrapeTarget(where: StatusScrapeTargetSubscriptionWhereInput): StatusScrapeTargetSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }

@@ -11,4 +11,19 @@ type StatusScrapeTarget {
   twitterHandle: String @unique
   strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
+  results: [StatusScrape!]!
+}
+
+type StatusScrape {
+  id: ID! @unique
+  createdAt: DateTime!
+  target: StatusScrapeTarget!
+  results: [StatusScrapeResult!]!
+}
+
+type StatusScrapeResult {
+  scrape: StatusScrape!
+  category: String!
+  component: String!
+  status: String!
 }
