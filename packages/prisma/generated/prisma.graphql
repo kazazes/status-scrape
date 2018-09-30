@@ -85,6 +85,8 @@ enum ScrapeStrategy {
 type StatusScrape {
   id: ID!
   createdAt: DateTime!
+  failed: Boolean!
+  dom: String
   target: StatusScrapeTarget!
   results(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult!]
 }
@@ -96,6 +98,8 @@ type StatusScrapeConnection {
 }
 
 input StatusScrapeCreateInput {
+  failed: Boolean
+  dom: String
   target: StatusScrapeTargetCreateOneWithoutResultsInput!
   results: StatusScrapeResultCreateManyWithoutScrapeInput
 }
@@ -111,10 +115,14 @@ input StatusScrapeCreateOneWithoutResultsInput {
 }
 
 input StatusScrapeCreateWithoutResultsInput {
+  failed: Boolean
+  dom: String
   target: StatusScrapeTargetCreateOneWithoutResultsInput!
 }
 
 input StatusScrapeCreateWithoutTargetInput {
+  failed: Boolean
+  dom: String
   results: StatusScrapeResultCreateManyWithoutScrapeInput
 }
 
@@ -128,6 +136,10 @@ enum StatusScrapeOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  failed_ASC
+  failed_DESC
+  dom_ASC
+  dom_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -135,6 +147,8 @@ enum StatusScrapeOrderByInput {
 type StatusScrapePreviousValues {
   id: ID!
   createdAt: DateTime!
+  failed: Boolean!
+  dom: String
 }
 
 type StatusScrapeResult {
@@ -476,6 +490,8 @@ input StatusScrapeTargetWhereUniqueInput {
 }
 
 input StatusScrapeUpdateInput {
+  failed: Boolean
+  dom: String
   target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
   results: StatusScrapeResultUpdateManyWithoutScrapeInput
 }
@@ -497,10 +513,14 @@ input StatusScrapeUpdateOneRequiredWithoutResultsInput {
 }
 
 input StatusScrapeUpdateWithoutResultsDataInput {
+  failed: Boolean
+  dom: String
   target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
 }
 
 input StatusScrapeUpdateWithoutTargetDataInput {
+  failed: Boolean
+  dom: String
   results: StatusScrapeResultUpdateManyWithoutScrapeInput
 }
 
@@ -543,6 +563,22 @@ input StatusScrapeWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  failed: Boolean
+  failed_not: Boolean
+  dom: String
+  dom_not: String
+  dom_in: [String!]
+  dom_not_in: [String!]
+  dom_lt: String
+  dom_lte: String
+  dom_gt: String
+  dom_gte: String
+  dom_contains: String
+  dom_not_contains: String
+  dom_starts_with: String
+  dom_not_starts_with: String
+  dom_ends_with: String
+  dom_not_ends_with: String
   target: StatusScrapeTargetWhereInput
   results_every: StatusScrapeResultWhereInput
   results_some: StatusScrapeResultWhereInput

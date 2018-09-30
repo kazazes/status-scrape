@@ -14,7 +14,8 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "sourceMap": true,
+    // "sourceMap": true,
+    "inlineSourceMap": true,
     "lib": ["es2017", "esnext", "dom"],
     "skipLibCheck": true
   },

@@ -17,6 +17,8 @@ type StatusScrapeTarget {
 type StatusScrape {
   id: ID! @unique
   createdAt: DateTime!
+  failed: Boolean! @default(value: "false")
+  dom: String
   target: StatusScrapeTarget!
   results: [StatusScrapeResult!]!
 }

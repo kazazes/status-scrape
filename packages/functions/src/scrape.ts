@@ -30,5 +30,6 @@ export const statusScrape = async (req: Request, res: Response) => {
   }
 
   const result = await scraper.scrape();
+  await scraper.parse();
   return res.send(result.headers);
 };
