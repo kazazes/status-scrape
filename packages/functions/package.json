@@ -6,14 +6,24 @@
   "private": true,
   "scripts": {
     "build": "tsc -b",
-    "clean": "rimraf dist",
-    "lint": "tslint -c ../tslint.json -p tsconfig.json",
-    "watch:ts": "tsc -w"
+    "build:bundle": "npm-run-all clean build && mkdirp ./bundle && cp -a package.json dist/* bundle && sed -i '' 's/dist\\/index.js/index.js/g' bundle/package.json",
+    "clean": "rimraf dist bundle",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "watch:ts": "tsc -w",
+    "deploy": "yarn run build:bundle && source .env && gcloud functions deploy statusScrape --source bundle --runtime nodejs8 --trigger-http --timeout=120 --project $GC_PROJECT",
+    "deploy:emulator": "source .env && functions-emulator deploy statusScrape -H --timeout=120 --project $GC_PROJECT",
+    "emulate": "functions-emulator start"
   },
   "devDependencies": {
-    "@types/express": "^4.16.0"
+    "@types/express": "^4.16.0",
+    "@types/got": "^8.3.4",
+    "@types/jsonwebtoken": "^7.2.8",
+    "mkdirp": "^0.5.1"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "got": "^9.2.2",
+    "jsonwebtoken": "^8.3.0",
+    "tslib": "^1.9.3"
   }
 }
