@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.post("/statusScrape", statusScrape);
 supertest(app);
 
-describe("Scrape statuspage.io", () => {
+describe("Scrape metastatuspage.com", () => {
   test("It should succeed", async () => {
     const response = await supertest(app)
       .post("/statusScrape")

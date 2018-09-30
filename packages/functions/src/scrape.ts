@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-import { verify } from "jsonwebtoken";
 
 import { StatusScrapeTargetNode } from "./prisma";
-import { StatusPageStrategy } from "./strategies/statusPageStrategy";
+import { StatuspageStrategy } from "./strategies/statuspageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
+import { isAuthenticated } from "./util";
 
 export const statusScrape = async (req: Request, res: Response) => {
   dotenv.config();
@@ -23,7 +23,7 @@ export const statusScrape = async (req: Request, res: Response) => {
 
   switch (target.strategy) {
     case "STATUSPAGE_IO":
-      scraper = new StatusPageStrategy(target);
+      scraper = new StatuspageStrategy(target);
       break;
     default:
       return res.status(500).send("Invalid scraping strategy.");
@@ -32,35 +32,3 @@ export const statusScrape = async (req: Request, res: Response) => {
   const result = await scraper.scrape();
   return res.send(result.headers);
 };
-
-interface IVerifiedToken {
-  userId?: any;
-  machine?: boolean;
-}
-
-function isAuthenticated(req: Request, res: Response) {
-  // tslint:disable-next-line:variable-name
-  const Authorization = req.get("Authorization");
-  if (Authorization) {
-    const token = Authorization.replace("Bearer ", "");
-    try {
-      const verifiedToken = verify(
-        token,
-        process.env.APP_SECRET
-      ) as IVerifiedToken;
-      return verifiedToken.machine !== undefined && verifiedToken.machine;
-    } catch (e) {
-      res.status(403).send(new AuthError());
-      return false;
-    }
-  }
-
-  res.status(403).send(new AuthError());
-  return false;
-}
-
-class AuthError extends Error {
-  constructor() {
-    super("Not authorized");
-  }
-}

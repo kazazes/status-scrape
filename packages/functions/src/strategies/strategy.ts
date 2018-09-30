@@ -1,5 +1,6 @@
-import { Response } from "got";
+import got, { Response } from "got";
 import { ScrapeStrategy, StatusScrapeTargetNode } from "../prisma";
+
 export abstract class ScraperStrategy {
   public target: StatusScrapeTargetNode;
   public strategy: ScrapeStrategy;
@@ -7,5 +8,9 @@ export abstract class ScraperStrategy {
     this.target = target;
   }
 
-  public abstract async scrape(): Promise<Response<string>>;
+  public async scrape(): Promise<Response<string>> {
+    console.log(`Starting scrape of ${this.target.statusUrl}`);
+    const result = await got(this.target.statusUrl);
+    return result;
+  }
 }
