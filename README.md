@@ -21,7 +21,7 @@ yarn run build
 
 ## Usage
 
-Populate `packages/server/.env` and `yarn run start`.
+Populate `packages/server/.env` and `yarn run start`. The GraphQL playground is accessible at `/graphql`.
 
 ## Project Structure
 
