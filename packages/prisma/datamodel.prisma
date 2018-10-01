@@ -11,7 +11,7 @@ type StatusScrapeTarget {
   twitterHandle: String @unique
   strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
-  results: [StatusScrape!]!
+  results: [StatusScrape!]! @relation(name: "TargetScrapeRelation")
 }
 
 type StatusScrape {
@@ -19,12 +19,12 @@ type StatusScrape {
   createdAt: DateTime!
   failed: Boolean! @default(value: "false")
   dom: String
-  target: StatusScrapeTarget!
-  results: [StatusScrapeResult!]!
+  target: StatusScrapeTarget! @relation(name: "TargetScrapeRelation")
+  results: [StatusScrapeResult!]! @relation(name: "ScrapeResultRelation")
 }
 
 type StatusScrapeResult {
-  scrape: StatusScrape!
+  scrape: StatusScrape! @relation(name: "ScrapeResultRelation")
   category: String!
   component: String!
   status: SystemStatus!

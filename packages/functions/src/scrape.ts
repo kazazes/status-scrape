@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { StatusScrapeTargetNode } from "./prisma";
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
-import { ScraperStrategy } from "./strategies/strategy";
+import { IParsedCategory, ScraperStrategy } from "./strategies/strategy";
 import { isAuthenticated, setup } from "./util";
 
 export const statusScrape = async (req: Request, res: Response) => {
@@ -29,6 +29,17 @@ export const statusScrape = async (req: Request, res: Response) => {
   }
 
   await scraper.scrape();
-  const result = await scraper.parse();
-  return res.send({ target, result, dom: scraper.scraped.dom });
+  const results = await scraper.parse();
+  const response: IScrapeFunctionResponse = {
+    target,
+    results,
+    dom: scraper.scraped.dom
+  };
+  return res.send(response);
 };
+
+export interface IScrapeFunctionResponse {
+  target: StatusScrapeTargetNode;
+  results: IParsedCategory[];
+  dom: string;
+}

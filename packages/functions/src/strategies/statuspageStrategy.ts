@@ -12,26 +12,23 @@ export class StatuspageStrategy extends ScraperStrategy {
   }
 
   public parse() {
-    const parsed: IParsedCategory[] = scrapeIt.scrapeHTML(
-      $.load(this.scraped.dom),
-      {
-        groups: {
-          listItem: ".is-group",
-          data: {
-            category: ".fa-minus-square-o+ span",
-            components: {
-              listItem: ".child-components-container div[class*='status-']",
-              data: {
-                name: ".name",
-                status: {
-                  selector: ".component-status",
-                  convert: (status: string) => {
-                    switch (status.toLowerCase()) {
-                      case "operational":
-                        return "OPERATIONAL";
-                      default:
-                        return "UNKNOWN";
-                    }
+    const parsed: any = scrapeIt.scrapeHTML($.load(this.scraped.dom), {
+      groups: {
+        listItem: ".is-group",
+        data: {
+          category: ".fa-minus-square-o+ span",
+          components: {
+            listItem: ".child-components-container div[class*='status-']",
+            data: {
+              name: ".name",
+              status: {
+                selector: ".component-status",
+                convert: (status: string) => {
+                  switch (status.toLowerCase()) {
+                    case "operational":
+                      return "OPERATIONAL";
+                    default:
+                      return "UNKNOWN";
                   }
                 }
               }
@@ -39,8 +36,8 @@ export class StatuspageStrategy extends ScraperStrategy {
           }
         }
       }
-    );
-    return parsed;
+    });
+    return parsed.groups as IParsedCategory[];
   }
 
   protected async manipulateScrapedPage(page: Page) {

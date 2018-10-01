@@ -243,7 +243,7 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type SystemStatus = "OPERATIONAL";
+export type SystemStatus = "OPERATIONAL" | "UNKNOWN";
 
 export type ScrapeStrategy = "STATUSPAGE_IO";
 

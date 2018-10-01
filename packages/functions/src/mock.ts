@@ -1,7 +1,7 @@
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
 
 const strategy = new StatuspageStrategy({
-  id: "",
+  id: "cjmnwu8fmfd470b77ir3v5c9e",
   name: "Statuspage",
   twitterHandle: "statuspage",
   strategy: "STATUSPAGE_IO",

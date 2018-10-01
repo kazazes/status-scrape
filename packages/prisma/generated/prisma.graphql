@@ -591,6 +591,7 @@ type Subscription {
 
 enum SystemStatus {
   OPERATIONAL
+  UNKNOWN
 }
 
 type User {
