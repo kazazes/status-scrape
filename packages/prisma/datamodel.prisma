@@ -27,5 +27,5 @@ type StatusScrapeResult {
   scrape: StatusScrape!
   category: String!
   component: String!
-  status: String!
+  status: SystemStatus!
 }

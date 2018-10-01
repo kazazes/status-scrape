@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import mkdirp from "mkdirp";
 
 import { StatusScrapeTargetNode } from "./prisma";
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
@@ -18,7 +17,6 @@ export const statusScrape = async (req: Request, res: Response) => {
   }
 
   const target = req.body.target as StatusScrapeTargetNode;
-  mkdirp.sync("/tmp/status-scrape", {});
 
   let scraper: ScraperStrategy;
 
@@ -30,6 +28,7 @@ export const statusScrape = async (req: Request, res: Response) => {
       return res.sendStatus(500);
   }
 
-  const result = await scraper.scrape();
-  return res.send(result.response.headers);
+  await scraper.scrape();
+  const result = await scraper.parse();
+  return res.send({ target, result, dom: scraper.scraped.dom });
 };

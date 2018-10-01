@@ -29,7 +29,9 @@ export class ScrapeController {
       { headers, body: JSON.stringify(body) }
     );
 
-    logger.info(JSON.stringify(response.headers));
+    logger.info(JSON.stringify(response.body, null, 2));
+
+    // TODO: Store scrape results
   }
 
   private getMachineToken() {

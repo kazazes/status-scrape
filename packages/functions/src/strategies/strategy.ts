@@ -1,16 +1,17 @@
 import { PathLike } from "fs";
-import puppeteer, { Response } from "puppeteer";
+import mkdirp from "mkdirp";
+import puppeteer, { Page, Response } from "puppeteer";
 import {
   ScrapeStrategy,
-  StatusScrapeResultCreateInput,
-  StatusScrapeTargetNode
+  StatusScrapeTargetNode,
+  SystemStatus
 } from "../prisma";
 
 export abstract class ScraperStrategy {
+  public scraped: IScrapeResponse;
   protected target: StatusScrapeTargetNode;
   protected strategy: ScrapeStrategy;
   protected interceptUrls: string[]; // Matches the end of a URL and stores request in this.scraped
-  protected scraped: IScrapeResponse;
   constructor(target: StatusScrapeTargetNode) {
     this.interceptUrls = [];
     this.target = target;
@@ -21,31 +22,31 @@ export abstract class ScraperStrategy {
 
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] }); // no sandbox required to run as root in GC Functions
     const page = await browser.newPage();
-    // await page.setRequestInterception(true);
 
     const interceptedResponses: IInterceptedResponse[] = [];
     page.on("requestfinished", req => {
-      this.interceptUrls.forEach(targetUrl => {
+      this.interceptUrls.forEach(async targetUrl => {
         if (req.url().endsWith(targetUrl)) {
           interceptedResponses.push({
             targetUrl,
             url: req.url(),
-            content: req.response()
+            response: req.response(),
+            body: await req.response().text()
           });
         }
       });
     });
 
     page.setViewport({ height: 768, width: 1366, deviceScaleFactor: 2 });
-    const response = await page.goto(this.target.statusUrl);
-
-    const screenshotPath = `/tmp/status-scrape/${this.target.name}.png`;
-    await page.screenshot({
-      path: screenshotPath,
-      fullPage: true,
-      type: "png"
+    const response = await page.goto(this.target.statusUrl, {
+      waitUntil: "networkidle2"
     });
-    console.log("Saved screenshot to " + screenshotPath);
+
+    await this.manipulateScrapedPage(page);
+    const screenshotPath = `/tmp/status-scrape/${
+      this.target.name
+    }-${new Date().getTime()}.png`;
+    await this.screenshot(page, screenshotPath);
 
     const dom = await page.content();
     this.scraped = {
@@ -58,7 +59,17 @@ export abstract class ScraperStrategy {
     return this.scraped;
   }
 
-  public abstract async parse(): Promise<StatusScrapeResultCreateInput[]>;
+  public abstract parse(): IParsedCategory[];
+  protected abstract async manipulateScrapedPage(page: Page): Promise<any>;
+
+  protected async screenshot(page: Page, path: string) {
+    mkdirp.sync("/tmp/status-scrape", {});
+    return page.screenshot({
+      path,
+      fullPage: true,
+      type: "png"
+    });
+  }
 }
 
 export interface IScrapeResponse {
@@ -71,5 +82,11 @@ export interface IScrapeResponse {
 export interface IInterceptedResponse {
   targetUrl: string;
   url: string;
-  content: Response;
+  response: Response;
+  body: string;
+}
+
+export interface IParsedCategory {
+  category: string;
+  components: [{ name: string; status: SystemStatus }];
 }

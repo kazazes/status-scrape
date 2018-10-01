@@ -7,6 +7,18 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Mock Scrape",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "debug:mock"],
+      "cwd": "${workspaceFolder}/packages/functions",
+      "port": 9229,
+      "outFiles": ["dist/**/*"],
+      "restart": false,
+      "sourceMaps": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Jest Tests",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": ["--runInBand"],

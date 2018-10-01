@@ -155,7 +155,7 @@ type StatusScrapeResult {
   scrape: StatusScrape!
   category: String!
   component: String!
-  status: String!
+  status: SystemStatus!
 }
 
 type StatusScrapeResultConnection {
@@ -168,7 +168,7 @@ input StatusScrapeResultCreateInput {
   scrape: StatusScrapeCreateOneWithoutResultsInput!
   category: String!
   component: String!
-  status: String!
+  status: SystemStatus!
 }
 
 input StatusScrapeResultCreateManyWithoutScrapeInput {
@@ -178,7 +178,7 @@ input StatusScrapeResultCreateManyWithoutScrapeInput {
 input StatusScrapeResultCreateWithoutScrapeInput {
   category: String!
   component: String!
-  status: String!
+  status: SystemStatus!
 }
 
 type StatusScrapeResultEdge {
@@ -204,7 +204,7 @@ enum StatusScrapeResultOrderByInput {
 type StatusScrapeResultPreviousValues {
   category: String!
   component: String!
-  status: String!
+  status: SystemStatus!
 }
 
 type StatusScrapeResultSubscriptionPayload {
@@ -229,7 +229,7 @@ input StatusScrapeResultUpdateInput {
   scrape: StatusScrapeUpdateOneRequiredWithoutResultsInput
   category: String
   component: String
-  status: String
+  status: SystemStatus
 }
 
 input StatusScrapeResultUpdateManyWithoutScrapeInput {
@@ -266,20 +266,10 @@ input StatusScrapeResultWhereInput {
   component_not_starts_with: String
   component_ends_with: String
   component_not_ends_with: String
-  status: String
-  status_not: String
-  status_in: [String!]
-  status_not_in: [String!]
-  status_lt: String
-  status_lte: String
-  status_gt: String
-  status_gte: String
-  status_contains: String
-  status_not_contains: String
-  status_starts_with: String
-  status_not_starts_with: String
-  status_ends_with: String
-  status_not_ends_with: String
+  status: SystemStatus
+  status_not: SystemStatus
+  status_in: [SystemStatus!]
+  status_not_in: [SystemStatus!]
   AND: [StatusScrapeResultWhereInput!]
   OR: [StatusScrapeResultWhereInput!]
   NOT: [StatusScrapeResultWhereInput!]
@@ -597,6 +587,10 @@ type Subscription {
   statusScrapeResult(where: StatusScrapeResultSubscriptionWhereInput): StatusScrapeResultSubscriptionPayload
   statusScrapeTarget(where: StatusScrapeTargetSubscriptionWhereInput): StatusScrapeTargetSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+enum SystemStatus {
+  OPERATIONAL
 }
 
 type User {

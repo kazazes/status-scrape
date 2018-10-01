@@ -1,29 +1,16 @@
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
-import express from "express";
-import { sign } from "jsonwebtoken";
-import supertest from "supertest";
-import { statusScrape } from "./scrape";
+import { StatuspageStrategy } from "./strategies/statuspageStrategy";
 
-dotenv.config();
-
-export const app = express();
-export const token = sign({ machine: true }, process.env.APP_SECRET, {
-  expiresIn: "1h"
+const strategy = new StatuspageStrategy({
+  id: "",
+  name: "Statuspage",
+  twitterHandle: "statuspage",
+  strategy: "STATUSPAGE_IO",
+  statusUrl: "https://metastatuspage.com/"
 });
-app.use(bodyParser.json());
-app.post("/statusScrape", statusScrape);
-supertest(app);
 
-supertest(app)
-  .post("/statusScrape")
-  .send({
-    target: {
-      name: "Statuspage",
-      twitterHandle: "statuspage",
-      strategy: "STATUSPAGE_IO",
-      statusUrl: "https://metastatuspage.com/"
-    }
-  })
-  .set("Content-Type", "application/json")
-  .set("Authorization", `Bearer ${token}`);
+async function mockScrape() {
+  await strategy.scrape();
+  await strategy.parse();
+}
+
+mockScrape();

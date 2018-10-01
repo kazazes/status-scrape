@@ -1623,11 +1623,6 @@
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.1.tgz#ff44c20fefdf0cf8c390f64b0dfbbc3c10dbaa87"
   integrity sha512-JnkzkyIHAjK7+zJLEQieQg5iDwEqoX200BBFa0rfMU7jI9BQWBnM9BZh16gQecCyBjK0S149wZPb0SoTh2o34g==
 
-"@types/insight@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@types/insight/-/insight-0.8.0.tgz#12baa0119597cb2bc2bdafc35c7aebd9c6598189"
-  integrity sha512-yJ6QOQm2SYTo/fqAEjDgIOt6YWlF9+2d6/sLVeJ0zmBVq8xDTlTk7ylWWDr6REQc+1aRzZbrFClXo1KsCeMyBA==
-
 "@types/jest@^23.1.4", "@types/jest@^23.3.1":
   version "23.3.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.2.tgz#07b90f6adf75d42c34230c026a2529e56c249dbb"
