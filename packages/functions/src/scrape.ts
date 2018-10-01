@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import mkdirp from "mkdirp";
 
 import { StatusScrapeTargetNode } from "./prisma";
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
@@ -18,6 +19,7 @@ export const statusScrape = async (req: Request, res: Response) => {
   }
 
   const target = req.body.target as StatusScrapeTargetNode;
+  mkdirp.sync("/tmp/status-scrape", {});
 
   let scraper: ScraperStrategy;
 
@@ -26,9 +28,9 @@ export const statusScrape = async (req: Request, res: Response) => {
       scraper = new StatuspageStrategy(target);
       break;
     default:
-      return res.status(500).send("Invalid scraping strategy.");
+      return res.sendStatus(500);
   }
 
   const result = await scraper.scrape();
-  return res.send(result.headers);
+  return res.send(result.response.headers);
 };

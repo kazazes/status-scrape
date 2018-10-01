@@ -1,10 +1,18 @@
-import { StatusScrapeTargetNode } from "../prisma";
+import {
+  StatusScrapeResultCreateInput,
+  StatusScrapeTargetNode
+} from "../prisma";
 import { ScraperStrategy } from "./strategy";
 
-// tslint:disable:no-console
 export class StatuspageStrategy extends ScraperStrategy {
   constructor(target: StatusScrapeTargetNode) {
     super(target);
     this.strategy = "STATUSPAGE_IO";
+    this.interceptUrls.push("index.json");
+  }
+
+  public async parse() {
+    const inputs: StatusScrapeResultCreateInput[] = [];
+    return inputs;
   }
 }

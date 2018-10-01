@@ -27,7 +27,7 @@ export function isAuthenticated(req: Request, res: Response) {
   return false;
 }
 
-class AuthError extends Error {
+export class AuthError extends Error {
   constructor() {
     super("Not authorized");
   }
