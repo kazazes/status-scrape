@@ -1,14 +1,13 @@
-import dotenv from "dotenv";
 import { Request, Response } from "express";
 import mkdirp from "mkdirp";
 
 import { StatusScrapeTargetNode } from "./prisma";
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
 import { ScraperStrategy } from "./strategies/strategy";
-import { isAuthenticated } from "./util";
+import { isAuthenticated, setup } from "./util";
 
 export const statusScrape = async (req: Request, res: Response) => {
-  dotenv.config();
+  setup();
   if (!isAuthenticated(req, res)) {
     return false;
   }

@@ -9,7 +9,7 @@ import {
 export abstract class ScraperStrategy {
   protected target: StatusScrapeTargetNode;
   protected strategy: ScrapeStrategy;
-  protected interceptUrls: string[]; // Save the results of these requests when scraping
+  protected interceptUrls: string[]; // Matches the end of a URL and stores request in this.scraped
   protected scraped: IScrapeResponse;
   constructor(target: StatusScrapeTargetNode) {
     this.interceptUrls = [];
@@ -19,7 +19,7 @@ export abstract class ScraperStrategy {
   public async scrape(): Promise<IScrapeResponse> {
     console.log(`Starting scrape of ${this.target.statusUrl}`);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] }); // no sandbox required to run as root in GC Functions
     const page = await browser.newPage();
     // await page.setRequestInterception(true);
 

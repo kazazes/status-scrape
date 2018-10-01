@@ -8,5 +8,5 @@
       "*": ["node_modules/*", "types/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "tests", "bundle"]
+  "exclude": ["node_modules", "dist", "tests", "bundle", "src/mock.ts"]
 }
