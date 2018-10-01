@@ -1,5 +1,3 @@
-import surgeon from "surgeon";
-
 import {
   StatusScrapeResultCreateInput,
   StatusScrapeTargetNode
