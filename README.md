@@ -21,11 +21,7 @@ yarn run build
 
 ## Usage
 
-```bash
-yarn run serve
-```
-
-Then go to [http://localhost:8080/](http://localhost:8080/).
+Populate `packages/server/.env` and `yarn run start`.
 
 ## Project Structure
 

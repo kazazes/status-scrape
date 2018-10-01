@@ -11,7 +11,6 @@
     "deploy:functions": "yarn workspace @status-scrape/functions run deploy",
     "lint": "lerna run --parallel lint",
     "test": "lerna run --parallel test",
-    "serve": "yarn workspace @status-scrape/admin run serve",
     "start": "yarn workspace @status-scrape/server run start",
     "watch:ts": "bin/build-ts.sh",
     "watch:webpack": "yarn workspace @status-scrape/admin run watch:webpack",
