@@ -27,12 +27,6 @@ yarn run serve
 
 Then go to [http://localhost:8080/](http://localhost:8080/).
 
-## Meta
-
-**Peter Kazazes** – [@pkpolls](https://twitter.com/pkpolls) – peter@peterk.co
-
----
-
 ## Project Structure
 
 ```
@@ -47,4 +41,10 @@ packages
 - `admin-frontend` - A Vue.js application which controls the scraper targets and scheduling, and displays historical scraping data.
 - `prisma` - A [Prisma](https://prisma.io) GraphQL ORM and client.
 - `functions` - The scraper and associated utilities. These are designed to be run via Google Cloud Functions. They are dispatched by the server.
-- `server` - An Express server which runs implements a GraphQL API and serves the Vue.js app.
+- `server` - An Express server which implements a GraphQL API and serves the Vue.js app.
+
+---
+
+## Meta
+
+**Peter Kazazes** – [@pkpolls](https://twitter.com/pkpolls) – peter@peterk.co
