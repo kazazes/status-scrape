@@ -39,10 +39,12 @@ Then go to [http://localhost:8080/](http://localhost:8080/).
 packages
 ├── admin-frontend
 ├── prisma
-├── scraper
+├── functions
+├── server
 └── common
 ```
 
 - `admin-frontend` - A Vue.js application which controls the scraper targets and scheduling, and displays historical scraping data.
-- `prisma-server` - A [Prisma](https://prisma.io) GraphQL server and ORM.
-- `scraper` - The scraper and associated utilities. These are designed to be run locally or via Google Cloud Functions. They are dispatched by the server.
+- `prisma` - A [Prisma](https://prisma.io) GraphQL ORM and client.
+- `functions` - The scraper and associated utilities. These are designed to be run via Google Cloud Functions. They are dispatched by the server.
+- `server` - An Express server which runs implements a GraphQL API and serves the Vue.js app.
