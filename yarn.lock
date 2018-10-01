@@ -11380,27 +11380,10 @@ prisma-cli-engine@1.18.0-beta.12:
     update-notifier "^2.3.0"
     validator "^8.2.0"
 
-prisma-client-lib@1.18.0-beta.12, prisma-client-lib@^1.18.0-beta.12:
+prisma-client-lib@1.18.0-beta.12:
   version "1.18.0-beta.12"
   resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.18.0-beta.12.tgz#dc8e0bec00822722c69636598e969deb6ec872c9"
   integrity sha512-RkVvTZzAdv/xHDjPOTviAFnipOVSy9Nxq5ci5t5RaH5n6UBO3ZbBbPS2L2DRGDm+Vx/kAmLUPEoD82eFwPMnJw==
-  dependencies:
-    "@types/node" "^10.9.4"
-    debug "^4.0.1"
-    graphql-tag "^2.9.2"
-    http-link-dataloader "^0.1.4"
-    jsonwebtoken "^8.3.0"
-    lodash.flatten "^4.4.0"
-    prettier "^1.14.2"
-    subscriptions-transport-ws "^0.9.14"
-    uppercamelcase "^3.0.0"
-    ws "^6.0.0"
-    zen-observable "^0.8.9"
-
-prisma-client-lib@^1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.17.1.tgz#5fcc386a493e89ab650d8a9d4ca42817091d35a9"
-  integrity sha512-PIGnOMXJhVqwewNKCdJ1vaDg3itt1cmnm8Dgf5nhxADJlwJkRnMCwjZnG7f4A909XAzakumPAWdvBmDERRoYnQ==
   dependencies:
     "@types/node" "^10.9.4"
     debug "^4.0.1"
