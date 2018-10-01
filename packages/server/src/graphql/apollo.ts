@@ -1,13 +1,13 @@
+import { prisma, Prisma } from "@status-scrape/prisma";
 import { Request, Response } from "express";
 import { importSchema } from "graphql-import";
-import { prisma, Prisma } from "../../prisma";
 import { resolvers } from "./resolvers";
 
 import { Config } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import { makeExecutableSchema } from "graphql-tools";
 
-const typeDefs = importSchema(__dirname + "/../schema.graphql");
+const typeDefs = importSchema(__dirname + "/../../schema.graphql");
 
 const schema = makeExecutableSchema({
   typeDefs,

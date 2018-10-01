@@ -1,5 +1,5 @@
 import { verify } from "jsonwebtoken";
-import { IApolloContext } from "./apollo";
+import { IApolloContext } from "./graphql/apollo";
 
 export class AuthError extends Error {
   constructor() {

@@ -11,7 +11,7 @@ type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
-  statusScrape: (where?: StatusScrapeWhereInput) => Promise<boolean>;
+  statusScrapeJob: (where?: StatusScrapeJobWhereInput) => Promise<boolean>;
   statusScrapeResult: (
     where?: StatusScrapeResultWhereInput
   ) => Promise<boolean>;
@@ -41,29 +41,29 @@ export interface Prisma {
    * Queries
    */
 
-  statusScrape: (where: StatusScrapeWhereUniqueInput) => StatusScrape;
-  statusScrapes: (
+  statusScrapeJob: (where: StatusScrapeJobWhereUniqueInput) => StatusScrapeJob;
+  statusScrapeJobs: (
     args?: {
-      where?: StatusScrapeWhereInput;
-      orderBy?: StatusScrapeOrderByInput;
+      where?: StatusScrapeJobWhereInput;
+      orderBy?: StatusScrapeJobOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => FragmentableArray<StatusScrapeNode>;
-  statusScrapesConnection: (
+  ) => FragmentableArray<StatusScrapeJobNode>;
+  statusScrapeJobsConnection: (
     args?: {
-      where?: StatusScrapeWhereInput;
-      orderBy?: StatusScrapeOrderByInput;
+      where?: StatusScrapeJobWhereInput;
+      orderBy?: StatusScrapeJobOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => StatusScrapeConnection;
+  ) => StatusScrapeJobConnection;
   statusScrapeResults: (
     args?: {
       where?: StatusScrapeResultWhereInput;
@@ -140,22 +140,32 @@ export interface Prisma {
    * Mutations
    */
 
-  createStatusScrape: (data: StatusScrapeCreateInput) => StatusScrape;
-  updateStatusScrape: (
-    args: { data: StatusScrapeUpdateInput; where: StatusScrapeWhereUniqueInput }
-  ) => StatusScrape;
-  updateManyStatusScrapes: (
-    args: { data: StatusScrapeUpdateInput; where?: StatusScrapeWhereInput }
-  ) => BatchPayload;
-  upsertStatusScrape: (
+  createStatusScrapeJob: (data: StatusScrapeJobCreateInput) => StatusScrapeJob;
+  updateStatusScrapeJob: (
     args: {
-      where: StatusScrapeWhereUniqueInput;
-      create: StatusScrapeCreateInput;
-      update: StatusScrapeUpdateInput;
+      data: StatusScrapeJobUpdateInput;
+      where: StatusScrapeJobWhereUniqueInput;
     }
-  ) => StatusScrape;
-  deleteStatusScrape: (where: StatusScrapeWhereUniqueInput) => StatusScrape;
-  deleteManyStatusScrapes: (where?: StatusScrapeWhereInput) => BatchPayload;
+  ) => StatusScrapeJob;
+  updateManyStatusScrapeJobs: (
+    args: {
+      data: StatusScrapeJobUpdateInput;
+      where?: StatusScrapeJobWhereInput;
+    }
+  ) => BatchPayload;
+  upsertStatusScrapeJob: (
+    args: {
+      where: StatusScrapeJobWhereUniqueInput;
+      create: StatusScrapeJobCreateInput;
+      update: StatusScrapeJobUpdateInput;
+    }
+  ) => StatusScrapeJob;
+  deleteStatusScrapeJob: (
+    where: StatusScrapeJobWhereUniqueInput
+  ) => StatusScrapeJob;
+  deleteManyStatusScrapeJobs: (
+    where?: StatusScrapeJobWhereInput
+  ) => BatchPayload;
   createStatusScrapeResult: (
     data: StatusScrapeResultCreateInput
   ) => StatusScrapeResult;
@@ -221,9 +231,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  statusScrape: (
-    where?: StatusScrapeSubscriptionWhereInput
-  ) => StatusScrapeSubscriptionPayloadSubscription;
+  statusScrapeJob: (
+    where?: StatusScrapeJobSubscriptionWhereInput
+  ) => StatusScrapeJobSubscriptionPayloadSubscription;
   statusScrapeResult: (
     where?: StatusScrapeResultSubscriptionWhereInput
   ) => StatusScrapeResultSubscriptionPayloadSubscription;
@@ -245,19 +255,26 @@ export interface ClientConstructor<T> {
 
 export type SystemStatus = "OPERATIONAL" | "UNKNOWN";
 
-export type ScrapeStrategy = "STATUSPAGE_IO";
+export type ScrapeJobStatus =
+  | "SCHEDULED"
+  | "RUNNING"
+  | "DONE"
+  | "FAILED"
+  | "TIMED_OUT";
 
-export type StatusScrapeOrderByInput =
+export type StatusScrapeJobOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "failed_ASC"
-  | "failed_DESC"
   | "dom_ASC"
   | "dom_DESC"
+  | "status_ASC"
+  | "status_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
+
+export type ScrapeStrategy = "STATUSPAGE_IO";
 
 export type StatusScrapeResultOrderByInput =
   | "category_ASC"
@@ -305,13 +322,14 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface StatusScrapeResultCreateManyWithoutScrapeInput {
-  create?:
-    | StatusScrapeResultCreateWithoutScrapeInput[]
-    | StatusScrapeResultCreateWithoutScrapeInput;
+export interface StatusScrapeTargetCreateWithoutResultsInput {
+  name: String;
+  twitterHandle?: String;
+  strategy?: ScrapeStrategy;
+  statusUrl: String;
 }
 
-export type StatusScrapeWhereUniqueInput = AtLeastOne<{
+export type StatusScrapeJobWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
@@ -322,73 +340,43 @@ export interface StatusScrapeTargetUpdateWithoutResultsDataInput {
   statusUrl?: String;
 }
 
-export interface StatusScrapeTargetWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  twitterHandle?: String;
-  twitterHandle_not?: String;
-  twitterHandle_in?: String[] | String;
-  twitterHandle_not_in?: String[] | String;
-  twitterHandle_lt?: String;
-  twitterHandle_lte?: String;
-  twitterHandle_gt?: String;
-  twitterHandle_gte?: String;
-  twitterHandle_contains?: String;
-  twitterHandle_not_contains?: String;
-  twitterHandle_starts_with?: String;
-  twitterHandle_not_starts_with?: String;
-  twitterHandle_ends_with?: String;
-  twitterHandle_not_ends_with?: String;
-  strategy?: ScrapeStrategy;
-  strategy_not?: ScrapeStrategy;
-  strategy_in?: ScrapeStrategy[] | ScrapeStrategy;
-  strategy_not_in?: ScrapeStrategy[] | ScrapeStrategy;
-  statusUrl?: String;
-  statusUrl_not?: String;
-  statusUrl_in?: String[] | String;
-  statusUrl_not_in?: String[] | String;
-  statusUrl_lt?: String;
-  statusUrl_lte?: String;
-  statusUrl_gt?: String;
-  statusUrl_gte?: String;
-  statusUrl_contains?: String;
-  statusUrl_not_contains?: String;
-  statusUrl_starts_with?: String;
-  statusUrl_not_starts_with?: String;
-  statusUrl_ends_with?: String;
-  statusUrl_not_ends_with?: String;
-  results_every?: StatusScrapeWhereInput;
-  results_some?: StatusScrapeWhereInput;
-  results_none?: StatusScrapeWhereInput;
-  AND?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
-  OR?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
-  NOT?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
+export interface StatusScrapeResultWhereInput {
+  scrape?: StatusScrapeJobWhereInput;
+  category?: String;
+  category_not?: String;
+  category_in?: String[] | String;
+  category_not_in?: String[] | String;
+  category_lt?: String;
+  category_lte?: String;
+  category_gt?: String;
+  category_gte?: String;
+  category_contains?: String;
+  category_not_contains?: String;
+  category_starts_with?: String;
+  category_not_starts_with?: String;
+  category_ends_with?: String;
+  category_not_ends_with?: String;
+  component?: String;
+  component_not?: String;
+  component_in?: String[] | String;
+  component_not_in?: String[] | String;
+  component_lt?: String;
+  component_lte?: String;
+  component_gt?: String;
+  component_gte?: String;
+  component_contains?: String;
+  component_not_contains?: String;
+  component_starts_with?: String;
+  component_not_starts_with?: String;
+  component_ends_with?: String;
+  component_not_ends_with?: String;
+  status?: SystemStatus;
+  status_not?: SystemStatus;
+  status_in?: SystemStatus[] | SystemStatus;
+  status_not_in?: SystemStatus[] | SystemStatus;
+  AND?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
+  OR?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
+  NOT?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
 }
 
 export interface StatusScrapeTargetUpsertWithoutResultsInput {
@@ -396,7 +384,7 @@ export interface StatusScrapeTargetUpsertWithoutResultsInput {
   create: StatusScrapeTargetCreateWithoutResultsInput;
 }
 
-export interface StatusScrapeWhereInput {
+export interface StatusScrapeJobWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -419,8 +407,6 @@ export interface StatusScrapeWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
-  failed?: Boolean;
-  failed_not?: Boolean;
   dom?: String;
   dom_not?: String;
   dom_in?: String[] | String;
@@ -439,9 +425,13 @@ export interface StatusScrapeWhereInput {
   results_every?: StatusScrapeResultWhereInput;
   results_some?: StatusScrapeResultWhereInput;
   results_none?: StatusScrapeResultWhereInput;
-  AND?: StatusScrapeWhereInput[] | StatusScrapeWhereInput;
-  OR?: StatusScrapeWhereInput[] | StatusScrapeWhereInput;
-  NOT?: StatusScrapeWhereInput[] | StatusScrapeWhereInput;
+  status?: ScrapeJobStatus;
+  status_not?: ScrapeJobStatus;
+  status_in?: ScrapeJobStatus[] | ScrapeJobStatus;
+  status_not_in?: ScrapeJobStatus[] | ScrapeJobStatus;
+  AND?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
+  OR?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
+  NOT?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
 }
 
 export interface UserWhereInput {
@@ -507,7 +497,7 @@ export interface UserWhereInput {
 }
 
 export interface StatusScrapeResultCreateInput {
-  scrape: StatusScrapeCreateOneWithoutResultsInput;
+  scrape: StatusScrapeJobCreateOneWithoutResultsInput;
   category: String;
   component: String;
   status: SystemStatus;
@@ -518,7 +508,7 @@ export interface StatusScrapeTargetCreateInput {
   twitterHandle?: String;
   strategy?: ScrapeStrategy;
   statusUrl: String;
-  results?: StatusScrapeCreateManyWithoutTargetInput;
+  results?: StatusScrapeJobCreateManyWithoutTargetInput;
 }
 
 export interface StatusScrapeResultUpdateManyWithoutScrapeInput {
@@ -527,9 +517,9 @@ export interface StatusScrapeResultUpdateManyWithoutScrapeInput {
     | StatusScrapeResultCreateWithoutScrapeInput;
 }
 
-export interface StatusScrapeUpsertWithoutResultsInput {
-  update: StatusScrapeUpdateWithoutResultsDataInput;
-  create: StatusScrapeCreateWithoutResultsInput;
+export interface StatusScrapeJobUpsertWithoutResultsInput {
+  update: StatusScrapeJobUpdateWithoutResultsDataInput;
+  create: StatusScrapeJobCreateWithoutResultsInput;
 }
 
 export interface StatusScrapeTargetSubscriptionWhereInput {
@@ -549,34 +539,34 @@ export interface StatusScrapeTargetSubscriptionWhereInput {
     | StatusScrapeTargetSubscriptionWhereInput;
 }
 
-export interface StatusScrapeUpdateWithoutResultsDataInput {
-  failed?: Boolean;
+export interface StatusScrapeJobUpdateWithoutResultsDataInput {
   dom?: String;
   target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
+  status?: ScrapeJobStatus;
 }
 
-export interface StatusScrapeSubscriptionWhereInput {
+export interface StatusScrapeJobSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: StatusScrapeWhereInput;
+  node?: StatusScrapeJobWhereInput;
   AND?:
-    | StatusScrapeSubscriptionWhereInput[]
-    | StatusScrapeSubscriptionWhereInput;
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
   OR?:
-    | StatusScrapeSubscriptionWhereInput[]
-    | StatusScrapeSubscriptionWhereInput;
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
   NOT?:
-    | StatusScrapeSubscriptionWhereInput[]
-    | StatusScrapeSubscriptionWhereInput;
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
 }
 
-export interface StatusScrapeUpdateOneRequiredWithoutResultsInput {
-  create?: StatusScrapeCreateWithoutResultsInput;
-  update?: StatusScrapeUpdateWithoutResultsDataInput;
-  upsert?: StatusScrapeUpsertWithoutResultsInput;
-  connect?: StatusScrapeWhereUniqueInput;
+export interface StatusScrapeJobUpdateOneRequiredWithoutResultsInput {
+  create?: StatusScrapeJobCreateWithoutResultsInput;
+  update?: StatusScrapeJobUpdateWithoutResultsDataInput;
+  upsert?: StatusScrapeJobUpsertWithoutResultsInput;
+  connect?: StatusScrapeJobWhereUniqueInput;
 }
 
 export interface UserCreateInput {
@@ -585,22 +575,22 @@ export interface UserCreateInput {
   password: String;
 }
 
-export interface StatusScrapeUpdateWithoutTargetDataInput {
-  failed?: Boolean;
+export interface StatusScrapeJobUpdateWithoutTargetDataInput {
   dom?: String;
   results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
+  status?: ScrapeJobStatus;
 }
 
-export interface StatusScrapeUpdateWithWhereUniqueWithoutTargetInput {
-  where: StatusScrapeWhereUniqueInput;
-  data: StatusScrapeUpdateWithoutTargetDataInput;
+export interface StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeJobWhereUniqueInput;
+  data: StatusScrapeJobUpdateWithoutTargetDataInput;
 }
 
-export interface StatusScrapeCreateInput {
-  failed?: Boolean;
+export interface StatusScrapeJobCreateInput {
   dom?: String;
   target: StatusScrapeTargetCreateOneWithoutResultsInput;
   results?: StatusScrapeResultCreateManyWithoutScrapeInput;
+  status: ScrapeJobStatus;
 }
 
 export interface StatusScrapeTargetUpdateInput {
@@ -608,7 +598,7 @@ export interface StatusScrapeTargetUpdateInput {
   twitterHandle?: String;
   strategy?: ScrapeStrategy;
   statusUrl?: String;
-  results?: StatusScrapeUpdateManyWithoutTargetInput;
+  results?: StatusScrapeJobUpdateManyWithoutTargetInput;
 }
 
 export interface StatusScrapeTargetCreateOneWithoutResultsInput {
@@ -621,11 +611,11 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: String;
 }>;
 
-export interface StatusScrapeTargetCreateWithoutResultsInput {
-  name: String;
-  twitterHandle?: String;
-  strategy?: ScrapeStrategy;
-  statusUrl: String;
+export interface StatusScrapeResultUpdateInput {
+  scrape?: StatusScrapeJobUpdateOneRequiredWithoutResultsInput;
+  category?: String;
+  component?: String;
+  status?: SystemStatus;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -639,11 +629,10 @@ export interface UserSubscriptionWhereInput {
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface StatusScrapeResultUpdateInput {
-  scrape?: StatusScrapeUpdateOneRequiredWithoutResultsInput;
-  category?: String;
-  component?: String;
-  status?: SystemStatus;
+export interface StatusScrapeResultCreateManyWithoutScrapeInput {
+  create?:
+    | StatusScrapeResultCreateWithoutScrapeInput[]
+    | StatusScrapeResultCreateWithoutScrapeInput;
 }
 
 export interface UserUpdateInput {
@@ -665,67 +654,97 @@ export type StatusScrapeTargetWhereUniqueInput = AtLeastOne<{
   statusUrl?: String;
 }>;
 
-export interface StatusScrapeUpdateInput {
-  failed?: Boolean;
+export interface StatusScrapeJobUpdateInput {
   dom?: String;
   target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
   results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
+  status?: ScrapeJobStatus;
 }
 
-export interface StatusScrapeCreateWithoutTargetInput {
-  failed?: Boolean;
+export interface StatusScrapeJobCreateWithoutTargetInput {
   dom?: String;
   results?: StatusScrapeResultCreateManyWithoutScrapeInput;
+  status: ScrapeJobStatus;
 }
 
-export interface StatusScrapeCreateOneWithoutResultsInput {
-  create?: StatusScrapeCreateWithoutResultsInput;
-  connect?: StatusScrapeWhereUniqueInput;
+export interface StatusScrapeJobCreateOneWithoutResultsInput {
+  create?: StatusScrapeJobCreateWithoutResultsInput;
+  connect?: StatusScrapeJobWhereUniqueInput;
 }
 
-export interface StatusScrapeCreateWithoutResultsInput {
-  failed?: Boolean;
+export interface StatusScrapeJobCreateWithoutResultsInput {
   dom?: String;
   target: StatusScrapeTargetCreateOneWithoutResultsInput;
+  status: ScrapeJobStatus;
 }
 
-export interface StatusScrapeResultWhereInput {
-  scrape?: StatusScrapeWhereInput;
-  category?: String;
-  category_not?: String;
-  category_in?: String[] | String;
-  category_not_in?: String[] | String;
-  category_lt?: String;
-  category_lte?: String;
-  category_gt?: String;
-  category_gte?: String;
-  category_contains?: String;
-  category_not_contains?: String;
-  category_starts_with?: String;
-  category_not_starts_with?: String;
-  category_ends_with?: String;
-  category_not_ends_with?: String;
-  component?: String;
-  component_not?: String;
-  component_in?: String[] | String;
-  component_not_in?: String[] | String;
-  component_lt?: String;
-  component_lte?: String;
-  component_gt?: String;
-  component_gte?: String;
-  component_contains?: String;
-  component_not_contains?: String;
-  component_starts_with?: String;
-  component_not_starts_with?: String;
-  component_ends_with?: String;
-  component_not_ends_with?: String;
-  status?: SystemStatus;
-  status_not?: SystemStatus;
-  status_in?: SystemStatus[] | SystemStatus;
-  status_not_in?: SystemStatus[] | SystemStatus;
-  AND?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
-  OR?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
-  NOT?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
+export interface StatusScrapeTargetWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  twitterHandle?: String;
+  twitterHandle_not?: String;
+  twitterHandle_in?: String[] | String;
+  twitterHandle_not_in?: String[] | String;
+  twitterHandle_lt?: String;
+  twitterHandle_lte?: String;
+  twitterHandle_gt?: String;
+  twitterHandle_gte?: String;
+  twitterHandle_contains?: String;
+  twitterHandle_not_contains?: String;
+  twitterHandle_starts_with?: String;
+  twitterHandle_not_starts_with?: String;
+  twitterHandle_ends_with?: String;
+  twitterHandle_not_ends_with?: String;
+  strategy?: ScrapeStrategy;
+  strategy_not?: ScrapeStrategy;
+  strategy_in?: ScrapeStrategy[] | ScrapeStrategy;
+  strategy_not_in?: ScrapeStrategy[] | ScrapeStrategy;
+  statusUrl?: String;
+  statusUrl_not?: String;
+  statusUrl_in?: String[] | String;
+  statusUrl_not_in?: String[] | String;
+  statusUrl_lt?: String;
+  statusUrl_lte?: String;
+  statusUrl_gt?: String;
+  statusUrl_gte?: String;
+  statusUrl_contains?: String;
+  statusUrl_not_contains?: String;
+  statusUrl_starts_with?: String;
+  statusUrl_not_starts_with?: String;
+  statusUrl_ends_with?: String;
+  statusUrl_not_ends_with?: String;
+  results_every?: StatusScrapeJobWhereInput;
+  results_some?: StatusScrapeJobWhereInput;
+  results_none?: StatusScrapeJobWhereInput;
+  AND?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
+  OR?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
+  NOT?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
 }
 
 export interface StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
@@ -735,32 +754,34 @@ export interface StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
   connect?: StatusScrapeTargetWhereUniqueInput;
 }
 
-export interface StatusScrapeCreateManyWithoutTargetInput {
+export interface StatusScrapeJobCreateManyWithoutTargetInput {
   create?:
-    | StatusScrapeCreateWithoutTargetInput[]
-    | StatusScrapeCreateWithoutTargetInput;
-  connect?: StatusScrapeWhereUniqueInput[] | StatusScrapeWhereUniqueInput;
+    | StatusScrapeJobCreateWithoutTargetInput[]
+    | StatusScrapeJobCreateWithoutTargetInput;
+  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
 }
 
-export interface StatusScrapeUpdateManyWithoutTargetInput {
+export interface StatusScrapeJobUpdateManyWithoutTargetInput {
   create?:
-    | StatusScrapeCreateWithoutTargetInput[]
-    | StatusScrapeCreateWithoutTargetInput;
-  delete?: StatusScrapeWhereUniqueInput[] | StatusScrapeWhereUniqueInput;
-  connect?: StatusScrapeWhereUniqueInput[] | StatusScrapeWhereUniqueInput;
-  disconnect?: StatusScrapeWhereUniqueInput[] | StatusScrapeWhereUniqueInput;
+    | StatusScrapeJobCreateWithoutTargetInput[]
+    | StatusScrapeJobCreateWithoutTargetInput;
+  delete?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
+  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
+  disconnect?:
+    | StatusScrapeJobWhereUniqueInput[]
+    | StatusScrapeJobWhereUniqueInput;
   update?:
-    | StatusScrapeUpdateWithWhereUniqueWithoutTargetInput[]
-    | StatusScrapeUpdateWithWhereUniqueWithoutTargetInput;
+    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput[]
+    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput;
   upsert?:
-    | StatusScrapeUpsertWithWhereUniqueWithoutTargetInput[]
-    | StatusScrapeUpsertWithWhereUniqueWithoutTargetInput;
+    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput[]
+    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput;
 }
 
-export interface StatusScrapeUpsertWithWhereUniqueWithoutTargetInput {
-  where: StatusScrapeWhereUniqueInput;
-  update: StatusScrapeUpdateWithoutTargetDataInput;
-  create: StatusScrapeCreateWithoutTargetInput;
+export interface StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeJobWhereUniqueInput;
+  update: StatusScrapeJobUpdateWithoutTargetDataInput;
+  create: StatusScrapeJobCreateWithoutTargetInput;
 }
 
 export interface StatusScrapeResultSubscriptionWhereInput {
@@ -809,63 +830,6 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StatusScrapeTargetSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface StatusScrapeTargetSubscriptionPayload
-  extends Promise<StatusScrapeTargetSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StatusScrapeTarget>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StatusScrapeTargetPreviousValues>() => T;
-}
-
-export interface StatusScrapeTargetSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StatusScrapeTargetSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StatusScrapeTargetSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StatusScrapeTargetPreviousValuesSubscription>() => T;
-}
-
-export interface StatusScrapeConnectionNode {}
-
-export interface StatusScrapeConnection
-  extends Promise<StatusScrapeConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<StatusScrapeEdgeNode>>() => T;
-  aggregate: <T = AggregateStatusScrape>() => T;
-}
-
-export interface StatusScrapeConnectionSubscription
-  extends Promise<AsyncIterator<StatusScrapeConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StatusScrapeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStatusScrapeSubscription>() => T;
-}
-
-export interface AggregateStatusScrapeResultNode {
-  count: Int;
-}
-
-export interface AggregateStatusScrapeResult
-  extends Promise<AggregateStatusScrapeResultNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStatusScrapeResultSubscription
-  extends Promise<AsyncIterator<AggregateStatusScrapeResultNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface StatusScrapeResultEdgeNode {
   cursor: String;
 }
@@ -884,20 +848,6 @@ export interface StatusScrapeResultEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayloadNode {
-  count: Long;
-}
-
-export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayloadNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
 export interface StatusScrapeTargetNode {
   id: ID_Output;
   name: String;
@@ -914,10 +864,10 @@ export interface StatusScrapeTarget
   twitterHandle: () => Promise<String>;
   strategy: () => Promise<ScrapeStrategy>;
   statusUrl: () => Promise<String>;
-  results: <T = FragmentableArray<StatusScrapeNode>>(
+  results: <T = FragmentableArray<StatusScrapeJobNode>>(
     args?: {
-      where?: StatusScrapeWhereInput;
-      orderBy?: StatusScrapeOrderByInput;
+      where?: StatusScrapeJobWhereInput;
+      orderBy?: StatusScrapeJobOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -935,10 +885,10 @@ export interface StatusScrapeTargetSubscription
   twitterHandle: () => Promise<AsyncIterator<String>>;
   strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
   statusUrl: () => Promise<AsyncIterator<String>>;
-  results: <T = Promise<AsyncIterator<StatusScrapeSubscription>>>(
+  results: <T = Promise<AsyncIterator<StatusScrapeJobSubscription>>>(
     args?: {
-      where?: StatusScrapeWhereInput;
-      orderBy?: StatusScrapeOrderByInput;
+      where?: StatusScrapeJobWhereInput;
+      orderBy?: StatusScrapeJobOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -968,6 +918,111 @@ export interface StatusScrapeResultConnectionSubscription
   aggregate: <T = AggregateStatusScrapeResultSubscription>() => T;
 }
 
+export interface StatusScrapeResultNode {
+  category: String;
+  component: String;
+  status: SystemStatus;
+}
+
+export interface StatusScrapeResult
+  extends Promise<StatusScrapeResultNode>,
+    Fragmentable {
+  scrape: <T = StatusScrapeJob>() => T;
+  category: () => Promise<String>;
+  component: () => Promise<String>;
+  status: () => Promise<SystemStatus>;
+}
+
+export interface StatusScrapeResultSubscription
+  extends Promise<AsyncIterator<StatusScrapeResultNode>>,
+    Fragmentable {
+  scrape: <T = StatusScrapeJobSubscription>() => T;
+  category: () => Promise<AsyncIterator<String>>;
+  component: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<SystemStatus>>;
+}
+
+export interface BatchPayloadNode {
+  count: Long;
+}
+
+export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayloadNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface PageInfoNode {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfoNode>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface StatusScrapeTargetPreviousValuesNode {
+  id: ID_Output;
+  name: String;
+  twitterHandle?: String;
+  strategy: ScrapeStrategy;
+  statusUrl: String;
+}
+
+export interface StatusScrapeTargetPreviousValues
+  extends Promise<StatusScrapeTargetPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  twitterHandle: () => Promise<String>;
+  strategy: () => Promise<ScrapeStrategy>;
+  statusUrl: () => Promise<String>;
+}
+
+export interface StatusScrapeTargetPreviousValuesSubscription
+  extends Promise<AsyncIterator<StatusScrapeTargetPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  twitterHandle: () => Promise<AsyncIterator<String>>;
+  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
+  statusUrl: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateStatusScrapeJobNode {
+  count: Int;
+}
+
+export interface AggregateStatusScrapeJob
+  extends Promise<AggregateStatusScrapeJobNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStatusScrapeJobSubscription
+  extends Promise<AsyncIterator<AggregateStatusScrapeJobNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface AggregateUserNode {
   count: Int;
 }
@@ -980,22 +1035,6 @@ export interface AggregateUser
 
 export interface AggregateUserSubscription
   extends Promise<AsyncIterator<AggregateUserNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateStatusScrapeNode {
-  count: Int;
-}
-
-export interface AggregateStatusScrape
-  extends Promise<AggregateStatusScrapeNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStatusScrapeSubscription
-  extends Promise<AsyncIterator<AggregateStatusScrapeNode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1018,21 +1057,21 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface StatusScrapeEdgeNode {
+export interface StatusScrapeJobEdgeNode {
   cursor: String;
 }
 
-export interface StatusScrapeEdge
-  extends Promise<StatusScrapeEdgeNode>,
+export interface StatusScrapeJobEdge
+  extends Promise<StatusScrapeJobEdgeNode>,
     Fragmentable {
-  node: <T = StatusScrape>() => T;
+  node: <T = StatusScrapeJob>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface StatusScrapeEdgeSubscription
-  extends Promise<AsyncIterator<StatusScrapeEdgeNode>>,
+export interface StatusScrapeJobEdgeSubscription
+  extends Promise<AsyncIterator<StatusScrapeJobEdgeNode>>,
     Fragmentable {
-  node: <T = StatusScrapeSubscription>() => T;
+  node: <T = StatusScrapeJobSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1059,17 +1098,18 @@ export interface UserSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StatusScrapeNode {
+export interface StatusScrapeJobNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  failed: Boolean;
   dom?: String;
+  status: ScrapeJobStatus;
 }
 
-export interface StatusScrape extends Promise<StatusScrapeNode>, Fragmentable {
+export interface StatusScrapeJob
+  extends Promise<StatusScrapeJobNode>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  failed: () => Promise<Boolean>;
   dom: () => Promise<String>;
   target: <T = StatusScrapeTarget>() => T;
   results: <T = FragmentableArray<StatusScrapeResultNode>>(
@@ -1083,14 +1123,14 @@ export interface StatusScrape extends Promise<StatusScrapeNode>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  status: () => Promise<ScrapeJobStatus>;
 }
 
-export interface StatusScrapeSubscription
-  extends Promise<AsyncIterator<StatusScrapeNode>>,
+export interface StatusScrapeJobSubscription
+  extends Promise<AsyncIterator<StatusScrapeJobNode>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  failed: () => Promise<AsyncIterator<Boolean>>;
   dom: () => Promise<AsyncIterator<String>>;
   target: <T = StatusScrapeTargetSubscription>() => T;
   results: <T = Promise<AsyncIterator<StatusScrapeResultSubscription>>>(
@@ -1104,6 +1144,7 @@ export interface StatusScrapeSubscription
       last?: Int;
     }
   ) => T;
+  status: () => Promise<AsyncIterator<ScrapeJobStatus>>;
 }
 
 export interface StatusScrapeTargetEdgeNode {
@@ -1124,50 +1165,45 @@ export interface StatusScrapeTargetEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface StatusScrapeSubscriptionPayloadNode {
+export interface StatusScrapeJobSubscriptionPayloadNode {
   mutation: MutationType;
   updatedFields?: String[];
 }
 
-export interface StatusScrapeSubscriptionPayload
-  extends Promise<StatusScrapeSubscriptionPayloadNode>,
+export interface StatusScrapeJobSubscriptionPayload
+  extends Promise<StatusScrapeJobSubscriptionPayloadNode>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = StatusScrape>() => T;
+  node: <T = StatusScrapeJob>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = StatusScrapePreviousValues>() => T;
+  previousValues: <T = StatusScrapeJobPreviousValues>() => T;
 }
 
-export interface StatusScrapeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StatusScrapeSubscriptionPayloadNode>>,
+export interface StatusScrapeJobSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StatusScrapeJobSubscriptionPayloadNode>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StatusScrapeSubscription>() => T;
+  node: <T = StatusScrapeJobSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StatusScrapePreviousValuesSubscription>() => T;
+  previousValues: <T = StatusScrapeJobPreviousValuesSubscription>() => T;
 }
 
-export interface UserSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
+export interface StatusScrapeJobConnectionNode {}
 
-export interface UserSubscriptionPayload
-  extends Promise<UserSubscriptionPayloadNode>,
+export interface StatusScrapeJobConnection
+  extends Promise<StatusScrapeJobConnectionNode>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = User>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValues>() => T;
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<StatusScrapeJobEdgeNode>>() => T;
+  aggregate: <T = AggregateStatusScrapeJob>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
+export interface StatusScrapeJobConnectionSubscription
+  extends Promise<AsyncIterator<StatusScrapeJobConnectionNode>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StatusScrapeJobEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStatusScrapeJobSubscription>() => T;
 }
 
 export interface UserEdgeNode {
@@ -1231,104 +1267,91 @@ export interface StatusScrapeResultSubscriptionPayloadSubscription
   previousValues: <T = StatusScrapeResultPreviousValuesSubscription>() => T;
 }
 
-export interface PageInfoNode {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface StatusScrapeTargetSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
 }
 
-export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfoNode>>,
+export interface StatusScrapeTargetSubscriptionPayload
+  extends Promise<StatusScrapeTargetSubscriptionPayloadNode>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<MutationType>;
+  node: <T = StatusScrapeTarget>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StatusScrapeTargetPreviousValues>() => T;
 }
 
-export interface StatusScrapePreviousValuesNode {
+export interface StatusScrapeTargetSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StatusScrapeTargetSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StatusScrapeTargetSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StatusScrapeTargetPreviousValuesSubscription>() => T;
+}
+
+export interface StatusScrapeJobPreviousValuesNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  failed: Boolean;
   dom?: String;
+  status: ScrapeJobStatus;
 }
 
-export interface StatusScrapePreviousValues
-  extends Promise<StatusScrapePreviousValuesNode>,
+export interface StatusScrapeJobPreviousValues
+  extends Promise<StatusScrapeJobPreviousValuesNode>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  failed: () => Promise<Boolean>;
   dom: () => Promise<String>;
+  status: () => Promise<ScrapeJobStatus>;
 }
 
-export interface StatusScrapePreviousValuesSubscription
-  extends Promise<AsyncIterator<StatusScrapePreviousValuesNode>>,
+export interface StatusScrapeJobPreviousValuesSubscription
+  extends Promise<AsyncIterator<StatusScrapeJobPreviousValuesNode>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  failed: () => Promise<AsyncIterator<Boolean>>;
   dom: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<ScrapeJobStatus>>;
 }
 
-export interface StatusScrapeTargetPreviousValuesNode {
-  id: ID_Output;
-  name: String;
-  twitterHandle?: String;
-  strategy: ScrapeStrategy;
-  statusUrl: String;
+export interface UserSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
 }
 
-export interface StatusScrapeTargetPreviousValues
-  extends Promise<StatusScrapeTargetPreviousValuesNode>,
+export interface UserSubscriptionPayload
+  extends Promise<UserSubscriptionPayloadNode>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  twitterHandle: () => Promise<String>;
-  strategy: () => Promise<ScrapeStrategy>;
-  statusUrl: () => Promise<String>;
+  mutation: () => Promise<MutationType>;
+  node: <T = User>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValues>() => T;
 }
 
-export interface StatusScrapeTargetPreviousValuesSubscription
-  extends Promise<AsyncIterator<StatusScrapeTargetPreviousValuesNode>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  twitterHandle: () => Promise<AsyncIterator<String>>;
-  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
-  statusUrl: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface StatusScrapeResultNode {
-  category: String;
-  component: String;
-  status: SystemStatus;
+export interface AggregateStatusScrapeResultNode {
+  count: Int;
 }
 
-export interface StatusScrapeResult
-  extends Promise<StatusScrapeResultNode>,
+export interface AggregateStatusScrapeResult
+  extends Promise<AggregateStatusScrapeResultNode>,
     Fragmentable {
-  scrape: <T = StatusScrape>() => T;
-  category: () => Promise<String>;
-  component: () => Promise<String>;
-  status: () => Promise<SystemStatus>;
+  count: () => Promise<Int>;
 }
 
-export interface StatusScrapeResultSubscription
-  extends Promise<AsyncIterator<StatusScrapeResultNode>>,
+export interface AggregateStatusScrapeResultSubscription
+  extends Promise<AsyncIterator<AggregateStatusScrapeResultNode>>,
     Fragmentable {
-  scrape: <T = StatusScrapeSubscription>() => T;
-  category: () => Promise<AsyncIterator<String>>;
-  component: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<SystemStatus>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface StatusScrapeTargetConnectionNode {}
@@ -1367,17 +1390,7 @@ export interface AggregateStatusScrapeTargetSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
 export type Long = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1394,6 +1407,16 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.

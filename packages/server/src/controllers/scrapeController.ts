@@ -2,22 +2,27 @@ import { logger } from "@status-scrape/common";
 import {
   prisma,
   StatusScrapeResultCreateInput,
+  StatusScrapeResultNode,
   StatusScrapeTargetNode,
   SystemStatus
 } from "@status-scrape/prisma";
-import got from "got";
+import got, { Response } from "got";
 import { sign } from "jsonwebtoken";
 import { flatMap } from "lodash";
 
 export class ScrapeController {
   public target: StatusScrapeTargetNode;
+  public results: StatusScrapeResultNode[];
   constructor(target: StatusScrapeTargetNode) {
     this.target = target;
   }
 
   public async scrape() {
-    const storedScrape = prisma.createStatusScrape({
-      target: { connect: { id: this.target.id } }
+    // tslint:disable-next-line:no-console
+    console.time("scrape");
+    const storedScrape = prisma.createStatusScrapeJob({
+      target: { connect: { id: this.target.id } },
+      status: "RUNNING"
     });
     const storedScrapeId = await storedScrape.id();
 
@@ -35,13 +40,34 @@ export class ScrapeController {
     logger.verbose(`Headers: \n\n ${JSON.stringify(headers, null, 2)}`);
     logger.verbose(`Body: \n\n ${JSON.stringify(body, null, 2)}`);
 
-    const response = await got(
-      `${process.env.GC_FUNCTIONS_BASE_URL}statusScrape`,
-      { headers, body: JSON.stringify(body) }
-    );
+    const timer = setTimeout(async () => {
+      prisma.updateStatusScrapeJob({
+        where: { id: storedScrapeId },
+        data: {
+          status: "TIMED_OUT"
+        }
+      });
+      logger.error("Timed out.");
+      throw new Error("Google Cloud Function timed out");
+    }, 60000);
+    let response: Response<string>;
+    try {
+      response = await got(`${process.env.GC_FUNCTIONS_BASE_URL}statusScrape`, {
+        headers,
+        body: JSON.stringify(body)
+      });
+    } catch (e) {
+      logger.error(`Request to ${
+        process.env.GC_FUNCTIONS_BASE_URL
+      }statusScrape failed
+      Body: ${JSON.stringify(body, null, 2)}`);
+    }
+
+    clearTimeout(timer);
 
     logger.silly(JSON.stringify(response.body, null, 2));
 
+    // Map returned results to database
     const parsedTarget = JSON.parse(response.body) as IScrapeFunctionResponse;
     const inputs = flatMap(parsedTarget.results, category => {
       return category.components.map(component => {
@@ -55,12 +81,13 @@ export class ScrapeController {
       });
     });
 
-    await Promise.all(inputs);
+    this.results = await Promise.all(inputs);
 
     logger.debug(
       `Created ${inputs.length} status scrape results for ${
         this.target.name
-      } (${this.target.statusUrl})`
+        // tslint:disable-next-line:no-console
+      } (${this.target.statusUrl}) in ${console.timeEnd("scrape")}`
     );
   }
 

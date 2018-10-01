@@ -6,3 +6,11 @@ enum SystemStatus {
   OPERATIONAL
   UNKNOWN
 }
+
+enum ScrapeJobStatus {
+  SCHEDULED
+  RUNNING
+  DONE
+  FAILED
+  TIMED_OUT
+}

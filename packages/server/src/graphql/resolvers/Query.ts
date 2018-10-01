@@ -1,7 +1,7 @@
 import { prisma, StatusScrapeTargetNode } from "@status-scrape/prisma";
+import { ScrapeController } from "../../controllers/scrapeController";
+import { getUserId } from "../../utils";
 import { IApolloContext } from "../apollo";
-import { ScrapeController } from "../scrapeController";
-import { getUserId } from "../utils";
 import { ILoginArgs } from "./Mutation";
 
 // tslint:disable-next-line:variable-name

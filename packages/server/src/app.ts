@@ -2,11 +2,14 @@ import { logger } from "@status-scrape/common";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cookieSession from "cookie-session";
+import dotenv from "dotenv";
 import express from "express";
 import expressHealthcheck from "express-healthcheck";
 import morgan from "morgan";
 import path from "path";
-import apollo from "./apollo";
+import apollo from "./graphql/apollo";
+
+dotenv.config();
 
 const app = express();
 const env = process.env.NODE_ENV;
