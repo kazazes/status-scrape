@@ -1,12 +1,11 @@
 {
   "defaultSeverity": "warning",
   "extends": [
-    "tslint:recommended"
+    "tslint:latest"
   ],
   "linterOptions": {
     "exclude": [
-      "node_modules/**",
-      "tests/**"
+      "node_modules/**"
     ]
   },
   "rules": {

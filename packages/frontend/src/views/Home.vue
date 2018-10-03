@@ -11,8 +11,8 @@
 
   @Component({
     components: {
-      HelloWorld,
-    },
+      HelloWorld
+    }
   })
   export default class Home extends Vue {}
 </script>

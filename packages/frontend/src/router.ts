@@ -1,50 +1,25 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Dashboard from "@/components/Dashboard.vue";
-import Profile from "@/components/Profile.vue";
-import Tables from "@/components/Tables.vue";
-import Maps from "@/components/Maps.vue";
-import BadGateway from "@/components/BadGateway.vue";
+import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes: [
     {
-      path: "/dashboard",
-      name: "Dashboard",
-      component: Dashboard,
-      props: { page: 1 },
-      alias: "/",
+      path: "/",
+      name: "home",
+      component: Home,
     },
     {
-      path: "/profile",
-      name: "Profile",
-      props: { page: 2 },
-      component: Profile,
-    },
-    {
-      path: "/tables",
-      name: "Tables",
-      props: { page: 3 },
-      component: Tables,
-    },
-    {
-      path: "/maps",
-      name: "Maps",
-      props: { page: 4 },
-      component: Maps,
-    },
-    {
-      path: "/404",
-      name: "BadGateway",
-      props: { page: 5 },
-      component: BadGateway,
-    },
-    {
-      path: "*",
-      props: { page: 5 },
-      redirect: "/404",
+      path: "/about",
+      name: "about",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ "./views/About.vue"),
     },
   ],
 });
