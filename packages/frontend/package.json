@@ -1,0 +1,59 @@
+{
+  "name": "@status-scrape/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
+    "apollo-link-persisted-queries": "^0.2.1",
+    "apollo-upload-client": "^9.0.0",
+    "bootstrap-css-only": "^4.1.1",
+    "jquery": "^3.3.1",
+    "mdbvue": "git+https://oauth2:5WEbk8n4Gysj7zCyyuFC@git.mdbootstrap.com/mdb/vue/vu-pro.git",
+    "popper.js": "^1.14.3",
+    "vue": "^2.5.17",
+    "vue-apollo": "^3.0.0-beta.25",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^7.0.0",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/apollo-upload-client": "^8.1.0",
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.0.4",
+    "@vue/cli-plugin-typescript": "^3.0.4",
+    "@vue/cli-plugin-unit-jest": "^3.0.4",
+    "@vue/cli-service": "^3.0.4",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "graphql-tag": "^2.9.0",
+    "lint-staged": "^7.2.2",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "ts-jest": "^23.0.0",
+    "typescript": "^3.0.0",
+    "vue-cli-plugin-apollo": "^0.17.0",
+    "vue-cli-plugin-bootstrap": "^1.0.0-alpha.1",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}
