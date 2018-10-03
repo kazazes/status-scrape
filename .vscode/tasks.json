@@ -14,7 +14,9 @@
       "type": "npm",
       "script": "build",
       "problemMatcher": [
-        "$tsc"
+        "$tsc",
+        "$ts-webpack",
+        "$tslint-webpack"
       ]
     },
     {
@@ -34,28 +36,6 @@
     },
     {
       "type": "npm",
-      "script": "watch:ts",
-      "path": "packages/scraper/",
-      "problemMatcher": [
-        "$tsc-watch"
-      ]
-    },
-    {
-      "type": "npm",
-      "script": "deploy",
-      "path": "packages/server/",
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "build:pack",
-      "path": "packages/admin-frontend/",
-      "problemMatcher": [
-        "$tsc"
-      ]
-    },
-    {
-      "type": "npm",
       "script": "deploy:prisma",
       "path": "packages/prisma/",
       "problemMatcher": []
@@ -64,6 +44,16 @@
       "type": "npm",
       "script": "deploy:gae",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "serve",
+      "path": "packages/frontend/",
+      "isBackground": true,
+      "problemMatcher": [
+        "$ts-webpack-watch",
+        "$tslint-webpack-watch"
+      ]
     }
   ]
 }
