@@ -1,7 +1,8 @@
 {
   "defaultSeverity": "warning",
   "extends": [
-    "tslint:latest"
+    "tslint:latest",
+    "tslint-config-prettier"
   ],
   "linterOptions": {
     "exclude": [
@@ -9,7 +10,9 @@
     ]
   },
   "rules": {
+    "no-submodule-imports": false,
     "semicolon": true,
+    "no-implicit-dependencies": false,
     "quotemark": [
       true,
       "double"
