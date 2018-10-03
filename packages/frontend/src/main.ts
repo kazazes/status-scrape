@@ -1,16 +1,16 @@
 import Vue from "vue";
-import "./vendor/bootstrap/bootstrap.scss";
-import "mdbvue/build/scss/mdb.scss";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
-import { createProvider } from "./vue-apollo";
+import "font-awesome/css/font-awesome.min.css";
+import "@/vendor/bootstrap/bootstrap.scss";
+import "mdbvue/build/css/mdb.css";
 
 Vue.config.productionTip = false;
 
+// tslint:disable-next-line:no-unused-expression
 new Vue({
+  el: "#app",
   router,
-  store,
-  apolloProvider: createProvider(),
-  render: (h) => h(App),
-}).$mount("#app");
+  components: { App },
+  template: "<App/>",
+});
