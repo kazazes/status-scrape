@@ -1,10 +1,10 @@
-import Vue from 'vue';
-import './vendor/bootstrap/bootstrap.scss';
-import 'mdbvue/build/scss/mdb.scss';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import { createProvider } from './vue-apollo'
+import Vue from "vue";
+import "./vendor/bootstrap/bootstrap.scss";
+import "mdbvue/build/scss/mdb.scss";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import { createProvider } from "./vue-apollo";
 
 Vue.config.productionTip = false;
 
@@ -12,5 +12,5 @@ new Vue({
   router,
   store,
   apolloProvider: createProvider(),
-  render: (h) => h(App)
-}).$mount('#app');
+  render: (h) => h(App),
+}).$mount("#app");
