@@ -23,6 +23,10 @@ app.set("view engine", "pug");
 
 app.enable("trust proxy");
 app.use(helmet());
+<<<<<<< HEAD
+=======
+debugger;
+>>>>>>> 51cbf64d4a92b7897eea7b52715d3e052c7a5634
 if (app.get("env") === "production") {
   app.use(enforceHTTPS());
 }
