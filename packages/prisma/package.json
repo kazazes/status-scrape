@@ -1,6 +1,6 @@
 {
   "name": "@status-scrape/prisma",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "author": "Peter Kazazes",
   "private": true,
@@ -14,7 +14,7 @@
     "watch:start": "nodemon dist/index.js"
   },
   "dependencies": {
-    "@status-scrape/common": "^1.0.0",
+    "@status-scrape/common": "^0.0.1",
     "graphql": "^0.13.0",
     "prisma-client-lib": "^1.18.0-beta.12"
   },

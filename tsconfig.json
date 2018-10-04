@@ -19,9 +19,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "paths": {
-      "*": [
-        "packages/*/types"
-      ]
+      "*": ["packages/*/types"]
     }
   }
 }
