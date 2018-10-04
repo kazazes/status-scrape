@@ -1,6 +1,6 @@
 {
   "name": "@status-scrape/frontend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +9,7 @@
     "watch": "vue-cli-service build --watch --mode development"
   },
   "dependencies": {
-    "@status-scrape/common": "^1.0.0",
+    "@status-scrape/common": "^0.0.1",
     "@babel/polyfill": "^7.0.0-rc.1",
     "apollo-cache": "^1.1.17",
     "apollo-cache-inmemory": "^1.2.10",
