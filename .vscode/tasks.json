@@ -6,23 +6,17 @@
     {
       "type": "npm",
       "script": "lint",
-      "problemMatcher": [
-        "$tslint5"
-      ]
+      "problemMatcher": ["$tslint5", "$tslint-webpack"]
     },
     {
       "type": "npm",
       "script": "build",
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": ["$tsc", "$ts-webpack", "$tslint-webpack"]
     },
     {
       "type": "npm",
       "script": "watch:ts",
-      "problemMatcher": [
-        "$tsc-watch"
-      ],
+      "problemMatcher": ["$tsc-watch"],
       "isBackground": true,
       "presentation": {
         "echo": true,
@@ -34,28 +28,6 @@
     },
     {
       "type": "npm",
-      "script": "watch:ts",
-      "path": "packages/scraper/",
-      "problemMatcher": [
-        "$tsc-watch"
-      ]
-    },
-    {
-      "type": "npm",
-      "script": "deploy",
-      "path": "packages/server/",
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "build:pack",
-      "path": "packages/admin-frontend/",
-      "problemMatcher": [
-        "$tsc"
-      ]
-    },
-    {
-      "type": "npm",
       "script": "deploy:prisma",
       "path": "packages/prisma/",
       "problemMatcher": []
@@ -64,6 +36,19 @@
       "type": "npm",
       "script": "deploy:gae",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "serve",
+      "path": "packages/frontend/",
+      "isBackground": true,
+      "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch"]
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "packages/frontend/",
+      "problemMatcher": ["$ts-webpack", "$tslint-webpack"]
     }
   ]
 }

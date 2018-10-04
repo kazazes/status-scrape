@@ -27,14 +27,14 @@ Populate `packages/server/.env` and `yarn run start`. The GraphQL playground is 
 
 ```
 packages
-├── admin-frontend
+├── frontend
 ├── prisma
 ├── functions
 ├── server
 └── common
 ```
 
-- `admin-frontend` - A Vue.js application which controls the scraper targets and scheduling, and displays historical scraping data.
+- `frontend` - A Vue.js application which controls the scraper targets and scheduling, and displays historical scraping data, served by `server`.
 - `prisma` - A [Prisma](https://prisma.io) GraphQL ORM and client.
 - `functions` - The scraper and associated utilities. These are designed to be run via Google Cloud Functions. They are dispatched by the server.
 - `server` - An Express server which implements a GraphQL API and serves the Vue.js app.

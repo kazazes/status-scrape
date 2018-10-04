@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const staticPath = path.join(`${__dirname}"/../../admin-frontend/dist/`);
+const staticPath = path.join(`${__dirname}"/../../frontend/dist/`);
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
 
 app.locals.env = env;
