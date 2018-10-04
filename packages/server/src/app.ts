@@ -5,6 +5,7 @@ import cookieSession from "cookie-session";
 import dotenv from "dotenv";
 import express from "express";
 import expressHealthcheck from "express-healthcheck";
+import { default as httpsRedirect } from "express-https-redirect";
 import morgan from "morgan";
 import path from "path";
 import apollo from "./graphql/apollo";
@@ -12,7 +13,7 @@ import apollo from "./graphql/apollo";
 dotenv.config();
 
 const app = express();
-const env = process.env.NODE_ENV;
+const staticPath = path.join(`${__dirname}"/../../frontend/dist/`);
 
 app.set("port", process.env.PORT || 3000);
 app.set("hostname", process.env.HOST || "127.0.0.1");
@@ -22,10 +23,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const staticPath = path.join(`${__dirname}"/../../frontend/dist/`);
+app.use("/", httpsRedirect);
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
-
-app.locals.env = env;
 
 app.use(
   cookieSession({
