@@ -23,7 +23,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+<<<<<<< HEAD
 app.use("/", httpsRedirect());
+=======
+if (process.env.NODE_ENV === "production") {
+  app.use(httpsRedirect(true));
+}
+>>>>>>> hotfix/https-redirect
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
 
 app.use(
