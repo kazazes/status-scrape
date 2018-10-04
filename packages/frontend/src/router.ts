@@ -6,7 +6,8 @@ import Dashboard from "./views/Dashboard.vue";
 Vue.use(Router);
 
 export default new Router({
-  mode: "hash",
+  mode: "history",
+  linkActiveClass: "active",
   base: process.env.BASE_URL,
   routes: [
     {
