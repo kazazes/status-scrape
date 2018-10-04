@@ -2,6 +2,7 @@ dist/
 junit.xml
 package.lock.json
 .idea
+packages/*/.vscode
 
 # Created by https://www.gitignore.io/api/node,macos,visualstudiocode
 

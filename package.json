@@ -12,8 +12,9 @@
     "lint": "lerna run --parallel lint",
     "test": "lerna run --parallel test",
     "start": "yarn workspace @status-scrape/server run start",
+    "watch": "bin/build.sh",
     "watch:ts": "bin/build-ts.sh",
-    "watch:webpack": "yarn workspace @status-scrape/admin run watch:webpack",
+    "watch:webpack": "yarn workspace @status-scrape/frontend run watch",
     "debug": "yarn workspace @status-scrape/server watch:debug"
   },
   "devDependencies": {
