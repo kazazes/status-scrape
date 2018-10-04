@@ -4,8 +4,9 @@ import cookieParser from "cookie-parser";
 import cookieSession from "cookie-session";
 import dotenv from "dotenv";
 import express from "express";
+import enforceHTTPS from "express-enforces-ssl";
 import expressHealthcheck from "express-healthcheck";
-import { default as httpsRedirect } from "express-https-redirect";
+import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import apollo from "./graphql/apollo";
@@ -19,13 +20,16 @@ app.set("port", process.env.PORT || 3000);
 app.set("hostname", process.env.HOST || "127.0.0.1");
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+app.enable("trust proxy");
+app.use(helmet());
+if (process.env.NODE_ENV === "production") {
+  app.use(enforceHTTPS());
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-if (process.env.NODE_ENV === "production") {
-  app.use(httpsRedirect(true));
-}
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
 
 app.use(

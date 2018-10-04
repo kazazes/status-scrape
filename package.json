@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "clean": "lerna run --parallel clean",
+    "clean": "lerna run --parallel clean && yarn",
     "clean:modules": "rimraf packages/*/node_modules node_modules",
     "deploy:gae": "npm-run-all clean lint build && gcloud beta app deploy && notify -t 'Google App Engine' -m 'Version deployed.' -s Glass",
     "deploy:functions": "yarn workspace @status-scrape/functions run deploy && notify -t 'Google Cloud Functions' -m 'Function deployed.' -s Glass",
