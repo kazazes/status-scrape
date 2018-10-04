@@ -23,7 +23,7 @@ app.set("view engine", "pug");
 
 app.enable("trust proxy");
 app.use(helmet());
-if (process.env.NODE_ENV === "production") {
+if (app.get("env") === "production") {
   app.use(enforceHTTPS());
 }
 
