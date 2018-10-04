@@ -9,29 +9,31 @@
                                 <v-toolbar-title>Status Scrape</v-toolbar-title>
                             </v-toolbar>
                             <v-card-text>
-                                <v-form method="POST" @submit.prevent="login">
-                                    <v-text-field
-                                        v-model="email"
-                                        prepend-icon="fa-user"
-                                        name="login"
-                                        label="Login"
-                                        type="text"
-                                        required
-                                    ></v-text-field>
-                                    <v-text-field
-                                        v-model="password"
-                                        id="password"
-                                        prepend-icon="fa-lock"
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        required
-                                    ></v-text-field>
+                                <v-form>
+                                    <form method="POST" @submit.prevent="login">
+                                        <v-text-field
+                                            v-model="email"
+                                            prepend-icon="fa-envelope"
+                                            name="login"
+                                            label="Login"
+                                            type="text"
+                                            required
+                                        ></v-text-field>
+                                        <v-text-field
+                                            v-model="password"
+                                            id="password"
+                                            prepend-icon="fa-lock"
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            required
+                                        ></v-text-field>
+                                    </form>
                                 </v-form>
                             </v-card-text>
                             <v-card-actions class="text-align-center">
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary">Login</v-btn>
+                                <v-btn @click="login" color="primary">Login</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -75,3 +77,8 @@
       }
     }
 </script>
+<style scoped>
+    html {
+      max-height: 100%;
+    }
+</style>

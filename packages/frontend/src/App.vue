@@ -1,7 +1,8 @@
 <template>
   <v-app dark>
-    <Dashboard v-if="isAuthenticated" />
-    <Login v-else />
+    <Snackbar/>
+    <Dashboard v-if="isAuthenticated"/>
+    <Login v-else/>
   </v-app>
 </template>
 
@@ -9,6 +10,7 @@
   import Vue from "vue";
   import Component from "vue-class-component";
   import Dashboard from "./views/Dashboard.vue";
+  import Snackbar from "./components/Snackbar.vue";
   import Login from "./views/Login.vue";
   import { APOLLO_TOKEN } from "./constants";
 
@@ -16,7 +18,8 @@
     name: "App",
     components: {
       Dashboard,
-      Login
+      Login,
+      Snackbar,
     },
     data: () => {
       return {
@@ -25,7 +28,7 @@
     },
   })
   export default class App extends Vue {
-    public logout () {
+    public logout() {
       localStorage.removeItem(APOLLO_TOKEN);
       this.$router.replace("/");
     }
