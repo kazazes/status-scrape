@@ -4,6 +4,6 @@
     "no-console": false
   },
   "linterOptions": {
-    "exclude": ["tests/**/*"]
+    "exclude": ["tests/**/*", "src/prisma*.ts"]
   }
 }

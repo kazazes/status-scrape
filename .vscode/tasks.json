@@ -6,25 +6,17 @@
     {
       "type": "npm",
       "script": "lint",
-      "problemMatcher": [
-        "$tslint5"
-      ]
+      "problemMatcher": ["$tslint5", "$tslint-webpack"]
     },
     {
       "type": "npm",
       "script": "build",
-      "problemMatcher": [
-        "$tsc",
-        "$ts-webpack",
-        "$tslint-webpack"
-      ]
+      "problemMatcher": ["$tsc", "$ts-webpack", "$tslint-webpack"]
     },
     {
       "type": "npm",
       "script": "watch:ts",
-      "problemMatcher": [
-        "$tsc-watch"
-      ],
+      "problemMatcher": ["$tsc-watch"],
       "isBackground": true,
       "presentation": {
         "echo": true,
@@ -50,19 +42,13 @@
       "script": "serve",
       "path": "packages/frontend/",
       "isBackground": true,
-      "problemMatcher": [
-        "$ts-webpack-watch",
-        "$tslint-webpack-watch"
-      ]
+      "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch"]
     },
     {
       "type": "npm",
       "script": "build",
       "path": "packages/frontend/",
-      "problemMatcher": [
-        "$ts-webpack",
-        "$tslint-webpack"
-      ]
+      "problemMatcher": ["$ts-webpack", "$tslint-webpack"]
     }
   ]
 }
