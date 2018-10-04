@@ -54,6 +54,15 @@
         "$ts-webpack-watch",
         "$tslint-webpack-watch"
       ]
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "packages/frontend/",
+      "problemMatcher": [
+        "$ts-webpack",
+        "$tslint-webpack"
+      ]
     }
   ]
 }
