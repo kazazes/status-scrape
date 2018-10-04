@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <!-- <Dashboard /> -->
-    <Login />
+    <Dashboard />
+    <!-- <Login /> -->
   </v-app>
 </template>
 
