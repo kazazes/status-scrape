@@ -4,11 +4,15 @@ import "./plugins/vuetify";
 import router from "./router";
 import store from "./store";
 import App from "./App.vue";
+import { createProvider } from "./plugins/vue-apollo";
+
+import "vuetify/dist/vuetify.min.css";
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  apolloProvider: createProvider(),
+  render: h => h(App)
 }).$mount("#app");
