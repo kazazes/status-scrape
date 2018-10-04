@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/", httpsRedirect);
+app.use("/", httpsRedirect());
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
 
 app.use(
