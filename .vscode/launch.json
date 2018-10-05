@@ -39,6 +39,20 @@
       "outputCapture": "std",
       "console": "integratedTerminal",
       "outFiles": ["packages/*/dist/**"]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "vuejs: chrome",
+      "url": "http://127.0.0.1:8080",
+      "webRoot": "${workspaceFolder}/dist",
+      "breakOnLoad": true,
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "userDataDir": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "smartStep": true
     }
   ]
 }
