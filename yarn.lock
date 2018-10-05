@@ -11966,7 +11966,7 @@ punycode@^1.2.4, punycode@^1.4.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
   integrity sha1-wNWmOycYgArY4esPpSachN1BhF4=
 
-puppeteer@1.9.0:
+puppeteer@^1.8.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.9.0.tgz#56dba79e7ea4faac807877bee3b23d63291fc59e"
   integrity sha512-GH4PmhJf9wBRAPvtJkEJLAvdNNOofZortmBZSj8cGWYni98GUFqsf66blOEfJbo5B8l0KG5HR2d/W2MejnUrzg==
@@ -14604,10 +14604,10 @@ vue-cli-plugin-apollo@^0.17.0:
     subscriptions-transport-ws "^0.9.15"
     ts-node "^7.0.1"
 
-vue-cli-plugin-vuetify@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-0.2.0.tgz#f66aa544264ad0a17f70c056359151bcd4dc2e73"
-  integrity sha512-U6gvAnYXVa0GUeKWq6bYTE06Y/zFUwwvONRRdQBLKjrZtECtw3B8Siz16wC7Js463d0YVetqUjRrYAHpoZvIug==
+vue-cli-plugin-vuetify@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-0.2.1.tgz#fea624e5e4cf3cc2e655d469d441ec151fbb2c23"
+  integrity sha512-kYnDF8a8TmjF89mxHhBIqZPOizGLEXU3MLetw5kfLeG1NBeyejbdEGaUFy59LETvJFnBKYjN4OYFChlZhlLNLg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"
