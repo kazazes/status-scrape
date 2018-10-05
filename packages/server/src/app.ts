@@ -56,11 +56,6 @@ app.use(
 
 app.use(express.static(staticPath, { maxAge: 31557600000 }));
 apollo.applyMiddleware({ app });
-app.use(
-  spaFallback({
-    verbose: app.get("env") === "development",
-    index: "/"
-  })
-);
+app.use(spaFallback());
 
 export default app;
