@@ -71,6 +71,14 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs-4>
+            <v-menu offset-y style="float: right;">
+              <v-btn slot="activator" color="info" dark>{{ me.name }}</v-btn>
+              <v-list light dense subheader>
+                <v-list-tile @click="$emit('logout')">
+                  <v-list-tile-title>Logout</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
             <v-btn icon style="float: right;">
               <v-icon>fa-bell</v-icon>
             </v-btn>
@@ -134,11 +142,15 @@
 <script lang="ts">
   import Component from "vue-class-component";
   import Vue from "vue";
+  import { ME } from "../graphql/Queries";
+  import { ApolloQueryResult, ApolloError } from "apollo-client";
+  import { IMe } from "../store/me";
 
   @Component({
-    name: "Dasbboard",
+    name: "Dashboard",
     components: {},
     data: () => ({
+      me: { name: "" },
       dialog: false,
       drawer: null,
       items: [
@@ -149,13 +161,34 @@
         { icon: "fa-calendar", text: "Schedule" },
         { icon: "fa-map", text: "Strategies" },
         { divider: true },
-        { icon: "fa-user-friends", text: "Users"},
+        { icon: "fa-user-friends", text: "Users" },
         { icon: "fa-wrench", text: "Settings" },
         { icon: "fa-question", text: "Help" },
       ],
     }),
     props: {
       source: String,
+    },
+    apollo: {
+      me: {
+        query: ME,
+        name: "me",
+        fetchPolicy: "no-cache",
+        result(result: ApolloQueryResult<any>) {
+          console.log(`Hi ${result.data.me.name}!`);
+          const me: IMe = {
+            name: result.data.me.name,
+            email: result.data.me.email,
+          };
+          this.$store.commit("setMe", me);
+        },
+        pollInterval: 30000,
+        error(e: ApolloError) {
+          if (e.graphQLErrors && e.graphQLErrors.length > 0) {
+            this.$emit("logout");
+          }
+        },
+      },
     },
   })
   export default class Dashboard extends Vue {}

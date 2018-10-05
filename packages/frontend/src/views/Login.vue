@@ -46,7 +46,9 @@
 <script lang="ts">
     import Vue from "vue";
     import Component from "vue-class-component";
-    import { mutations, APOLLO_TOKEN } from "../constants";
+    import { APOLLO_TOKEN } from "../constants";
+    import { LOGIN } from "../graphql/Mutations";
+    import { ISnackbarArgs } from "../store/snackbar";
 
     @Component({
       name: "Login",
@@ -61,18 +63,28 @@
       private name: string = "";
       private async login() {
         try {
-          const response = await this.$apollo.mutate({
-            mutation: mutations.LOGIN,
-            variables: {
-              email: this.email,
-              password: this.password,
-            },
-          });
+          const response = await this.$apollo
+            .mutate({
+              mutation: LOGIN,
+              variables: {
+                email: this.email,
+                password: this.password,
+              },
+            })
+            .catch((e) => {
+              throw e;
+            });
 
           localStorage.setItem(APOLLO_TOKEN, response.data.login.token);
-          this.$router.replace("/");
+          this.$router.push("/dashboard");
         } catch (e) {
-          console.error(e);
+          const snack: ISnackbarArgs = {
+            message: "Invalid username or password.",
+            color: "error",
+            position: "top",
+            timeout: 5000,
+          };
+          this.$store.commit("showSnackbar", snack);
         }
       }
     }

@@ -1,9 +1,5 @@
 <template>
-  <v-app dark>
-    <Snackbar/>
-    <Dashboard v-if="isAuthenticated"/>
-    <Login v-else/>
-  </v-app>
+  <router-view v-on:logout="logout"></router-view>
 </template>
 
 <script lang="ts">
@@ -21,16 +17,20 @@
       Login,
       Snackbar,
     },
-    data: () => {
-      return {
-        isAuthenticated: !!localStorage.getItem(APOLLO_TOKEN),
-      };
-    },
   })
   export default class App extends Vue {
+    private isAuthenticated: boolean = !!localStorage.getItem(APOLLO_TOKEN);
     public logout() {
       localStorage.removeItem(APOLLO_TOKEN);
-      this.$router.replace("/");
+      this.$router.push("/login");
+    }
+
+    public mounted() {
+      if (this.isAuthenticated) {
+        this.$router.push("/dashboard");
+      } else {
+        this.$router.push("/login");
+      }
     }
   }
 </script>
