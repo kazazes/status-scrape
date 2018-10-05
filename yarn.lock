@@ -1687,10 +1687,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.13.2.tgz#ffe96278e712a8d4e467e367a338b05e22872646"
   integrity sha512-k6MCN8WuDiCj6O+UJsVMbrreZxkbrhQbO02oDj6yuRu8UAkp0MDdEcDKif8/gBKuJbT84kkO+VHQAqXkumEklg==
 
-"@types/puppeteer@^1.6.4":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.8.0.tgz#b414871bfeaf7a20976b955f3a7546b81091d0b4"
-  integrity sha512-YR6aEjBY87BNj3k8wrtieU39ljyVAceKqO08fI9EMBDkYu5Sp6vioTKiAIsrNqDyB0u249lqLmmhwwq6qLNqww==
+"@types/puppeteer@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.9.0.tgz#9a4bcca1902259e2cea6e6be7b4a540aad13785e"
+  integrity sha512-ZP3wL4Lqpgu4xZbz/0vQhbIZnllNEawVW3oTpEXyJg+uhf/YQgL8oeTrfoUwj9JXE9UUe53eqmgLl29/d2gjqQ==
   dependencies:
     "@types/node" "*"
 
@@ -11784,7 +11784,7 @@ prisma-yml@1.18.0-beta.16:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-prisma@1.18.0-beta.16:
+prisma@^1.18.0-beta.12:
   version "1.18.0-beta.16"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-1.18.0-beta.16.tgz#63476795860e9791225837717116a597e60d37ae"
   integrity sha512-6xHiq0QRnBbDYcUriK/XQTLCAuxLTzjHBkDCauR6jf49I8VSw9sO1vwywfJxvhkFDJ4J4tWrrj3eLX4bPSa7/Q==
