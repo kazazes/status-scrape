@@ -38,7 +38,7 @@ export function getUserId(context: IApolloContext) {
     return verifiedToken && verifiedToken.userId;
   }
 
-  return new AuthError();
+  throw new AuthError();
 }
 
 // tslint:disable-next-line:no-var-requires
