@@ -1,7 +1,7 @@
 import { prisma, StatusScrapeTargetCreateInput } from "@status-scrape/prisma";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { AuthError, isAuthenticated } from "../../utils";
+import { isAuthenticated } from "../../utils";
 import { IApolloContext } from "../apollo";
 
 export interface ILoginArgs {
@@ -32,22 +32,19 @@ export const Mutation = {
     };
   },
   signup: async (obj: any, args: ILoginArgs, ctx: any, info: any) => {
-    if (process.env.SIGNUP_ENABLED) {
-      const hashedPassword = await hash(args.password, 10);
-      const user = await ctx.db.createUser({
-        email: args.email,
-        name: args.name,
-        password: hashedPassword
-      });
+    await isAuthenticated(ctx);
+    const hashedPassword = await hash(args.password, 10);
+    const user = await ctx.db.createUser({
+      email: args.email,
+      name: args.name,
+      password: hashedPassword
+    });
 
-      return {
-        user,
-        // tslint:disable-next-line:object-literal-sort-keys
-        token: sign({ userId: user.id }, process.env.APP_SECRET)
-      };
-    }
-
-    return new AuthError();
+    return {
+      user,
+      // tslint:disable-next-line:object-literal-sort-keys
+      token: sign({ userId: user.id }, process.env.APP_SECRET)
+    };
   },
   upsertScrapeTarget: async (
     obj: any,
