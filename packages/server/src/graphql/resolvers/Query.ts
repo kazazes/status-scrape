@@ -7,7 +7,8 @@ import { ILoginArgs } from "./Mutation";
 // tslint:disable-next-line:variable-name
 export const Query = {
   me: (obj: any, args: ILoginArgs, ctx: IApolloContext, info: any) => {
-    return ctx.db.user({ id: getUserId(ctx) });
+    const id = getUserId(ctx);
+    return ctx.db.user({ id });
   },
   startScrape: async (
     obj: any,

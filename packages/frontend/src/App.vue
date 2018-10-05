@@ -1,14 +1,12 @@
 <template>
-  <v-app dark>
-    <Dashboard v-if="isAuthenticated" />
-    <Login v-else />
-  </v-app>
+  <router-view v-on:logout="logout"></router-view>
 </template>
 
 <script lang="ts">
   import Vue from "vue";
   import Component from "vue-class-component";
   import Dashboard from "./views/Dashboard.vue";
+  import Snackbar from "./components/Snackbar.vue";
   import Login from "./views/Login.vue";
   import { APOLLO_TOKEN } from "./constants";
 
@@ -16,18 +14,23 @@
     name: "App",
     components: {
       Dashboard,
-      Login
-    },
-    data: () => {
-      return {
-        isAuthenticated: !!localStorage.getItem(APOLLO_TOKEN),
-      };
+      Login,
+      Snackbar,
     },
   })
   export default class App extends Vue {
-    public logout () {
+    private isAuthenticated: boolean = !!localStorage.getItem(APOLLO_TOKEN);
+    public logout() {
       localStorage.removeItem(APOLLO_TOKEN);
-      this.$router.replace("/");
+      this.$router.push("/login");
+    }
+
+    public mounted() {
+      if (this.isAuthenticated) {
+        this.$router.push("/dashboard");
+      } else {
+        this.$router.push("/login");
+      }
     }
   }
 </script>

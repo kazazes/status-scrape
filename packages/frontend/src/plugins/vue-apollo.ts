@@ -2,16 +2,13 @@ import Vue from "vue";
 import VueApollo from "vue-apollo";
 import { createApolloClient } from "../apolloClient";
 import { ApolloClient } from "apollo-client";
+import { APOLLO_TOKEN } from "../constants";
 
-// Install the vue plugin
 Vue.use(VueApollo);
-
-// Name of the localStorage item
-const AUTH_TOKEN = "apollo-token";
 
 // Http endpoint
 const httpEndpoint =
-  process.env.VUE_APP_GRAPHQL_HTTP || "http://localhost:4000/graphql";
+  process.env.VUE_APP_GRAPHQL_HTTP || `http://localhost:3000/graphql`;
 // Files URL root
 export const filesRoot =
   process.env.VUE_APP_FILES_ROOT ||
@@ -25,9 +22,9 @@ const defaultOptions = {
   httpEndpoint,
   // You can use `wss` for secure connection (recommended in production)
   // Use `null` to disable subscriptions
-  wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || "ws://localhost:4000/graphql",
+  wsEndpoint: null,
   // LocalStorage token
-  tokenName: AUTH_TOKEN,
+  tokenName: APOLLO_TOKEN,
   // Enable Automatic Query persisting with Apollo Engine
   persisting: false,
   // Use websockets for everything (no HTTP)
@@ -65,7 +62,7 @@ export function createProvider(options = {}) {
     defaultClient: apolloClient,
     defaultOptions: {
       $query: {
-        // fetchPolicy: 'cache-and-network',
+        fetchPolicy: "cache-and-network"
       }
     },
     errorHandler(error) {
@@ -84,7 +81,7 @@ export function createProvider(options = {}) {
 // Manually call this when user log in
 export async function onLogin(apolloClient: ApolloClient<any>, token: string) {
   if (typeof localStorage !== "undefined" && token) {
-    localStorage.setItem(AUTH_TOKEN, token);
+    localStorage.setItem(APOLLO_TOKEN, token);
   }
   try {
     await apolloClient.resetStore();
@@ -97,7 +94,7 @@ export async function onLogin(apolloClient: ApolloClient<any>, token: string) {
 // Manually call this when user log out
 export async function onLogout(apolloClient: ApolloClient<any>) {
   if (typeof localStorage !== "undefined") {
-    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.removeItem(APOLLO_TOKEN);
   }
 
   try {

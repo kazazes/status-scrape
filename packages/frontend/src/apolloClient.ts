@@ -11,7 +11,7 @@ import { ApolloCache } from "apollo-cache";
 interface ICreateApolloClientArgs {
   httpEndpoint: string;
   httpLinkOptions?: HttpOptions;
-  wsEndpoint?: string;
+  wsEndpoint?: string | null;
   uploadEndpoint?: string;
   tokenName: string;
   persisting: boolean;
