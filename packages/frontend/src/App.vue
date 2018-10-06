@@ -1,5 +1,8 @@
 <template>
-  <router-view v-on:logout="logout"></router-view>
+  <v-app dark>
+    <Snackbar/>
+    <router-view v-on:logout="logout"></router-view>
+  </v-app>
 </template>
 
 <script lang="ts">

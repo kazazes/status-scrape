@@ -1687,7 +1687,7 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.13.2.tgz#ffe96278e712a8d4e467e367a338b05e22872646"
   integrity sha512-k6MCN8WuDiCj6O+UJsVMbrreZxkbrhQbO02oDj6yuRu8UAkp0MDdEcDKif8/gBKuJbT84kkO+VHQAqXkumEklg==
 
-"@types/puppeteer@1.9.0":
+"@types/puppeteer@^1.6.4":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.9.0.tgz#9a4bcca1902259e2cea6e6be7b4a540aad13785e"
   integrity sha512-ZP3wL4Lqpgu4xZbz/0vQhbIZnllNEawVW3oTpEXyJg+uhf/YQgL8oeTrfoUwj9JXE9UUe53eqmgLl29/d2gjqQ==
