@@ -5,6 +5,7 @@ const strategy = new StatuspageStrategy({
   name: "Statuspage",
   twitterHandle: "statuspage",
   strategy: "STATUSPAGE_IO",
+  companyUrl: "statuspage.io",
   statusUrl: "https://metastatuspage.com/"
 });
 

@@ -11,12 +11,14 @@ type StatusScrapeTarget {
   twitterHandle: String @unique
   strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
+  companyUrl: String! @unique
   results: [StatusScrapeJob!]! @relation(name: "TargetScrapeRelation")
 }
 
 type StatusScrapeJob {
   id: ID! @unique
   createdAt: DateTime!
+  updatedAt: DateTime!
   dom: String
   target: StatusScrapeTarget! @relation(name: "TargetScrapeRelation")
   results: [StatusScrapeResult!]! @relation(name: "ScrapeResultRelation")

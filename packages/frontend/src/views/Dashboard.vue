@@ -12,14 +12,6 @@
       <v-list>
         <template v-for="(item, index) in items">
           <v-divider v-if="item.divider" :key="index"></v-divider>
-          <v-layout v-else-if="item.heading" :key="item.heading" row align-center>
-            <v-flex xs6>
-              <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
-            </v-flex>
-            <v-flex xs6 class="text-xs-center">
-              <a href="#!" class="body-2 black--text">EDIT</a>
-            </v-flex>
-          </v-layout>
           <v-list-group
             v-else-if="item.children"
             v-model="item.model"
@@ -41,7 +33,7 @@
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
-          <v-list-tile v-else :key="item.text">
+          <v-list-tile v-else :key="item.text" :to="item.path">
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
@@ -155,7 +147,7 @@
       drawer: null,
       items: [
         { icon: "fa-list-ul", text: "Data" },
-        { icon: "fa-bullseye", text: "Targets" },
+        { icon: "fa-bullseye", text: "Targets", path: "/dashboard/targets" },
         { divider: true },
         { icon: "fa-cogs", text: "Run" },
         { icon: "fa-calendar", text: "Schedule" },

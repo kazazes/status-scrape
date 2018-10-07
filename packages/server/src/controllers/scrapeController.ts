@@ -18,8 +18,6 @@ export class ScrapeController {
   }
 
   public async scrape() {
-    // tslint:disable-next-line:no-console
-    console.time("scrape");
     const storedScrape = prisma.createStatusScrapeJob({
       target: { connect: { id: this.target.id } },
       status: "RUNNING"
@@ -83,11 +81,16 @@ export class ScrapeController {
 
     this.results = await Promise.all(inputs);
 
+    await prisma.updateStatusScrapeJob({
+      where: { id: storedScrapeId },
+      data: { status: "DONE" }
+    });
+
     logger.debug(
       `Created ${inputs.length} status scrape results for ${
         this.target.name
         // tslint:disable-next-line:no-console
-      } (${this.target.statusUrl}) in ${console.timeEnd("scrape")}`
+      } (${this.target.statusUrl})`
     );
   }
 

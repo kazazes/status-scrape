@@ -8,3 +8,19 @@ export const ME = gql`
     }
   }
 `;
+
+export const TARGETS = gql`
+  query listTargets {
+    listTargets {
+      name
+      twitterHandle
+      strategy
+      statusUrl
+      companyUrl
+      results {
+        updatedAt
+        status
+      }
+    }
+  }
+`;

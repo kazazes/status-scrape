@@ -22,6 +22,7 @@
     "apollo-upload-client": "^9.0.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.0",
+    "moment": "^2.22.2",
     "vue": "^2.5.17",
     "vue-apollo": "^3.0.0-beta.11",
     "vue-class-component": "^6.0.0",
