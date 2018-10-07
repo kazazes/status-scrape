@@ -8,10 +8,10 @@ type User {
 type StatusScrapeTarget {
   id: ID! @unique
   name: String! @unique
-  twitterHandle: String @unique
-  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
   companyUrl: String! @unique
+  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
+  twitterHandle: String @unique
   results: [StatusScrapeJob!]! @relation(name: "TargetScrapeRelation")
 }
 

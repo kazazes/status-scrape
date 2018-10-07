@@ -5,7 +5,7 @@ import { createPersistedQueryLink } from "apollo-link-persisted-queries";
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.blueGrey.base,
+    primary: colors.red.lighten3,
     secondary: colors.green.base,
     accent: colors.blue.accent2,
     error: colors.red.lighten1,

@@ -5,7 +5,7 @@
         <v-subheader>Targets</v-subheader>
         <v-divider></v-divider>
         <template v-for="(target, index) in listTargets">
-          <v-list-tile :key="target.name" avatar :to="'/dashboard/targets/' + target.name" ripple>
+          <v-list-tile :key="target.name" avatar :to="'/dashboard/target/' + target.id" ripple>
             <v-list-tile-avatar>
               <CompanyLogo :companyUrl="target.companyUrl"/>
             </v-list-tile-avatar>
@@ -13,26 +13,28 @@
               <v-list-tile-title>{{ target.name }}</v-list-tile-title>
               <v-list-tile-sub-title>
                 Last scraped:
-                <span>{{ moment(target.results[0].updatedAt).format('LLL') }}</span>
+                <span>{{ target.results[0] ? moment(target.results[0].updatedAt).format('LLL') : "Never"}}</span>
               </v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon>
-                <v-icon small v-if="target.results[0].status === 'DONE'" color="success">fa-circle</v-icon>
-                <v-icon
-                  small
-                  v-else-if="target.results[0].status === 'RUNNING'"
-                  color="warning"
-                >fa-circle</v-icon>
-                <v-icon
-                  small
-                  v-else-if="target.results[0].status === 'FAILED' || target.results[0].status === 'TIMED_OUT'"
-                  color="error"
-                >fa-circle</v-icon>
-              </v-btn>
+            <v-list-tile-action v-if="target.results[0]">
+              <v-progress-circular
+                v-if="target.results[0].status === 'DONE'"
+                :value="100"
+                color="success"
+              ></v-progress-circular>
+              <v-progress-circular
+                v-else-if="target.results[0].status === 'RUNNING'"
+                indeterminate
+                color="success"
+              ></v-progress-circular>
+              <v-progress-circular
+                v-else-if="target.results[0].status === 'FAILED' || target.results[0].status === 'TIMED_OUT'"
+                color="error"
+                :value="100"
+              ></v-progress-circular>
+              <v-divider v-if="index < listTargets.length - 1" :key="index"></v-divider>
             </v-list-tile-action>
           </v-list-tile>
-          <v-divider v-if="index < listTargets.length - 1" :key="index"></v-divider>
         </template>
       </v-list>
     </v-flex>
@@ -45,7 +47,7 @@
   import CompanyLogo from "./CompanyLogo.vue";
 
   @Component({
-    name: "Target",
+    name: "Targets",
     components: { CompanyLogo },
     data: () => {
       return {};
@@ -54,8 +56,9 @@
       listTargets: {
         query: TARGETS,
         pollInterval: 2000,
+        fetchPolicy: "no-cache",
       },
     },
   })
-  export default class Target extends Vue {}
+  export default class Targets extends Vue {}
 </script>

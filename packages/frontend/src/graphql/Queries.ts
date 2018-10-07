@@ -12,6 +12,7 @@ export const ME = gql`
 export const TARGETS = gql`
   query listTargets {
     listTargets {
+      id
       name
       twitterHandle
       strategy
@@ -21,6 +22,26 @@ export const TARGETS = gql`
         updatedAt
         status
       }
+    }
+  }
+`;
+
+export const TARGET = gql`
+  query target($target: StatusScrapeTargetWhereUniqueInput!) {
+    target(target: $target) {
+      id
+      name
+      twitterHandle
+      strategy
+      statusUrl
+      companyUrl
+      # results {
+      #   results {
+      #     category
+      #     component
+      #     status
+      #   }
+      # }
     }
   }
 `;

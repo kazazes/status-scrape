@@ -6,8 +6,8 @@
 .vscode
 ts*.json
 *.log
+*.ts
 
-# Node.js dependencies:
 node_modules
 packages/functions
 

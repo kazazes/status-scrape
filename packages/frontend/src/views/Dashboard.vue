@@ -6,8 +6,6 @@
       width="230"
       fixed
       app
-      dark
-      color="secondary"
     >
       <v-list>
         <template v-for="(item, index) in items">
@@ -44,7 +42,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="primary" dark app fixed>
+    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue-grey darken-2" app fixed>
       <v-container fluid class="pa-0">
         <v-layout row justify-space-between align-center fill-height class="mt-0">
           <v-flex xs-2>
@@ -64,7 +62,7 @@
           </v-flex>
           <v-flex xs-4>
             <v-menu offset-y style="float: right;">
-              <v-btn slot="activator" color="info" dark>{{ me.name }}</v-btn>
+              <v-btn slot="activator" color="primary" dark>{{ me.name }}</v-btn>
               <v-list light dense subheader>
                 <v-list-tile @click="$emit('logout')">
                   <v-list-tile-title>Logout</v-list-tile-title>
@@ -83,52 +81,18 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-btn fab bottom right color="secondary" dark fixed @click="dialog = !dialog">
+    <v-btn
+      fab
+      bottom
+      right
+      color="secondary"
+      dark
+      fixed
+      @click="$refs.addTargetDialog.toggleDialog()"
+    >
       <v-icon>fa-plus</v-icon>
     </v-btn>
-    <v-dialog v-model="dialog" width="800px">
-      <v-card>
-        <v-card-title class="grey lighten-4 py-4 title">Create contact</v-card-title>
-        <v-container grid-list-sm class="pa-4">
-          <v-layout row wrap="">
-            <v-flex xs12 align-center justify-space-between>
-              <v-layout align-center>
-                <v-avatar size="40px" class="mr-3">
-                  <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt="">
-                </v-avatar>
-                <v-text-field placeholder="Name"></v-text-field>
-              </v-layout>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field prepend-icon="business" placeholder="Company"></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field placeholder="Job title"></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field prepend-icon="mail" placeholder="Email"></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                type="tel"
-                prepend-icon="phone"
-                placeholder="(000) 000 - 0000"
-                mask="phone"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field prepend-icon="notes" placeholder="Notes"></v-text-field>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-actions>
-          <v-btn flat color="primary">More</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
-          <v-btn flat @click="dialog = false">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <AddTargetDialog ref="addTargetDialog"/>
   </v-app>
 </template>
 <script lang="ts">
@@ -137,16 +101,16 @@
   import { ME } from "../graphql/Queries";
   import { ApolloQueryResult, ApolloError } from "apollo-client";
   import { IMe } from "../store/me";
+  import AddTargetDialog from "../components/AddTargetDialog.vue";
 
   @Component({
     name: "Dashboard",
-    components: {},
+    components: { AddTargetDialog },
     data: () => ({
       me: { name: "" },
       dialog: false,
       drawer: null,
       items: [
-        { icon: "fa-list-ul", text: "Data" },
         { icon: "fa-bullseye", text: "Targets", path: "/dashboard/targets" },
         { divider: true },
         { icon: "fa-cogs", text: "Run" },
