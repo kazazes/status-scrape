@@ -10,6 +10,15 @@ type Query {
   listTargets: [StatusScrapeTarget!]!
   target(target: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget!
   lastScrape(target: StatusScrapeTargetWhereUniqueInput!): StatusScrapeJob
+  statusScrapeJobs(
+    where: StatusScrapeJobWhereInput
+    orderBy: StatusScrapeJobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [StatusScrapeJob]!
 }
 
 type Mutation {

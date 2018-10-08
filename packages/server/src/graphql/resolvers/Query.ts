@@ -64,5 +64,14 @@ export const Query = {
           status
         }
       }`);
+  },
+  statusScrapeJobs: async (
+    obj: any,
+    args: any,
+    ctx: IApolloContext,
+    info: any
+  ) => {
+    await isAuthenticated(ctx);
+    return prisma.statusScrapeJobs(args);
   }
 };

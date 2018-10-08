@@ -35,13 +35,32 @@ export const TARGET = gql`
       strategy
       statusUrl
       companyUrl
-      # results {
-      #   results {
-      #     category
-      #     component
-      #     status
-      #   }
-      # }
+    }
+  }
+`;
+
+export const TARGET_JOBS = gql`
+  query statusScrapeJobs(
+    $where: StatusScrapeJobWhereInput
+    $skip: Int
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+  ) {
+    statusScrapeJobs(
+      where: $where
+      orderBy: updatedAt_DESC
+      skip: $skip
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+    ) {
+      id
+      createdAt
+      updatedAt
+      status
     }
   }
 `;

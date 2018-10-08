@@ -111,7 +111,7 @@
       dialog: false,
       drawer: null,
       items: [
-        { icon: "fa-bullseye", text: "Targets", path: "/dashboard/targets" },
+        { icon: "fa-bullseye", text: "Targets", path: "/dashboard/target" },
         { divider: true },
         { icon: "fa-cogs", text: "Run" },
         { icon: "fa-calendar", text: "Schedule" },

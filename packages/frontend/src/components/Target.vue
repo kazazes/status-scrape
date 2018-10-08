@@ -1,9 +1,17 @@
 <template>
   <v-layout row>
     <v-flex xs-12>
-      <pre>
-        {{ JSON.stringify(target,null, 2)}}
-      </pre>
+      <v-card>
+        <v-card-title class="blue-grey lighten-2">
+          <div class="v-avatar mr-2" style="height: 40px; width: 40px;">
+            <CompanyLogo :companyUrl="target.companyUrl"/>
+          </div>
+          <h3 class="headline white--text">{{ target.name }}</h3>
+        </v-card-title>
+        <v-card-text>
+          <ScrapesList :target="target"/>
+        </v-card-text>
+      </v-card>
     </v-flex>
   </v-layout>
 </template>
@@ -13,11 +21,11 @@
   import { TARGET } from "../graphql/Queries";
   import CompanyLogo from "./CompanyLogo.vue";
   import { VueApolloComponentOption } from "vue-apollo/types/options";
-  import { StatusScrapeTarget } from "@status-scrape/prisma";
+  import ScrapesList from "./ScrapesList.vue";
 
   @Component({
     name: "Target",
-    components: { CompanyLogo },
+    components: { CompanyLogo, ScrapesList },
     data() {
       return { targetId: String };
     },

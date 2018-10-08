@@ -2,6 +2,7 @@
   "name": "@status-scrape/prisma",
   "version": "0.0.1",
   "main": "dist/index.js",
+  "types": "dist/",
   "author": "Peter Kazazes",
   "private": true,
   "scripts": {

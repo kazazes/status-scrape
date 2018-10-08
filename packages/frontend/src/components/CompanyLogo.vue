@@ -5,6 +5,7 @@
   .company-logo {
     padding: 3px;
     border: 1px solid #b0bec5;
+    background-color: white;
   }
 </style>
 
