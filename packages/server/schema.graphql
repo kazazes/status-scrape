@@ -19,6 +19,15 @@ type Query {
     first: Int
     last: Int
   ): [StatusScrapeJob]!
+  statusScrapeResults(
+    where: StatusScrapeResultWhereInput
+    orderBy: StatusScrapeResultOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [StatusScrapeResult]!
 }
 
 type Mutation {

@@ -73,5 +73,14 @@ export const Query = {
   ) => {
     await isAuthenticated(ctx);
     return prisma.statusScrapeJobs(args);
+  },
+  statusScrapeResults: async (
+    obj: any,
+    args: any,
+    ctx: IApolloContext,
+    info: any
+  ) => {
+    await isAuthenticated(ctx);
+    return prisma.statusScrapeResults(args);
   }
 };

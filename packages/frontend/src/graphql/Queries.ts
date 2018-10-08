@@ -64,3 +64,35 @@ export const TARGET_JOBS = gql`
     }
   }
 `;
+
+export const JOB_RESULTS = gql`
+  query statusScrapeResults(
+    $where: StatusScrapeResultWhereInput
+    $skip: Int
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+  ) {
+    statusScrapeResults(
+      where: $where
+      orderBy: component_ASC
+      skip: $skip
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+    ) {
+      id
+      component
+      category
+      status
+    }
+  }
+`;
+
+export const SCRAPE = gql`
+  query startScrape($target: StatusScrapeTargetWhereUniqueInput!) {
+    startScrape(target: $target)
+  }
+`;

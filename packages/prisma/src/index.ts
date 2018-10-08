@@ -64,6 +64,9 @@ export interface Prisma {
       last?: Int;
     }
   ) => StatusScrapeJobConnection;
+  statusScrapeResult: (
+    where: StatusScrapeResultWhereUniqueInput
+  ) => StatusScrapeResult;
   statusScrapeResults: (
     args?: {
       where?: StatusScrapeResultWhereInput;
@@ -169,12 +172,28 @@ export interface Prisma {
   createStatusScrapeResult: (
     data: StatusScrapeResultCreateInput
   ) => StatusScrapeResult;
+  updateStatusScrapeResult: (
+    args: {
+      data: StatusScrapeResultUpdateInput;
+      where: StatusScrapeResultWhereUniqueInput;
+    }
+  ) => StatusScrapeResult;
   updateManyStatusScrapeResults: (
     args: {
       data: StatusScrapeResultUpdateInput;
       where?: StatusScrapeResultWhereInput;
     }
   ) => BatchPayload;
+  upsertStatusScrapeResult: (
+    args: {
+      where: StatusScrapeResultWhereUniqueInput;
+      create: StatusScrapeResultCreateInput;
+      update: StatusScrapeResultUpdateInput;
+    }
+  ) => StatusScrapeResult;
+  deleteStatusScrapeResult: (
+    where: StatusScrapeResultWhereUniqueInput
+  ) => StatusScrapeResult;
   deleteManyStatusScrapeResults: (
     where?: StatusScrapeResultWhereInput
   ) => BatchPayload;
@@ -277,14 +296,14 @@ export type StatusScrapeJobOrderByInput =
 export type ScrapeStrategy = "STATUSPAGE_IO";
 
 export type StatusScrapeResultOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
   | "category_ASC"
   | "category_DESC"
   | "component_ASC"
   | "component_DESC"
   | "status_ASC"
   | "status_DESC"
-  | "id_ASC"
-  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -295,14 +314,14 @@ export type StatusScrapeTargetOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
-  | "twitterHandle_ASC"
-  | "twitterHandle_DESC"
-  | "strategy_ASC"
-  | "strategy_DESC"
   | "statusUrl_ASC"
   | "statusUrl_DESC"
   | "companyUrl_ASC"
   | "companyUrl_DESC"
+  | "strategy_ASC"
+  | "strategy_DESC"
+  | "twitterHandle_ASC"
+  | "twitterHandle_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -324,27 +343,39 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface StatusScrapeTargetCreateWithoutResultsInput {
-  name: String;
-  twitterHandle?: String;
-  strategy?: ScrapeStrategy;
-  statusUrl: String;
-  companyUrl: String;
+export interface StatusScrapeResultCreateManyWithoutScrapeInput {
+  create?:
+    | StatusScrapeResultCreateWithoutScrapeInput[]
+    | StatusScrapeResultCreateWithoutScrapeInput;
+  connect?:
+    | StatusScrapeResultWhereUniqueInput[]
+    | StatusScrapeResultWhereUniqueInput;
 }
 
 export type StatusScrapeJobWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface StatusScrapeTargetUpdateWithoutResultsDataInput {
-  name?: String;
-  twitterHandle?: String;
-  strategy?: ScrapeStrategy;
-  statusUrl?: String;
-  companyUrl?: String;
+export interface StatusScrapeTargetUpsertWithoutResultsInput {
+  update: StatusScrapeTargetUpdateWithoutResultsDataInput;
+  create: StatusScrapeTargetCreateWithoutResultsInput;
 }
 
 export interface StatusScrapeResultWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   scrape?: StatusScrapeJobWhereInput;
   category?: String;
   category_not?: String;
@@ -383,9 +414,25 @@ export interface StatusScrapeResultWhereInput {
   NOT?: StatusScrapeResultWhereInput[] | StatusScrapeResultWhereInput;
 }
 
-export interface StatusScrapeTargetUpsertWithoutResultsInput {
-  update: StatusScrapeTargetUpdateWithoutResultsDataInput;
-  create: StatusScrapeTargetCreateWithoutResultsInput;
+export interface StatusScrapeResultUpdateManyWithoutScrapeInput {
+  create?:
+    | StatusScrapeResultCreateWithoutScrapeInput[]
+    | StatusScrapeResultCreateWithoutScrapeInput;
+  delete?:
+    | StatusScrapeResultWhereUniqueInput[]
+    | StatusScrapeResultWhereUniqueInput;
+  connect?:
+    | StatusScrapeResultWhereUniqueInput[]
+    | StatusScrapeResultWhereUniqueInput;
+  disconnect?:
+    | StatusScrapeResultWhereUniqueInput[]
+    | StatusScrapeResultWhereUniqueInput;
+  update?:
+    | StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput[]
+    | StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput;
+  upsert?:
+    | StatusScrapeResultUpsertWithWhereUniqueWithoutScrapeInput[]
+    | StatusScrapeResultUpsertWithWhereUniqueWithoutScrapeInput;
 }
 
 export interface StatusScrapeJobWhereInput {
@@ -444,6 +491,297 @@ export interface StatusScrapeJobWhereInput {
   AND?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
   OR?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
   NOT?: StatusScrapeJobWhereInput[] | StatusScrapeJobWhereInput;
+}
+
+export interface StatusScrapeTargetCreateInput {
+  name: String;
+  statusUrl: String;
+  companyUrl: String;
+  strategy?: ScrapeStrategy;
+  twitterHandle?: String;
+  results?: StatusScrapeJobCreateManyWithoutTargetInput;
+}
+
+export interface StatusScrapeResultCreateInput {
+  scrape: StatusScrapeJobCreateOneWithoutResultsInput;
+  category: String;
+  component: String;
+  status: SystemStatus;
+}
+
+export interface StatusScrapeJobUpsertWithoutResultsInput {
+  update: StatusScrapeJobUpdateWithoutResultsDataInput;
+  create: StatusScrapeJobCreateWithoutResultsInput;
+}
+
+export interface StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput {
+  where: StatusScrapeResultWhereUniqueInput;
+  data: StatusScrapeResultUpdateWithoutScrapeDataInput;
+}
+
+export interface StatusScrapeJobUpdateWithoutResultsDataInput {
+  dom?: String;
+  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
+  status?: ScrapeJobStatus;
+}
+
+export interface StatusScrapeTargetSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: StatusScrapeTargetWhereInput;
+  AND?:
+    | StatusScrapeTargetSubscriptionWhereInput[]
+    | StatusScrapeTargetSubscriptionWhereInput;
+  OR?:
+    | StatusScrapeTargetSubscriptionWhereInput[]
+    | StatusScrapeTargetSubscriptionWhereInput;
+  NOT?:
+    | StatusScrapeTargetSubscriptionWhereInput[]
+    | StatusScrapeTargetSubscriptionWhereInput;
+}
+
+export interface StatusScrapeJobUpdateOneRequiredWithoutResultsInput {
+  create?: StatusScrapeJobCreateWithoutResultsInput;
+  update?: StatusScrapeJobUpdateWithoutResultsDataInput;
+  upsert?: StatusScrapeJobUpsertWithoutResultsInput;
+  connect?: StatusScrapeJobWhereUniqueInput;
+}
+
+export interface StatusScrapeJobSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: StatusScrapeJobWhereInput;
+  AND?:
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
+  OR?:
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
+  NOT?:
+    | StatusScrapeJobSubscriptionWhereInput[]
+    | StatusScrapeJobSubscriptionWhereInput;
+}
+
+export type StatusScrapeResultWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeJobWhereUniqueInput;
+  update: StatusScrapeJobUpdateWithoutTargetDataInput;
+  create: StatusScrapeJobCreateWithoutTargetInput;
+}
+
+export interface StatusScrapeJobCreateInput {
+  dom?: String;
+  target: StatusScrapeTargetCreateOneWithoutResultsInput;
+  results?: StatusScrapeResultCreateManyWithoutScrapeInput;
+  status: ScrapeJobStatus;
+}
+
+export type StatusScrapeTargetWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  name?: String;
+  statusUrl?: String;
+  companyUrl?: String;
+  twitterHandle?: String;
+}>;
+
+export interface StatusScrapeTargetCreateOneWithoutResultsInput {
+  create?: StatusScrapeTargetCreateWithoutResultsInput;
+  connect?: StatusScrapeTargetWhereUniqueInput;
+}
+
+export interface StatusScrapeJobUpdateManyWithoutTargetInput {
+  create?:
+    | StatusScrapeJobCreateWithoutTargetInput[]
+    | StatusScrapeJobCreateWithoutTargetInput;
+  delete?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
+  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
+  disconnect?:
+    | StatusScrapeJobWhereUniqueInput[]
+    | StatusScrapeJobWhereUniqueInput;
+  update?:
+    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput[]
+    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput;
+  upsert?:
+    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput[]
+    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput;
+}
+
+export interface StatusScrapeTargetCreateWithoutResultsInput {
+  name: String;
+  statusUrl: String;
+  companyUrl: String;
+  strategy?: ScrapeStrategy;
+  twitterHandle?: String;
+}
+
+export interface StatusScrapeJobCreateWithoutTargetInput {
+  dom?: String;
+  results?: StatusScrapeResultCreateManyWithoutScrapeInput;
+  status: ScrapeJobStatus;
+}
+
+export interface StatusScrapeResultUpdateInput {
+  scrape?: StatusScrapeJobUpdateOneRequiredWithoutResultsInput;
+  category?: String;
+  component?: String;
+  status?: SystemStatus;
+}
+
+export interface StatusScrapeJobCreateManyWithoutTargetInput {
+  create?:
+    | StatusScrapeJobCreateWithoutTargetInput[]
+    | StatusScrapeJobCreateWithoutTargetInput;
+  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
+}
+
+export interface StatusScrapeResultCreateWithoutScrapeInput {
+  category: String;
+  component: String;
+  status: SystemStatus;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface StatusScrapeJobUpdateInput {
+  dom?: String;
+  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
+  results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
+  status?: ScrapeJobStatus;
+}
+
+export interface UserUpdateInput {
+  name?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
+  create?: StatusScrapeTargetCreateWithoutResultsInput;
+  update?: StatusScrapeTargetUpdateWithoutResultsDataInput;
+  upsert?: StatusScrapeTargetUpsertWithoutResultsInput;
+  connect?: StatusScrapeTargetWhereUniqueInput;
+}
+
+export interface StatusScrapeJobUpdateWithoutTargetDataInput {
+  dom?: String;
+  results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
+  status?: ScrapeJobStatus;
+}
+
+export interface StatusScrapeTargetUpdateWithoutResultsDataInput {
+  name?: String;
+  statusUrl?: String;
+  companyUrl?: String;
+  strategy?: ScrapeStrategy;
+  twitterHandle?: String;
+}
+
+export interface StatusScrapeTargetUpdateInput {
+  name?: String;
+  statusUrl?: String;
+  companyUrl?: String;
+  strategy?: ScrapeStrategy;
+  twitterHandle?: String;
+  results?: StatusScrapeJobUpdateManyWithoutTargetInput;
+}
+
+export interface StatusScrapeTargetWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  statusUrl?: String;
+  statusUrl_not?: String;
+  statusUrl_in?: String[] | String;
+  statusUrl_not_in?: String[] | String;
+  statusUrl_lt?: String;
+  statusUrl_lte?: String;
+  statusUrl_gt?: String;
+  statusUrl_gte?: String;
+  statusUrl_contains?: String;
+  statusUrl_not_contains?: String;
+  statusUrl_starts_with?: String;
+  statusUrl_not_starts_with?: String;
+  statusUrl_ends_with?: String;
+  statusUrl_not_ends_with?: String;
+  companyUrl?: String;
+  companyUrl_not?: String;
+  companyUrl_in?: String[] | String;
+  companyUrl_not_in?: String[] | String;
+  companyUrl_lt?: String;
+  companyUrl_lte?: String;
+  companyUrl_gt?: String;
+  companyUrl_gte?: String;
+  companyUrl_contains?: String;
+  companyUrl_not_contains?: String;
+  companyUrl_starts_with?: String;
+  companyUrl_not_starts_with?: String;
+  companyUrl_ends_with?: String;
+  companyUrl_not_ends_with?: String;
+  strategy?: ScrapeStrategy;
+  strategy_not?: ScrapeStrategy;
+  strategy_in?: ScrapeStrategy[] | ScrapeStrategy;
+  strategy_not_in?: ScrapeStrategy[] | ScrapeStrategy;
+  twitterHandle?: String;
+  twitterHandle_not?: String;
+  twitterHandle_in?: String[] | String;
+  twitterHandle_not_in?: String[] | String;
+  twitterHandle_lt?: String;
+  twitterHandle_lte?: String;
+  twitterHandle_gt?: String;
+  twitterHandle_gte?: String;
+  twitterHandle_contains?: String;
+  twitterHandle_not_contains?: String;
+  twitterHandle_starts_with?: String;
+  twitterHandle_not_starts_with?: String;
+  twitterHandle_ends_with?: String;
+  twitterHandle_not_ends_with?: String;
+  results_every?: StatusScrapeJobWhereInput;
+  results_some?: StatusScrapeJobWhereInput;
+  results_none?: StatusScrapeJobWhereInput;
+  AND?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
+  OR?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
+  NOT?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
 }
 
 export interface UserWhereInput {
@@ -508,178 +846,16 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface StatusScrapeResultCreateInput {
-  scrape: StatusScrapeJobCreateOneWithoutResultsInput;
-  category: String;
-  component: String;
-  status: SystemStatus;
+export interface StatusScrapeResultUpsertWithWhereUniqueWithoutScrapeInput {
+  where: StatusScrapeResultWhereUniqueInput;
+  update: StatusScrapeResultUpdateWithoutScrapeDataInput;
+  create: StatusScrapeResultCreateWithoutScrapeInput;
 }
 
-export interface StatusScrapeTargetCreateInput {
-  name: String;
-  twitterHandle?: String;
-  strategy?: ScrapeStrategy;
-  statusUrl: String;
-  companyUrl: String;
-  results?: StatusScrapeJobCreateManyWithoutTargetInput;
-}
-
-export interface StatusScrapeResultUpdateManyWithoutScrapeInput {
-  create?:
-    | StatusScrapeResultCreateWithoutScrapeInput[]
-    | StatusScrapeResultCreateWithoutScrapeInput;
-}
-
-export interface StatusScrapeJobUpsertWithoutResultsInput {
-  update: StatusScrapeJobUpdateWithoutResultsDataInput;
-  create: StatusScrapeJobCreateWithoutResultsInput;
-}
-
-export interface StatusScrapeTargetSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: StatusScrapeTargetWhereInput;
-  AND?:
-    | StatusScrapeTargetSubscriptionWhereInput[]
-    | StatusScrapeTargetSubscriptionWhereInput;
-  OR?:
-    | StatusScrapeTargetSubscriptionWhereInput[]
-    | StatusScrapeTargetSubscriptionWhereInput;
-  NOT?:
-    | StatusScrapeTargetSubscriptionWhereInput[]
-    | StatusScrapeTargetSubscriptionWhereInput;
-}
-
-export interface StatusScrapeJobUpdateWithoutResultsDataInput {
-  dom?: String;
-  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
-  status?: ScrapeJobStatus;
-}
-
-export interface StatusScrapeJobSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: StatusScrapeJobWhereInput;
-  AND?:
-    | StatusScrapeJobSubscriptionWhereInput[]
-    | StatusScrapeJobSubscriptionWhereInput;
-  OR?:
-    | StatusScrapeJobSubscriptionWhereInput[]
-    | StatusScrapeJobSubscriptionWhereInput;
-  NOT?:
-    | StatusScrapeJobSubscriptionWhereInput[]
-    | StatusScrapeJobSubscriptionWhereInput;
-}
-
-export interface StatusScrapeJobUpdateOneRequiredWithoutResultsInput {
-  create?: StatusScrapeJobCreateWithoutResultsInput;
-  update?: StatusScrapeJobUpdateWithoutResultsDataInput;
-  upsert?: StatusScrapeJobUpsertWithoutResultsInput;
-  connect?: StatusScrapeJobWhereUniqueInput;
-}
-
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-}
-
-export interface StatusScrapeJobUpdateWithoutTargetDataInput {
-  dom?: String;
-  results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
-  status?: ScrapeJobStatus;
-}
-
-export interface StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput {
-  where: StatusScrapeJobWhereUniqueInput;
-  data: StatusScrapeJobUpdateWithoutTargetDataInput;
-}
-
-export interface StatusScrapeJobCreateInput {
-  dom?: String;
-  target: StatusScrapeTargetCreateOneWithoutResultsInput;
-  results?: StatusScrapeResultCreateManyWithoutScrapeInput;
-  status: ScrapeJobStatus;
-}
-
-export interface StatusScrapeTargetUpdateInput {
-  name?: String;
-  twitterHandle?: String;
-  strategy?: ScrapeStrategy;
-  statusUrl?: String;
-  companyUrl?: String;
-  results?: StatusScrapeJobUpdateManyWithoutTargetInput;
-}
-
-export interface StatusScrapeTargetCreateOneWithoutResultsInput {
-  create?: StatusScrapeTargetCreateWithoutResultsInput;
-  connect?: StatusScrapeTargetWhereUniqueInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface StatusScrapeResultUpdateInput {
-  scrape?: StatusScrapeJobUpdateOneRequiredWithoutResultsInput;
+export interface StatusScrapeResultUpdateWithoutScrapeDataInput {
   category?: String;
   component?: String;
   status?: SystemStatus;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface StatusScrapeResultCreateManyWithoutScrapeInput {
-  create?:
-    | StatusScrapeResultCreateWithoutScrapeInput[]
-    | StatusScrapeResultCreateWithoutScrapeInput;
-}
-
-export interface UserUpdateInput {
-  name?: String;
-  email?: String;
-  password?: String;
-}
-
-export interface StatusScrapeResultCreateWithoutScrapeInput {
-  category: String;
-  component: String;
-  status: SystemStatus;
-}
-
-export type StatusScrapeTargetWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  name?: String;
-  twitterHandle?: String;
-  statusUrl?: String;
-  companyUrl?: String;
-}>;
-
-export interface StatusScrapeJobUpdateInput {
-  dom?: String;
-  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
-  results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
-  status?: ScrapeJobStatus;
-}
-
-export interface StatusScrapeJobCreateWithoutTargetInput {
-  dom?: String;
-  results?: StatusScrapeResultCreateManyWithoutScrapeInput;
-  status: ScrapeJobStatus;
 }
 
 export interface StatusScrapeJobCreateOneWithoutResultsInput {
@@ -691,126 +867,6 @@ export interface StatusScrapeJobCreateWithoutResultsInput {
   dom?: String;
   target: StatusScrapeTargetCreateOneWithoutResultsInput;
   status: ScrapeJobStatus;
-}
-
-export interface StatusScrapeTargetWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  twitterHandle?: String;
-  twitterHandle_not?: String;
-  twitterHandle_in?: String[] | String;
-  twitterHandle_not_in?: String[] | String;
-  twitterHandle_lt?: String;
-  twitterHandle_lte?: String;
-  twitterHandle_gt?: String;
-  twitterHandle_gte?: String;
-  twitterHandle_contains?: String;
-  twitterHandle_not_contains?: String;
-  twitterHandle_starts_with?: String;
-  twitterHandle_not_starts_with?: String;
-  twitterHandle_ends_with?: String;
-  twitterHandle_not_ends_with?: String;
-  strategy?: ScrapeStrategy;
-  strategy_not?: ScrapeStrategy;
-  strategy_in?: ScrapeStrategy[] | ScrapeStrategy;
-  strategy_not_in?: ScrapeStrategy[] | ScrapeStrategy;
-  statusUrl?: String;
-  statusUrl_not?: String;
-  statusUrl_in?: String[] | String;
-  statusUrl_not_in?: String[] | String;
-  statusUrl_lt?: String;
-  statusUrl_lte?: String;
-  statusUrl_gt?: String;
-  statusUrl_gte?: String;
-  statusUrl_contains?: String;
-  statusUrl_not_contains?: String;
-  statusUrl_starts_with?: String;
-  statusUrl_not_starts_with?: String;
-  statusUrl_ends_with?: String;
-  statusUrl_not_ends_with?: String;
-  companyUrl?: String;
-  companyUrl_not?: String;
-  companyUrl_in?: String[] | String;
-  companyUrl_not_in?: String[] | String;
-  companyUrl_lt?: String;
-  companyUrl_lte?: String;
-  companyUrl_gt?: String;
-  companyUrl_gte?: String;
-  companyUrl_contains?: String;
-  companyUrl_not_contains?: String;
-  companyUrl_starts_with?: String;
-  companyUrl_not_starts_with?: String;
-  companyUrl_ends_with?: String;
-  companyUrl_not_ends_with?: String;
-  results_every?: StatusScrapeJobWhereInput;
-  results_some?: StatusScrapeJobWhereInput;
-  results_none?: StatusScrapeJobWhereInput;
-  AND?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
-  OR?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
-  NOT?: StatusScrapeTargetWhereInput[] | StatusScrapeTargetWhereInput;
-}
-
-export interface StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
-  create?: StatusScrapeTargetCreateWithoutResultsInput;
-  update?: StatusScrapeTargetUpdateWithoutResultsDataInput;
-  upsert?: StatusScrapeTargetUpsertWithoutResultsInput;
-  connect?: StatusScrapeTargetWhereUniqueInput;
-}
-
-export interface StatusScrapeJobCreateManyWithoutTargetInput {
-  create?:
-    | StatusScrapeJobCreateWithoutTargetInput[]
-    | StatusScrapeJobCreateWithoutTargetInput;
-  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
-}
-
-export interface StatusScrapeJobUpdateManyWithoutTargetInput {
-  create?:
-    | StatusScrapeJobCreateWithoutTargetInput[]
-    | StatusScrapeJobCreateWithoutTargetInput;
-  delete?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
-  connect?: StatusScrapeJobWhereUniqueInput[] | StatusScrapeJobWhereUniqueInput;
-  disconnect?:
-    | StatusScrapeJobWhereUniqueInput[]
-    | StatusScrapeJobWhereUniqueInput;
-  update?:
-    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput[]
-    | StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput;
-  upsert?:
-    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput[]
-    | StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput;
-}
-
-export interface StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput {
-  where: StatusScrapeJobWhereUniqueInput;
-  update: StatusScrapeJobUpdateWithoutTargetDataInput;
-  create: StatusScrapeJobCreateWithoutTargetInput;
 }
 
 export interface StatusScrapeResultSubscriptionWhereInput {
@@ -828,6 +884,22 @@ export interface StatusScrapeResultSubscriptionWhereInput {
   NOT?:
     | StatusScrapeResultSubscriptionWhereInput[]
     | StatusScrapeResultSubscriptionWhereInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface StatusScrapeJobUpdateWithWhereUniqueWithoutTargetInput {
+  where: StatusScrapeJobWhereUniqueInput;
+  data: StatusScrapeJobUpdateWithoutTargetDataInput;
+}
+
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
 }
 
 export interface NodeNode {
@@ -880,10 +952,10 @@ export interface StatusScrapeResultEdgeSubscription
 export interface StatusScrapeTargetNode {
   id: ID_Output;
   name: String;
-  twitterHandle?: String;
-  strategy: ScrapeStrategy;
   statusUrl: String;
   companyUrl: String;
+  strategy: ScrapeStrategy;
+  twitterHandle?: String;
 }
 
 export interface StatusScrapeTarget
@@ -891,10 +963,10 @@ export interface StatusScrapeTarget
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  twitterHandle: () => Promise<String>;
-  strategy: () => Promise<ScrapeStrategy>;
   statusUrl: () => Promise<String>;
   companyUrl: () => Promise<String>;
+  strategy: () => Promise<ScrapeStrategy>;
+  twitterHandle: () => Promise<String>;
   results: <T = FragmentableArray<StatusScrapeJobNode>>(
     args?: {
       where?: StatusScrapeJobWhereInput;
@@ -913,10 +985,10 @@ export interface StatusScrapeTargetSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  twitterHandle: () => Promise<AsyncIterator<String>>;
-  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
   statusUrl: () => Promise<AsyncIterator<String>>;
   companyUrl: () => Promise<AsyncIterator<String>>;
+  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
+  twitterHandle: () => Promise<AsyncIterator<String>>;
   results: <T = Promise<AsyncIterator<StatusScrapeJobSubscription>>>(
     args?: {
       where?: StatusScrapeJobWhereInput;
@@ -951,6 +1023,7 @@ export interface StatusScrapeResultConnectionSubscription
 }
 
 export interface StatusScrapeResultNode {
+  id: ID_Output;
   category: String;
   component: String;
   status: SystemStatus;
@@ -959,6 +1032,7 @@ export interface StatusScrapeResultNode {
 export interface StatusScrapeResult
   extends Promise<StatusScrapeResultNode>,
     Fragmentable {
+  id: () => Promise<ID_Output>;
   scrape: <T = StatusScrapeJob>() => T;
   category: () => Promise<String>;
   component: () => Promise<String>;
@@ -968,6 +1042,7 @@ export interface StatusScrapeResult
 export interface StatusScrapeResultSubscription
   extends Promise<AsyncIterator<StatusScrapeResultNode>>,
     Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
   scrape: <T = StatusScrapeJobSubscription>() => T;
   category: () => Promise<AsyncIterator<String>>;
   component: () => Promise<AsyncIterator<String>>;
@@ -1014,10 +1089,10 @@ export interface PageInfoSubscription
 export interface StatusScrapeTargetPreviousValuesNode {
   id: ID_Output;
   name: String;
-  twitterHandle?: String;
-  strategy: ScrapeStrategy;
   statusUrl: String;
   companyUrl: String;
+  strategy: ScrapeStrategy;
+  twitterHandle?: String;
 }
 
 export interface StatusScrapeTargetPreviousValues
@@ -1025,10 +1100,10 @@ export interface StatusScrapeTargetPreviousValues
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  twitterHandle: () => Promise<String>;
-  strategy: () => Promise<ScrapeStrategy>;
   statusUrl: () => Promise<String>;
   companyUrl: () => Promise<String>;
+  strategy: () => Promise<ScrapeStrategy>;
+  twitterHandle: () => Promise<String>;
 }
 
 export interface StatusScrapeTargetPreviousValuesSubscription
@@ -1036,10 +1111,10 @@ export interface StatusScrapeTargetPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  twitterHandle: () => Promise<AsyncIterator<String>>;
-  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
   statusUrl: () => Promise<AsyncIterator<String>>;
   companyUrl: () => Promise<AsyncIterator<String>>;
+  strategy: () => Promise<AsyncIterator<ScrapeStrategy>>;
+  twitterHandle: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateStatusScrapeJobNode {
@@ -1261,6 +1336,7 @@ export interface UserEdgeSubscription
 }
 
 export interface StatusScrapeResultPreviousValuesNode {
+  id: ID_Output;
   category: String;
   component: String;
   status: SystemStatus;
@@ -1269,6 +1345,7 @@ export interface StatusScrapeResultPreviousValuesNode {
 export interface StatusScrapeResultPreviousValues
   extends Promise<StatusScrapeResultPreviousValuesNode>,
     Fragmentable {
+  id: () => Promise<ID_Output>;
   category: () => Promise<String>;
   component: () => Promise<String>;
   status: () => Promise<SystemStatus>;
@@ -1277,6 +1354,7 @@ export interface StatusScrapeResultPreviousValues
 export interface StatusScrapeResultPreviousValuesSubscription
   extends Promise<AsyncIterator<StatusScrapeResultPreviousValuesNode>>,
     Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
   category: () => Promise<AsyncIterator<String>>;
   component: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<SystemStatus>>;

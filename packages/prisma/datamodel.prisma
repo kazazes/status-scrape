@@ -26,6 +26,7 @@ type StatusScrapeJob {
 }
 
 type StatusScrapeResult {
+  id: ID! @unique
   scrape: StatusScrapeJob! @relation(name: "ScrapeResultRelation")
   category: String!
   component: String!

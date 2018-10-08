@@ -3,17 +3,11 @@
     <v-flex xs-12>
       <v-subheader>Scrapes</v-subheader>
       <v-expansion-panel light expand>
-        <v-expansion-panel-content
-          v-for="(job, index) in statusScrapeJobs"
-          :key="index"
-          :value="index === 0"
-        >
-          <div slot="header">{{ moment(job.updatedAt).format('LLL')}}</div>
-          <v-card>
-            <v-card-text>
-              <pre>
-                {{ JSON.stringify(job, null, 2)}}
-              </pre>
+        <v-expansion-panel-content v-for="(job, index) in statusScrapeJobs" :key="index">
+          <div slot="header">{{ moment(job.updatedAt).format('LLLL') }}</div>
+          <v-card class="pa-0">
+            <v-card-text class="px-0 pt-1">
+              <ScrapeJobResults :job="job"/>
             </v-card-text>
           </v-card>
         </v-expansion-panel-content>
@@ -26,10 +20,11 @@
   import Component from "vue-class-component";
   import { StatusScrapeTarget } from "@status-scrape/prisma";
   import { TARGET_JOBS } from "../graphql/Queries";
+  import ScrapeJobResults from "./ScrapeJobResults.vue";
 
   @Component({
     name: "ScrapesList",
-    components: {},
+    components: { ScrapeJobResults },
     data: () => {
       return {};
     },
@@ -39,6 +34,7 @@
     apollo: {
       statusScrapeJobs: {
         query: TARGET_JOBS,
+        pollInterval: 2000,
         variables() {
           return {
             where: { target: { id: this.target.id } },

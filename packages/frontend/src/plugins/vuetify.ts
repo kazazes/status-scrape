@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify";
 import colors from "vuetify/es5/util/colors";
-import { createPersistedQueryLink } from "apollo-link-persisted-queries";
 
 Vue.use(Vuetify, {
   theme: {
@@ -12,6 +11,9 @@ Vue.use(Vuetify, {
     info: colors.teal.lighten1,
     success: colors.green.lighten3,
     warning: colors.yellow.lighten1
+  },
+  icons: {
+    sort: "fas fa-arrow-up ml-1"
   },
   iconfont: "fa"
 });
