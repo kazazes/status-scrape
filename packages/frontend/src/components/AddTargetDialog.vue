@@ -101,7 +101,6 @@
       }
 
       if (this.errors.length === 0) {
-        this.statusUrl = this.statusUrl.replace(/^(https?:|)\/\//, "");
         this.companyUrl = this.companyUrl.replace(/^(https?:|)\/\//, "");
         this.twitterHandle = this.twitterHandle.replace("@", "");
         return true;

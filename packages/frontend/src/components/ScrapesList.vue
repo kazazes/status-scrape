@@ -1,9 +1,14 @@
 <template>
   <v-layout row>
     <v-flex xs-12>
+      <v-progress-linear v-if="statusScrapeJobs.length === 0" :indeterminate="true" class="mt-0"></v-progress-linear>
       <v-subheader>Scrapes</v-subheader>
       <v-expansion-panel light expand>
-        <v-expansion-panel-content v-for="(job, index) in statusScrapeJobs" :key="index">
+        <v-expansion-panel-content
+          v-for="(job, index) in statusScrapeJobs"
+          :key="index"
+          :value="index === 0"
+        >
           <div slot="header">{{ moment(job.updatedAt).format('LLLL') }}</div>
           <v-card class="pa-0">
             <v-card-text class="px-0 pt-1">
@@ -26,7 +31,9 @@
     name: "ScrapesList",
     components: { ScrapeJobResults },
     data: () => {
-      return {};
+      return {
+        statusScrapeJobs: [],
+      };
     },
     props: {
       target: Object as () => StatusScrapeTarget,

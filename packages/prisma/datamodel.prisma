@@ -12,7 +12,8 @@ type StatusScrapeTarget {
   companyUrl: String! @unique
   strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   twitterHandle: String @unique
-  results: [StatusScrapeJob!]! @relation(name: "TargetScrapeRelation")
+  results: [StatusScrapeJob!]!
+    @relation(name: "TargetScrapeRelation", onDelete: CASCADE)
 }
 
 type StatusScrapeJob {
@@ -20,8 +21,10 @@ type StatusScrapeJob {
   createdAt: DateTime!
   updatedAt: DateTime!
   dom: String
-  target: StatusScrapeTarget! @relation(name: "TargetScrapeRelation")
-  results: [StatusScrapeResult!]! @relation(name: "ScrapeResultRelation")
+  target: StatusScrapeTarget
+    @relation(name: "TargetScrapeRelation", onDelete: SET_NULL)
+  results: [StatusScrapeResult!]!
+    @relation(name: "ScrapeResultRelation", onDelete: CASCADE)
   status: ScrapeJobStatus!
 }
 

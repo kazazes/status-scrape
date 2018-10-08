@@ -4,6 +4,7 @@
       <v-list light subheader two-line>
         <v-subheader>Targets</v-subheader>
         <v-divider></v-divider>
+        <v-progress-linear v-if="listTargets.length === 0" :indeterminate="true" class="mt-0"></v-progress-linear>
         <template v-for="(target, index) in listTargets">
           <v-list-tile :key="target.name" avatar :to="'/dashboard/target/' + target.id" ripple>
             <v-list-tile-avatar>
@@ -50,7 +51,9 @@
     name: "Targets",
     components: { CompanyLogo },
     data: () => {
-      return {};
+      return {
+        listTargets: [],
+      };
     },
     apollo: {
       listTargets: {

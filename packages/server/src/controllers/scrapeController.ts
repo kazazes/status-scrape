@@ -59,6 +59,10 @@ export class ScrapeController {
         process.env.GC_FUNCTIONS_BASE_URL
       }statusScrape failed
       Body: ${JSON.stringify(body, null, 2)}`);
+      return prisma.updateStatusScrapeJob({
+        where: { id: storedScrapeId },
+        data: { status: "FAILED" }
+      });
     }
 
     clearTimeout(timer);
@@ -81,17 +85,17 @@ export class ScrapeController {
 
     this.results = await Promise.all(inputs);
 
-    await prisma.updateStatusScrapeJob({
-      where: { id: storedScrapeId },
-      data: { status: "DONE" }
-    });
-
     logger.debug(
       `Created ${inputs.length} status scrape results for ${
         this.target.name
         // tslint:disable-next-line:no-console
       } (${this.target.statusUrl})`
     );
+
+    return prisma.updateStatusScrapeJob({
+      where: { id: storedScrapeId },
+      data: { status: "DONE" }
+    });
   }
 
   private getMachineToken() {

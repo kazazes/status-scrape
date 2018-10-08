@@ -272,7 +272,11 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type SystemStatus = "OPERATIONAL" | "UNKNOWN";
+export type SystemStatus =
+  | "OPERATIONAL"
+  | "REROUTED"
+  | "MAINTENANCE"
+  | "UNKNOWN";
 
 export type ScrapeJobStatus =
   | "SCHEDULED"
@@ -521,7 +525,7 @@ export interface StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput {
 
 export interface StatusScrapeJobUpdateWithoutResultsDataInput {
   dom?: String;
-  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
+  target?: StatusScrapeTargetUpdateOneWithoutResultsInput;
   status?: ScrapeJobStatus;
 }
 
@@ -578,7 +582,7 @@ export interface StatusScrapeJobUpsertWithWhereUniqueWithoutTargetInput {
 
 export interface StatusScrapeJobCreateInput {
   dom?: String;
-  target: StatusScrapeTargetCreateOneWithoutResultsInput;
+  target?: StatusScrapeTargetCreateOneWithoutResultsInput;
   results?: StatusScrapeResultCreateManyWithoutScrapeInput;
   status: ScrapeJobStatus;
 }
@@ -660,7 +664,7 @@ export interface UserSubscriptionWhereInput {
 
 export interface StatusScrapeJobUpdateInput {
   dom?: String;
-  target?: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput;
+  target?: StatusScrapeTargetUpdateOneWithoutResultsInput;
   results?: StatusScrapeResultUpdateManyWithoutScrapeInput;
   status?: ScrapeJobStatus;
 }
@@ -671,10 +675,12 @@ export interface UserUpdateInput {
   password?: String;
 }
 
-export interface StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
+export interface StatusScrapeTargetUpdateOneWithoutResultsInput {
   create?: StatusScrapeTargetCreateWithoutResultsInput;
   update?: StatusScrapeTargetUpdateWithoutResultsDataInput;
   upsert?: StatusScrapeTargetUpsertWithoutResultsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
   connect?: StatusScrapeTargetWhereUniqueInput;
 }
 
@@ -865,7 +871,7 @@ export interface StatusScrapeJobCreateOneWithoutResultsInput {
 
 export interface StatusScrapeJobCreateWithoutResultsInput {
   dom?: String;
-  target: StatusScrapeTargetCreateOneWithoutResultsInput;
+  target?: StatusScrapeTargetCreateOneWithoutResultsInput;
   status: ScrapeJobStatus;
 }
 

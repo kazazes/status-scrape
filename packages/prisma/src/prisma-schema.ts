@@ -99,7 +99,7 @@ type StatusScrapeJob {
   createdAt: DateTime!
   updatedAt: DateTime!
   dom: String
-  target: StatusScrapeTarget!
+  target: StatusScrapeTarget
   results(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult!]
   status: ScrapeJobStatus!
 }
@@ -112,7 +112,7 @@ type StatusScrapeJobConnection {
 
 input StatusScrapeJobCreateInput {
   dom: String
-  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+  target: StatusScrapeTargetCreateOneWithoutResultsInput
   results: StatusScrapeResultCreateManyWithoutScrapeInput
   status: ScrapeJobStatus!
 }
@@ -129,7 +129,7 @@ input StatusScrapeJobCreateOneWithoutResultsInput {
 
 input StatusScrapeJobCreateWithoutResultsInput {
   dom: String
-  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+  target: StatusScrapeTargetCreateOneWithoutResultsInput
   status: ScrapeJobStatus!
 }
 
@@ -185,7 +185,7 @@ input StatusScrapeJobSubscriptionWhereInput {
 
 input StatusScrapeJobUpdateInput {
   dom: String
-  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+  target: StatusScrapeTargetUpdateOneWithoutResultsInput
   results: StatusScrapeResultUpdateManyWithoutScrapeInput
   status: ScrapeJobStatus
 }
@@ -208,7 +208,7 @@ input StatusScrapeJobUpdateOneRequiredWithoutResultsInput {
 
 input StatusScrapeJobUpdateWithoutResultsDataInput {
   dom: String
-  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+  target: StatusScrapeTargetUpdateOneWithoutResultsInput
   status: ScrapeJobStatus
 }
 
@@ -561,10 +561,12 @@ input StatusScrapeTargetUpdateInput {
   results: StatusScrapeJobUpdateManyWithoutTargetInput
 }
 
-input StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
+input StatusScrapeTargetUpdateOneWithoutResultsInput {
   create: StatusScrapeTargetCreateWithoutResultsInput
   update: StatusScrapeTargetUpdateWithoutResultsDataInput
   upsert: StatusScrapeTargetUpsertWithoutResultsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: StatusScrapeTargetWhereUniqueInput
 }
 
@@ -681,6 +683,8 @@ type Subscription {
 
 enum SystemStatus {
   OPERATIONAL
+  REROUTED
+  MAINTENANCE
   UNKNOWN
 }
 

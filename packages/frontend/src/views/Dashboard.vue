@@ -51,14 +51,14 @@
             </v-toolbar-title>
           </v-flex>
           <v-flex xs-4>
-            <v-text-field
+            <!-- <v-text-field
               flat
               solo-inverted
               hide-details
               prepend-inner-icon="fa-search "
               label="Search"
               class="hidden-sm-and-down"
-            ></v-text-field>
+            ></v-text-field>-->
           </v-flex>
           <v-flex xs-4>
             <v-menu offset-y style="float: right;">
@@ -77,6 +77,7 @@
       </v-container>
     </v-toolbar>
     <v-content>
+      <slot name="loading"></slot>
       <v-container fluid fill-height>
         <router-view></router-view>
       </v-container>

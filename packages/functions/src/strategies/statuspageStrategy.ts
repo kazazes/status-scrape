@@ -24,9 +24,13 @@ export class StatuspageStrategy extends ScraperStrategy {
               status: {
                 selector: ".component-status",
                 convert: (status: string) => {
-                  switch (status.toLowerCase()) {
+                  switch (status.toLowerCase().trim()) {
                     case "operational":
                       return "OPERATIONAL";
+                    case "re-routed":
+                      return "REROUTED";
+                    case "under maintenance":
+                      return "MAINTENANCE";
                     default:
                       return "UNKNOWN";
                   }

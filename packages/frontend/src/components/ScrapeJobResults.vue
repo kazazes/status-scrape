@@ -19,14 +19,14 @@
           :headers="headers"
           :search="search"
           :items="statusScrapeResults"
-          :loading="job.status === 'RUNNING'"
+          :loading="job.status === 'RUNNING' || jobLoading"
           :rows-per-page-items="
       [50,{'text':'$vuetify.dataIterator.rowsPerPageAll','value':-1}]"
           class="scrape-results-table"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs">{{ props.item.category }}</td>
             <td class="text-xs">{{ props.item.component }}</td>
+            <td class="text-xs">{{ props.item.category }}</td>
             <td class="text-xs">{{ props.item.status }}</td>
           </template>
           <v-alert
@@ -52,15 +52,16 @@
     data: () => {
       return {
         search: "",
+        jobLoading: false,
         headers: [
-          {
-            text: "Category",
-            value: "category",
-            sortable: true,
-          },
           {
             text: "Component",
             value: "component",
+            sortable: true,
+          },
+          {
+            text: "Category",
+            value: "category",
             sortable: true,
           },
           {
@@ -77,7 +78,8 @@
     apollo: {
       statusScrapeResults: {
         query: JOB_RESULTS,
-        pollInterval: 1500,
+        pollInterval: 2000,
+        loadingKey: "jobLoading",
         fetchPolicy: "cache-and-network",
         variables() {
           return {
