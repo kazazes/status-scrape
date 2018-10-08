@@ -1,6 +1,6 @@
 {
   "name": "@status-scrape/server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "author": "Peter Kazazes",
   "private": true,
@@ -14,8 +14,8 @@
     "watch:debug": "nodemon --inspect dist/index.js"
   },
   "dependencies": {
-    "@status-scrape/common": "^0.0.1",
-    "@status-scrape/prisma": "^0.0.1",
+    "@status-scrape/common": "^0.0.2",
+    "@status-scrape/prisma": "^0.0.2",
     "apollo-server-core": "^2.1.0",
     "apollo-server-express": "^2.1.0",
     "bcrypt": "^3.0.1",

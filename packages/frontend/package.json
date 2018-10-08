@@ -1,6 +1,6 @@
 {
   "name": "@status-scrape/frontend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
-    "@status-scrape/prisma": "^0.0.1",
+    "@status-scrape/prisma": "^0.0.2",
     "apollo-cache": "^1.1.17",
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",
