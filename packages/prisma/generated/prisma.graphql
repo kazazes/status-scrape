@@ -30,7 +30,10 @@ type Mutation {
   deleteStatusScrapeJob(where: StatusScrapeJobWhereUniqueInput!): StatusScrapeJob
   deleteManyStatusScrapeJobs(where: StatusScrapeJobWhereInput): BatchPayload!
   createStatusScrapeResult(data: StatusScrapeResultCreateInput!): StatusScrapeResult!
+  updateStatusScrapeResult(data: StatusScrapeResultUpdateInput!, where: StatusScrapeResultWhereUniqueInput!): StatusScrapeResult
   updateManyStatusScrapeResults(data: StatusScrapeResultUpdateInput!, where: StatusScrapeResultWhereInput): BatchPayload!
+  upsertStatusScrapeResult(where: StatusScrapeResultWhereUniqueInput!, create: StatusScrapeResultCreateInput!, update: StatusScrapeResultUpdateInput!): StatusScrapeResult!
+  deleteStatusScrapeResult(where: StatusScrapeResultWhereUniqueInput!): StatusScrapeResult
   deleteManyStatusScrapeResults(where: StatusScrapeResultWhereInput): BatchPayload!
   createStatusScrapeTarget(data: StatusScrapeTargetCreateInput!): StatusScrapeTarget!
   updateStatusScrapeTarget(data: StatusScrapeTargetUpdateInput!, where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
@@ -67,6 +70,7 @@ type Query {
   statusScrapeJob(where: StatusScrapeJobWhereUniqueInput!): StatusScrapeJob
   statusScrapeJobs(where: StatusScrapeJobWhereInput, orderBy: StatusScrapeJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeJob]!
   statusScrapeJobsConnection(where: StatusScrapeJobWhereInput, orderBy: StatusScrapeJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeJobConnection!
+  statusScrapeResult(where: StatusScrapeResultWhereUniqueInput!): StatusScrapeResult
   statusScrapeResults(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult]!
   statusScrapeResultsConnection(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StatusScrapeResultConnection!
   statusScrapeTarget(where: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget
@@ -93,8 +97,9 @@ enum ScrapeStrategy {
 type StatusScrapeJob {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   dom: String
-  target: StatusScrapeTarget!
+  target: StatusScrapeTarget
   results(where: StatusScrapeResultWhereInput, orderBy: StatusScrapeResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeResult!]
   status: ScrapeJobStatus!
 }
@@ -107,7 +112,7 @@ type StatusScrapeJobConnection {
 
 input StatusScrapeJobCreateInput {
   dom: String
-  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+  target: StatusScrapeTargetCreateOneWithoutResultsInput
   results: StatusScrapeResultCreateManyWithoutScrapeInput
   status: ScrapeJobStatus!
 }
@@ -124,7 +129,7 @@ input StatusScrapeJobCreateOneWithoutResultsInput {
 
 input StatusScrapeJobCreateWithoutResultsInput {
   dom: String
-  target: StatusScrapeTargetCreateOneWithoutResultsInput!
+  target: StatusScrapeTargetCreateOneWithoutResultsInput
   status: ScrapeJobStatus!
 }
 
@@ -144,17 +149,18 @@ enum StatusScrapeJobOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   dom_ASC
   dom_DESC
   status_ASC
   status_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type StatusScrapeJobPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   dom: String
   status: ScrapeJobStatus!
 }
@@ -179,7 +185,7 @@ input StatusScrapeJobSubscriptionWhereInput {
 
 input StatusScrapeJobUpdateInput {
   dom: String
-  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+  target: StatusScrapeTargetUpdateOneWithoutResultsInput
   results: StatusScrapeResultUpdateManyWithoutScrapeInput
   status: ScrapeJobStatus
 }
@@ -202,7 +208,7 @@ input StatusScrapeJobUpdateOneRequiredWithoutResultsInput {
 
 input StatusScrapeJobUpdateWithoutResultsDataInput {
   dom: String
-  target: StatusScrapeTargetUpdateOneRequiredWithoutResultsInput
+  target: StatusScrapeTargetUpdateOneWithoutResultsInput
   status: ScrapeJobStatus
 }
 
@@ -251,6 +257,14 @@ input StatusScrapeJobWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   dom: String
   dom_not: String
   dom_in: [String!]
@@ -283,6 +297,7 @@ input StatusScrapeJobWhereUniqueInput {
 }
 
 type StatusScrapeResult {
+  id: ID!
   scrape: StatusScrapeJob!
   category: String!
   component: String!
@@ -304,6 +319,7 @@ input StatusScrapeResultCreateInput {
 
 input StatusScrapeResultCreateManyWithoutScrapeInput {
   create: [StatusScrapeResultCreateWithoutScrapeInput!]
+  connect: [StatusScrapeResultWhereUniqueInput!]
 }
 
 input StatusScrapeResultCreateWithoutScrapeInput {
@@ -318,14 +334,14 @@ type StatusScrapeResultEdge {
 }
 
 enum StatusScrapeResultOrderByInput {
+  id_ASC
+  id_DESC
   category_ASC
   category_DESC
   component_ASC
   component_DESC
   status_ASC
   status_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -333,6 +349,7 @@ enum StatusScrapeResultOrderByInput {
 }
 
 type StatusScrapeResultPreviousValues {
+  id: ID!
   category: String!
   component: String!
   status: SystemStatus!
@@ -365,9 +382,45 @@ input StatusScrapeResultUpdateInput {
 
 input StatusScrapeResultUpdateManyWithoutScrapeInput {
   create: [StatusScrapeResultCreateWithoutScrapeInput!]
+  delete: [StatusScrapeResultWhereUniqueInput!]
+  connect: [StatusScrapeResultWhereUniqueInput!]
+  disconnect: [StatusScrapeResultWhereUniqueInput!]
+  update: [StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput!]
+  upsert: [StatusScrapeResultUpsertWithWhereUniqueWithoutScrapeInput!]
+}
+
+input StatusScrapeResultUpdateWithoutScrapeDataInput {
+  category: String
+  component: String
+  status: SystemStatus
+}
+
+input StatusScrapeResultUpdateWithWhereUniqueWithoutScrapeInput {
+  where: StatusScrapeResultWhereUniqueInput!
+  data: StatusScrapeResultUpdateWithoutScrapeDataInput!
+}
+
+input StatusScrapeResultUpsertWithWhereUniqueWithoutScrapeInput {
+  where: StatusScrapeResultWhereUniqueInput!
+  update: StatusScrapeResultUpdateWithoutScrapeDataInput!
+  create: StatusScrapeResultCreateWithoutScrapeInput!
 }
 
 input StatusScrapeResultWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   scrape: StatusScrapeJobWhereInput
   category: String
   category_not: String
@@ -406,12 +459,17 @@ input StatusScrapeResultWhereInput {
   NOT: [StatusScrapeResultWhereInput!]
 }
 
+input StatusScrapeResultWhereUniqueInput {
+  id: ID
+}
+
 type StatusScrapeTarget {
   id: ID!
   name: String!
-  twitterHandle: String
-  strategy: ScrapeStrategy!
   statusUrl: String!
+  companyUrl: String!
+  strategy: ScrapeStrategy!
+  twitterHandle: String
   results(where: StatusScrapeJobWhereInput, orderBy: StatusScrapeJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StatusScrapeJob!]
 }
 
@@ -423,9 +481,10 @@ type StatusScrapeTargetConnection {
 
 input StatusScrapeTargetCreateInput {
   name: String!
-  twitterHandle: String
-  strategy: ScrapeStrategy
   statusUrl: String!
+  companyUrl: String!
+  strategy: ScrapeStrategy
+  twitterHandle: String
   results: StatusScrapeJobCreateManyWithoutTargetInput
 }
 
@@ -436,9 +495,10 @@ input StatusScrapeTargetCreateOneWithoutResultsInput {
 
 input StatusScrapeTargetCreateWithoutResultsInput {
   name: String!
-  twitterHandle: String
-  strategy: ScrapeStrategy
   statusUrl: String!
+  companyUrl: String!
+  strategy: ScrapeStrategy
+  twitterHandle: String
 }
 
 type StatusScrapeTargetEdge {
@@ -451,12 +511,14 @@ enum StatusScrapeTargetOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  twitterHandle_ASC
-  twitterHandle_DESC
-  strategy_ASC
-  strategy_DESC
   statusUrl_ASC
   statusUrl_DESC
+  companyUrl_ASC
+  companyUrl_DESC
+  strategy_ASC
+  strategy_DESC
+  twitterHandle_ASC
+  twitterHandle_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -466,9 +528,10 @@ enum StatusScrapeTargetOrderByInput {
 type StatusScrapeTargetPreviousValues {
   id: ID!
   name: String!
-  twitterHandle: String
-  strategy: ScrapeStrategy!
   statusUrl: String!
+  companyUrl: String!
+  strategy: ScrapeStrategy!
+  twitterHandle: String
 }
 
 type StatusScrapeTargetSubscriptionPayload {
@@ -491,24 +554,28 @@ input StatusScrapeTargetSubscriptionWhereInput {
 
 input StatusScrapeTargetUpdateInput {
   name: String
-  twitterHandle: String
-  strategy: ScrapeStrategy
   statusUrl: String
+  companyUrl: String
+  strategy: ScrapeStrategy
+  twitterHandle: String
   results: StatusScrapeJobUpdateManyWithoutTargetInput
 }
 
-input StatusScrapeTargetUpdateOneRequiredWithoutResultsInput {
+input StatusScrapeTargetUpdateOneWithoutResultsInput {
   create: StatusScrapeTargetCreateWithoutResultsInput
   update: StatusScrapeTargetUpdateWithoutResultsDataInput
   upsert: StatusScrapeTargetUpsertWithoutResultsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: StatusScrapeTargetWhereUniqueInput
 }
 
 input StatusScrapeTargetUpdateWithoutResultsDataInput {
   name: String
-  twitterHandle: String
-  strategy: ScrapeStrategy
   statusUrl: String
+  companyUrl: String
+  strategy: ScrapeStrategy
+  twitterHandle: String
 }
 
 input StatusScrapeTargetUpsertWithoutResultsInput {
@@ -545,24 +612,6 @@ input StatusScrapeTargetWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  twitterHandle: String
-  twitterHandle_not: String
-  twitterHandle_in: [String!]
-  twitterHandle_not_in: [String!]
-  twitterHandle_lt: String
-  twitterHandle_lte: String
-  twitterHandle_gt: String
-  twitterHandle_gte: String
-  twitterHandle_contains: String
-  twitterHandle_not_contains: String
-  twitterHandle_starts_with: String
-  twitterHandle_not_starts_with: String
-  twitterHandle_ends_with: String
-  twitterHandle_not_ends_with: String
-  strategy: ScrapeStrategy
-  strategy_not: ScrapeStrategy
-  strategy_in: [ScrapeStrategy!]
-  strategy_not_in: [ScrapeStrategy!]
   statusUrl: String
   statusUrl_not: String
   statusUrl_in: [String!]
@@ -577,6 +626,38 @@ input StatusScrapeTargetWhereInput {
   statusUrl_not_starts_with: String
   statusUrl_ends_with: String
   statusUrl_not_ends_with: String
+  companyUrl: String
+  companyUrl_not: String
+  companyUrl_in: [String!]
+  companyUrl_not_in: [String!]
+  companyUrl_lt: String
+  companyUrl_lte: String
+  companyUrl_gt: String
+  companyUrl_gte: String
+  companyUrl_contains: String
+  companyUrl_not_contains: String
+  companyUrl_starts_with: String
+  companyUrl_not_starts_with: String
+  companyUrl_ends_with: String
+  companyUrl_not_ends_with: String
+  strategy: ScrapeStrategy
+  strategy_not: ScrapeStrategy
+  strategy_in: [ScrapeStrategy!]
+  strategy_not_in: [ScrapeStrategy!]
+  twitterHandle: String
+  twitterHandle_not: String
+  twitterHandle_in: [String!]
+  twitterHandle_not_in: [String!]
+  twitterHandle_lt: String
+  twitterHandle_lte: String
+  twitterHandle_gt: String
+  twitterHandle_gte: String
+  twitterHandle_contains: String
+  twitterHandle_not_contains: String
+  twitterHandle_starts_with: String
+  twitterHandle_not_starts_with: String
+  twitterHandle_ends_with: String
+  twitterHandle_not_ends_with: String
   results_every: StatusScrapeJobWhereInput
   results_some: StatusScrapeJobWhereInput
   results_none: StatusScrapeJobWhereInput
@@ -588,8 +669,9 @@ input StatusScrapeTargetWhereInput {
 input StatusScrapeTargetWhereUniqueInput {
   id: ID
   name: String
-  twitterHandle: String
   statusUrl: String
+  companyUrl: String
+  twitterHandle: String
 }
 
 type Subscription {
@@ -601,6 +683,8 @@ type Subscription {
 
 enum SystemStatus {
   OPERATIONAL
+  REROUTED
+  MAINTENANCE
   UNKNOWN
 }
 

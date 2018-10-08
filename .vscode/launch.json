@@ -7,6 +7,17 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch via NPM",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "debug"],
+      "port": 9229,
+      "outputCapture": "std",
+      "console": "integratedTerminal",
+      "outFiles": ["packages/*/dist/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Mock Scrape",
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["run", "debug:mock"],
@@ -28,17 +39,6 @@
         "NODE_ENV": "test"
       },
       "cwd": "${workspaceFolder}/packages/functions"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch via NPM",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": ["run", "debug"],
-      "port": 9229,
-      "outputCapture": "std",
-      "console": "integratedTerminal",
-      "outFiles": ["packages/*/dist/**"]
     },
     {
       "type": "chrome",

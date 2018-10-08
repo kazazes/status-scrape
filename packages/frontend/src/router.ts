@@ -2,7 +2,10 @@ import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login.vue";
 import Dashboard from "./views/Dashboard.vue";
+import Targets from "./components/Targets.vue";
+import Target from "./components/Target.vue";
 import App from "./App.vue";
+import TargetsList from "./components/TargetsList.vue";
 
 Vue.use(Router);
 
@@ -24,7 +27,28 @@ export default new Router({
     {
       path: "/dashboard",
       name: "dashboard",
-      component: Dashboard
+      redirect: "/dashboard/target",
+      component: Dashboard,
+      children: [
+        {
+          path: "target",
+          redirect: "target/all",
+          name: "targets",
+          component: Targets,
+          children: [
+            {
+              path: "all",
+              component: TargetsList,
+              name: "allTargets"
+            },
+            {
+              path: ":target",
+              component: Target,
+              name: "target"
+            }
+          ]
+        }
+      ]
     }
   ]
 });

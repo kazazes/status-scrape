@@ -1,6 +1,6 @@
 {
   "name": "@status-scrape/functions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/scrape.js",
   "author": "Peter Kazazes",
   "private": true,
@@ -12,7 +12,7 @@
     "watch:ts": "tsc -w",
     "deploy": "yarn run build:bundle && source .env && gcloud functions deploy statusScrape --source bundle --runtime nodejs8 --trigger-http --timeout=120 --project $GC_PROJECT",
     "test": "jest --runInBand",
-    "debug:mock": "node --inspect dist/mock.js"
+    "debug:mock": "nodemon --inspect dist/mock.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",

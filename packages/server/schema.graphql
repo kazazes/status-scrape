@@ -1,10 +1,33 @@
 # import StatusScrapeTarget from '../prisma/generated/prisma.graphql'
 # import StatusScrapeTargetCreateInput from '../prisma/generated/prisma.graphql'
 # import StatusScrapeTargetWhereUniqueInput from '../prisma/generated/prisma.graphql'
+# import StatusScrapeResult from '../prisma/generated/prisma.graphql'
+# import StatusScrapeJob from '../prisma/generated/prisma.graphql'
 
 type Query {
   me: User!
-  startScrape(target: StatusScrapeTargetWhereUniqueInput): Boolean
+  startScrape(target: StatusScrapeTargetWhereUniqueInput!): Boolean
+  listTargets: [StatusScrapeTarget!]!
+  target(target: StatusScrapeTargetWhereUniqueInput!): StatusScrapeTarget!
+  lastScrape(target: StatusScrapeTargetWhereUniqueInput!): StatusScrapeJob
+  statusScrapeJobs(
+    where: StatusScrapeJobWhereInput
+    orderBy: StatusScrapeJobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [StatusScrapeJob]!
+  statusScrapeResults(
+    where: StatusScrapeResultWhereInput
+    orderBy: StatusScrapeResultOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [StatusScrapeResult]!
 }
 
 type Mutation {

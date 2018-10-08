@@ -1,3 +1,4 @@
+import { logger } from "@status-scrape/common";
 import { prisma, StatusScrapeTargetCreateInput } from "@status-scrape/prisma";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -24,6 +25,8 @@ export const Mutation = {
     if (!valid) {
       throw new Error("Invalid password");
     }
+
+    logger.info(`Signed in user ${email}`);
 
     return {
       user,

@@ -8,22 +8,28 @@ type User {
 type StatusScrapeTarget {
   id: ID! @unique
   name: String! @unique
-  twitterHandle: String @unique
-  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
   statusUrl: String! @unique
-  results: [StatusScrapeJob!]! @relation(name: "TargetScrapeRelation")
+  companyUrl: String! @unique
+  strategy: ScrapeStrategy! @default(value: "STATUSPAGE_IO")
+  twitterHandle: String @unique
+  results: [StatusScrapeJob!]!
+    @relation(name: "TargetScrapeRelation", onDelete: CASCADE)
 }
 
 type StatusScrapeJob {
   id: ID! @unique
   createdAt: DateTime!
+  updatedAt: DateTime!
   dom: String
-  target: StatusScrapeTarget! @relation(name: "TargetScrapeRelation")
-  results: [StatusScrapeResult!]! @relation(name: "ScrapeResultRelation")
+  target: StatusScrapeTarget
+    @relation(name: "TargetScrapeRelation", onDelete: SET_NULL)
+  results: [StatusScrapeResult!]!
+    @relation(name: "ScrapeResultRelation", onDelete: CASCADE)
   status: ScrapeJobStatus!
 }
 
 type StatusScrapeResult {
+  id: ID! @unique
   scrape: StatusScrapeJob! @relation(name: "ScrapeResultRelation")
   category: String!
   component: String!

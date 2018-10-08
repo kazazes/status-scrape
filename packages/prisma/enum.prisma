@@ -4,6 +4,8 @@ enum ScrapeStrategy {
 
 enum SystemStatus {
   OPERATIONAL
+  REROUTED
+  MAINTENANCE
   UNKNOWN
 }
 

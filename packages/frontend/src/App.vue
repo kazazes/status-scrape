@@ -1,6 +1,14 @@
 <template>
-  <router-view v-on:logout="logout"></router-view>
+  <v-app dark>
+    <Snackbar/>
+    <router-view v-on:logout="logout"></router-view>
+  </v-app>
 </template>
+<style scoped>
+  .v-icon {
+    font-size: 20px;
+  }
+</style>
 
 <script lang="ts">
   import Vue from "vue";

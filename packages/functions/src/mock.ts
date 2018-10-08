@@ -1,11 +1,12 @@
 import { StatuspageStrategy } from "./strategies/statuspageStrategy";
 
 const strategy = new StatuspageStrategy({
-  id: "cjmnwu8fmfd470b77ir3v5c9e",
-  name: "Statuspage",
-  twitterHandle: "statuspage",
+  id: "cjn01yw7mptlm0b48hvdp5pie",
+  name: "Cloudflare",
+  twitterHandle: "cloudflare",
   strategy: "STATUSPAGE_IO",
-  statusUrl: "https://metastatuspage.com/"
+  statusUrl: "https://www.cloudflarestatus.com",
+  companyUrl: "cloudflare.com"
 });
 
 async function mockScrape() {

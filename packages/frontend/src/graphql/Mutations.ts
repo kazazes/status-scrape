@@ -15,3 +15,25 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const UPSERT_TARGET = gql`
+  mutation UpsertTarget(
+    $name: String!
+    $twitterHandle: String!
+    $strategy: ScrapeStrategy!
+    $companyUrl: String!
+    $statusUrl: String!
+  ) {
+    upsertScrapeTarget(
+      data: {
+        name: $name
+        companyUrl: $companyUrl
+        twitterHandle: $twitterHandle
+        strategy: $strategy
+        statusUrl: $statusUrl
+      }
+    ) {
+      id
+    }
+  }
+`;

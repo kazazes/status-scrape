@@ -18,8 +18,6 @@ export class ScrapeController {
   }
 
   public async scrape() {
-    // tslint:disable-next-line:no-console
-    console.time("scrape");
     const storedScrape = prisma.createStatusScrapeJob({
       target: { connect: { id: this.target.id } },
       status: "RUNNING"
@@ -41,14 +39,13 @@ export class ScrapeController {
     logger.verbose(`Body: \n\n ${JSON.stringify(body, null, 2)}`);
 
     const timer = setTimeout(async () => {
-      prisma.updateStatusScrapeJob({
+      logger.error("Timed out.");
+      return prisma.updateStatusScrapeJob({
         where: { id: storedScrapeId },
         data: {
           status: "TIMED_OUT"
         }
       });
-      logger.error("Timed out.");
-      throw new Error("Google Cloud Function timed out");
     }, 60000);
     let response: Response<string>;
     try {
@@ -61,6 +58,10 @@ export class ScrapeController {
         process.env.GC_FUNCTIONS_BASE_URL
       }statusScrape failed
       Body: ${JSON.stringify(body, null, 2)}`);
+      return prisma.updateStatusScrapeJob({
+        where: { id: storedScrapeId },
+        data: { status: "FAILED" }
+      });
     }
 
     clearTimeout(timer);
@@ -87,8 +88,13 @@ export class ScrapeController {
       `Created ${inputs.length} status scrape results for ${
         this.target.name
         // tslint:disable-next-line:no-console
-      } (${this.target.statusUrl}) in ${console.timeEnd("scrape")}`
+      } (${this.target.statusUrl})`
     );
+
+    return prisma.updateStatusScrapeJob({
+      where: { id: storedScrapeId },
+      data: { status: "DONE" }
+    });
   }
 
   private getMachineToken() {
