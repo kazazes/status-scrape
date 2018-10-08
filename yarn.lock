@@ -1619,7 +1619,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/graphql@14.0.2":
+"@types/graphql@^14.0.1":
   version "14.0.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.2.tgz#415e3779718c1e0805e418e3a798cb39dccc58ab"
   integrity sha512-mB9iBWsXs8BvTk0CIPYA0iV7Jfvx/Csb7pelA6cEZjKDmcJkNWoNmeFw69Hmhjosa4JPVCjNC7RuaStjx4GgTA==

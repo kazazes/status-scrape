@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": "dist",
+    "lib": ["esnext"],
     "paths": {
       "*": ["node_modules/*", "types/*"]
     }

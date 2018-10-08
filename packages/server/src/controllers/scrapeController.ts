@@ -39,14 +39,13 @@ export class ScrapeController {
     logger.verbose(`Body: \n\n ${JSON.stringify(body, null, 2)}`);
 
     const timer = setTimeout(async () => {
-      prisma.updateStatusScrapeJob({
+      logger.error("Timed out.");
+      return prisma.updateStatusScrapeJob({
         where: { id: storedScrapeId },
         data: {
           status: "TIMED_OUT"
         }
       });
-      logger.error("Timed out.");
-      throw new Error("Google Cloud Function timed out");
     }, 60000);
     let response: Response<string>;
     try {
