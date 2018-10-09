@@ -1784,7 +1784,7 @@
   resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-3.0.5.tgz#403bd1b4f58076ca8f85a65cf30e06cda3ce6b39"
   integrity sha512-OYwbI+HpEkEJ+eA9WkzlQOE7gjFxiOSAWHU1dIqiD041Sh+uo5OhEFfVARza7rFwHHB1emujFctYyScGx5rArA==
 
-"@vue/cli-plugin-babel@3.0.5":
+"@vue/cli-plugin-babel@^3.0.4":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-3.0.5.tgz#6396e6f52771d8a9cfbfe0d9369699a390528c4a"
   integrity sha512-nZYF93CG6xfgxpljolEcejOmcHXdoqzdNmlfakFi+7Lyvwc65T7aKG4kOV3m/FD14Bh6B56xiv3rSG9GFPR6aw==
@@ -14740,10 +14740,10 @@ vue@^2.5.17:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
   integrity sha512-mFbcWoDIJi0w0Za4emyLiW72Jae0yjANHbCVquMKijcavBGypqlF7zHRgMa5k4sesdv7hv2rB4JPdZfR+TPfhQ==
 
-vuetify@^1.2.0:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.2.6.tgz#e94e4b169544b326eabf08636006968c37e98f28"
-  integrity sha512-/5xFgawE1GBVDrMiTJf5P1+YP4mMAg/xni+2M2btwJI8842EWD0+DKC12icuPTrzWdnc8+hXqoubi4+qYz6SSg==
+vuetify@1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.2.7.tgz#3d73447d72bad6dca3e39272ec1bce73954add53"
+  integrity sha512-humc4uXzIiD91lf8DDec4jPNdqM9PDFE5DgZ8YOj5WyZ/1FLkhgX+EeMyms5ZgGbMwUJvXmqZm1QWbfCa+1vVQ==
 
 vuex@^3.0.1:
   version "3.0.1"
