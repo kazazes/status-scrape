@@ -24,6 +24,7 @@ jobs:
       - image: circleci/node:carbon-stretch-browsers
     working_directory: ~/repo
     steps:
+      - checkout
       - attach_workspace:
          at: ~/repo
       - run: yarn run test
