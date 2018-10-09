@@ -1784,7 +1784,7 @@
   resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-3.0.5.tgz#403bd1b4f58076ca8f85a65cf30e06cda3ce6b39"
   integrity sha512-OYwbI+HpEkEJ+eA9WkzlQOE7gjFxiOSAWHU1dIqiD041Sh+uo5OhEFfVARza7rFwHHB1emujFctYyScGx5rArA==
 
-"@vue/cli-plugin-babel@3.0.5":
+"@vue/cli-plugin-babel@^3.0.4":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-3.0.5.tgz#6396e6f52771d8a9cfbfe0d9369699a390528c4a"
   integrity sha512-nZYF93CG6xfgxpljolEcejOmcHXdoqzdNmlfakFi+7Lyvwc65T7aKG4kOV3m/FD14Bh6B56xiv3rSG9GFPR6aw==
@@ -11682,40 +11682,6 @@ prisma-client-lib@1.18.0-beta.22:
   version "1.18.0-beta.22"
   resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.18.0-beta.22.tgz#370017cd1c706c9ad33f77078bac8e6bf1f9d371"
   integrity sha512-BXerFhtXWHHPxpfP3dqDJrcIwU9aNk2Y8L+qD9qrYdCjgmvH4BLjP9walv1wGqcu3k7hcCvQ7DwPdmQsu4lsvA==
-  dependencies:
-    "@types/node" "^10.9.4"
-    debug "^4.0.1"
-    graphql-tag "^2.9.2"
-    http-link-dataloader "^0.1.4"
-    jsonwebtoken "^8.3.0"
-    lodash.flatten "^4.4.0"
-    prettier "^1.14.2"
-    subscriptions-transport-ws "^0.9.14"
-    uppercamelcase "^3.0.0"
-    ws "^6.0.0"
-    zen-observable "^0.8.9"
-
-prisma-client-lib@^1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.17.1.tgz#5fcc386a493e89ab650d8a9d4ca42817091d35a9"
-  integrity sha512-PIGnOMXJhVqwewNKCdJ1vaDg3itt1cmnm8Dgf5nhxADJlwJkRnMCwjZnG7f4A909XAzakumPAWdvBmDERRoYnQ==
-  dependencies:
-    "@types/node" "^10.9.4"
-    debug "^4.0.1"
-    graphql-tag "^2.9.2"
-    http-link-dataloader "^0.1.4"
-    jsonwebtoken "^8.3.0"
-    lodash.flatten "^4.4.0"
-    prettier "^1.14.2"
-    subscriptions-transport-ws "^0.9.14"
-    uppercamelcase "^3.0.0"
-    ws "^6.0.0"
-    zen-observable "^0.8.9"
-
-prisma-client-lib@^1.18.0-beta.12:
-  version "1.18.0-beta.16"
-  resolved "https://registry.yarnpkg.com/prisma-client-lib/-/prisma-client-lib-1.18.0-beta.16.tgz#15cdab40d3577221bffad7ed6f773953f969bf9f"
-  integrity sha512-Nd8pByrz5fZ4mwkArtnjN6EBWSbEA5jVdMqKPmbCGJlAh5sJzPkxMmmM9kkt1ilx9amhQYpwX04WiQ+/a4wrPw==
   dependencies:
     "@types/node" "^10.9.4"
     debug "^4.0.1"
