@@ -18,17 +18,17 @@ jobs:
           key: status-scrape-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn run build
     persist_to_workspace:
-      root: '.'
-      paths: 'packages/'
+      root: ~/repo
+      paths: 'packages'
   test:
     docker:
       - image: circleci/node:carbon-stretch-browsers
-    working_directory: ~/repo
     steps:
+      - run: mkdir -p ~/repo && cd ~/repo
       - checkout
       - attach_workspace:
          at: ~/repo
-      - run: yarn run test
+      - run: yarn && yarn run test
       - store_test_results:
           path: './packages/functions/'
       - store_test_results:
