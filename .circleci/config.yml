@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-test:
     docker:
       - image: circleci/node:carbon-stretch-browsers
     working_directory: ~/repo
@@ -34,5 +34,5 @@ workflows:
   version: 2
   workflow:
     jobs:
-    - build:
+    - build-test:
         context: test
