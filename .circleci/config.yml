@@ -18,7 +18,8 @@ jobs:
           key: status-scrape-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn run build
     persist_to_workspace:
-      paths: '~/repo'
+      root: '.'
+      paths: 'packages/'
   test:
     docker:
       - image: circleci/node:carbon-stretch-browsers
