@@ -1,4 +1,4 @@
-import supertest from "supertest";
+import supertest = require("supertest");
 import app from "../src/app";
 
 describe("Should return health checks", () => {

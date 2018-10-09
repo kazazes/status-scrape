@@ -1,4 +1,4 @@
-import supertest from "supertest";
+import supertest = require("supertest");
 import { app, token } from "./setup";
 
 describe("Scrape metastatuspage.com", () => {

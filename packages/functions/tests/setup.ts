@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import express from "express";
 import { sign } from "jsonwebtoken";
-import supertest from "supertest";
+import supertest = require("supertest");
 import { statusScrape } from "../src/scrape";
 
 dotenv.config();

@@ -8,6 +8,7 @@ beforeAll(async () => {
   const target: StatusScrapeTargetNode = {
     id: "cjmnwu8fmfd470b77ir3v5c9e",
     name: "Statuspage",
+    companyUrl: "statuspage.io",
     twitterHandle: "statuspage",
     strategy: "STATUSPAGE_IO",
     statusUrl: "https://metastatuspage.com/"
@@ -22,6 +23,6 @@ describe("scrapeController", () => {
       await scrapeController.scrape();
       expect(scrapeController.results.length).toBeGreaterThan(0);
     },
-    30000
+    60000
   );
 });

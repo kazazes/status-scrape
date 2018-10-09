@@ -1,4 +1,4 @@
-import supertest from "supertest";
+import supertest = require("supertest");
 import { app } from "./setup";
 
 describe("Send request with bad token", () => {
