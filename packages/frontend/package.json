@@ -9,6 +9,7 @@
     "watch": "vue-cli-service build --watch --mode development"
   },
   "dependencies": {
+    "@status-scrape/common": "^0.0.2",
     "@babel/polyfill": "^7.0.0-rc.1",
     "@status-scrape/prisma": "^0.0.2",
     "apollo-cache": "^1.1.17",
@@ -36,10 +37,10 @@
     "@babel/core": "^7",
     "@types/apollo-upload-client": "^8.1.0",
     "@types/validator": "^9.4.2",
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-typescript": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
-    "@vue/cli-shared-utils": "^3.0.4",
+    "@vue/cli-plugin-babel": "3.0.4",
+    "@vue/cli-plugin-typescript": "3.0.4",
+    "@vue/cli-service": "3.0.4",
+    "@vue/cli-shared-utils": "3.0.4",
     "babel-plugin-transform-imports": "^1.5.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
