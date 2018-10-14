@@ -5874,7 +5874,7 @@ express-session@^1.15.6:
     uid-safe "~2.1.5"
     utils-merge "1.0.1"
 
-express@^4.16.2, express@^4.16.3:
+express@^4.16.2, express@^4.16.3, express@^4.16.4:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
   integrity sha512-j12Uuyb4FMrd/qQAm6uCHAkPtO8FDTRJZBDd5D2KOL2eLaz1yUNdUB/NOIyq0iU4q4cFarsUCrnFDPBcnksuOg==
@@ -14566,15 +14566,15 @@ vue-apollo@^3.0.0-beta.11:
     chalk "^2.4.1"
     throttle-debounce "^2.0.0"
 
-vue-class-component@6.3.0, vue-class-component@^6.2.0:
+vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.3.0.tgz#32c3a3302d4a047f9750a9d1f2cc56823b899294"
   integrity sha512-i652iAt15d0HiH0ZKUNBqK/eGfOsg6GiHAdnAvaau+88CxngTmt47T/kOfbxWqvB6CU0fZZb3OCEGFc5UyyBIQ==
 
-vue-cli-plugin-apollo@^0.17.0:
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-apollo/-/vue-cli-plugin-apollo-0.17.1.tgz#166e1c4e1ff9da08e403da55d0d89791ad436d2b"
-  integrity sha512-/lCV/SIrtV+mJJLM7XSMw5zl40bMSxQUfRfJwQIMUt4Vbh51/XNUDsOBiSZ79M+cfU6j6pfdKz+LdeNBaHW7Rw==
+vue-cli-plugin-apollo@0.17.2:
+  version "0.17.2"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-apollo/-/vue-cli-plugin-apollo-0.17.2.tgz#13750f470a7592f1301872606869fdc916c0e17e"
+  integrity sha512-qUfLiQcJRQudySj36PqCJfGi9GxUQu3czYOo8OJLPsSQ0O3Ms+l0EfjMLulqR4VqK4LvOY+BB7CuOn6IJz4Lyg==
   dependencies:
     apollo-cache-inmemory "^1.2.10"
     apollo-client "^2.4.2"
@@ -14590,7 +14590,7 @@ vue-cli-plugin-apollo@^0.17.0:
     deepmerge "^2.2.1"
     esm "^3.0.84"
     execa "^1.0.0"
-    express "^4.16.3"
+    express "^4.16.4"
     graphql "^14.0.2"
     graphql-subscriptions "^1.0.0"
     nodemon "^1.18.4"
