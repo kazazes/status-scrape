@@ -12734,9 +12734,9 @@ schema-utils@^1.0.0:
     ajv-keywords "^3.1.0"
 
 scrape-it@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/scrape-it/-/scrape-it-5.0.5.tgz#0ae9282243df012163d6f4c367d34ef100473996"
-  integrity sha512-H+qXFE2xN3NQtSc1p6sQCt0EFahrQwhVtlcvxkXCf5y0Pn7AeE5XCrHo6mTuQmWN+cge6LlD8rV+UcoAQRvq7A==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/scrape-it/-/scrape-it-5.1.0.tgz#d4e43b87d2d835a3fd09ecb646a9c623fc7c3d90"
+  integrity sha512-YN1M91PfqzXIe8QRT6kHEUKwl3D7np1I5s4+LsqgfhBJX7OdLeMM+cPyiAF5vSuL+uxbM/UZia+YoL3Ttzhl8w==
   dependencies:
     assured "^1.0.10"
     cheerio "^0.20.0"
