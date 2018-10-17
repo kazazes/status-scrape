@@ -14611,9 +14611,9 @@ vue@^2.5.17:
   integrity sha512-mFbcWoDIJi0w0Za4emyLiW72Jae0yjANHbCVquMKijcavBGypqlF7zHRgMa5k4sesdv7hv2rB4JPdZfR+TPfhQ==
 
 vuetify@^1.2.0:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.2.9.tgz#1c0d00f9a76620931ef4c662bfafe12f120b0d52"
-  integrity sha512-PQJrBU56KThmuffhO147D1wX+7fHyFIfdh+kTHb+Od234PgqcyGH8hQ4KWDM76SbL5ozinF6FLZBPPw07TR9UQ==
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.2.10.tgz#e44c5bc167bd68fb12cf15c3434473313aa183b0"
+  integrity sha512-AUSWn7Qzx7gkxK76ohSt4RMF5sdMMjUOH1bER3dG/WPE9VpU/XmEkutMnWn12IgmR6VL5ymhlxGcZVwGqSUWAw==
 
 vuex@^3.0.1:
   version "3.0.1"
