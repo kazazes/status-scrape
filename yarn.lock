@@ -14565,10 +14565,10 @@ vue-cli-plugin-apollo@^0.17.0:
     subscriptions-transport-ws "^0.9.15"
     ts-node "^7.0.1"
 
-vue-cli-plugin-vuetify@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-0.2.1.tgz#fea624e5e4cf3cc2e655d469d441ec151fbb2c23"
-  integrity sha512-kYnDF8a8TmjF89mxHhBIqZPOizGLEXU3MLetw5kfLeG1NBeyejbdEGaUFy59LETvJFnBKYjN4OYFChlZhlLNLg==
+vue-cli-plugin-vuetify@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-0.4.5.tgz#f85ee699fbff46131457a89220de95b8203f279a"
+  integrity sha512-OXeKzTZY2Fp6FX0XuF8TosjzO1eCNzbafWierS33/zzKMgWOTdVF4dj/CUDIW7fav/6brBxebsu6RD4rnSF9qg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"
