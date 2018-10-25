@@ -14540,9 +14540,9 @@ vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   integrity sha512-cH208IoM+jgZyEf/g7mnFyofwPDJTM/QvBNhYMjqGB8fCsRyTf68rH2ISw/G20tJv+5mIThQ3upKwoL4jLTr1A==
 
 vue-cli-plugin-apollo@^0.17.0:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-apollo/-/vue-cli-plugin-apollo-0.17.2.tgz#13750f470a7592f1301872606869fdc916c0e17e"
-  integrity sha512-qUfLiQcJRQudySj36PqCJfGi9GxUQu3czYOo8OJLPsSQ0O3Ms+l0EfjMLulqR4VqK4LvOY+BB7CuOn6IJz4Lyg==
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-apollo/-/vue-cli-plugin-apollo-0.17.3.tgz#91603a3809ad78fffa1d7d81f32c24c6d18f3765"
+  integrity sha512-IMKGkmwVAF8uAy5ngbE0XYze6i9PGSAnByqvVgLgT4YsjUHMwfyUoyVJuAtfJPZG2G+fVpcwArhBhucAWXbSXw==
   dependencies:
     apollo-cache-inmemory "^1.2.10"
     apollo-client "^2.4.2"
