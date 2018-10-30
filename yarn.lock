@@ -1604,12 +1604,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/got@^8.3.4":
-  version "8.3.4"
-  resolved "https://registry.yarnpkg.com/@types/got/-/got-8.3.4.tgz#c6acca7252cdc9f7ae58070d13a45eb6ef9f88e7"
-  integrity sha512-0AbIQzpqQafYPFg26nwg5PfNgPLYwHeTP6z5F1u+5oypLIdpx34o5r8wYTTj3X3YYF2yPHtZPO/KYwlI8Nu/hQ==
+"@types/got@^9.2.0":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@types/got/-/got-9.2.0.tgz#5c99a07b24df6cd5e63d285b9c67a878987f5a2d"
+  integrity sha512-6aWDCt7AO0rhQSjnk+aLFIPfStFH1tMNQ9KLLfOT9SctmjOEndrqoo5Bw/YEIFYY2QRy744D/qUc2F3a3+mLsw==
   dependencies:
     "@types/node" "*"
+    "@types/tough-cookie" "*"
 
 "@types/graphql@^14.0.1":
   version "14.0.3"
@@ -1714,7 +1715,7 @@
   dependencies:
     "@types/superagent" "*"
 
-"@types/tough-cookie@^2.3.0":
+"@types/tough-cookie@*", "@types/tough-cookie@^2.3.0":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
   integrity sha512-MDQLxNFRLasqS4UlkWMSACMKeSm1x4Q3TxzUC7KQUsh6RK1ZrQ0VEyE3yzXcBu+K8ejVj4wuX32eUG02yNp+YQ==
